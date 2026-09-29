@@ -34,8 +34,8 @@
 .flame {
   position: absolute;
   background-repeat: no-repeat;
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 42%, transparent 100%);
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 42%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 62%, transparent 100%);
   animation: dance 1.2s ease-in-out infinite;
 }
 
@@ -55,19 +55,19 @@
     transform: scale(1, 1) skewX(0deg);
   }
   18% {
-    transform: scale(0.97, 1.07) skewX(-3deg);
+    transform: scale(0.98, 1.06) skewX(-2.5deg);
   }
   36% {
-    transform: scale(1.03, 0.97) skewX(2deg);
+    transform: scale(1.02, 0.98) skewX(1.5deg);
   }
   55% {
-    transform: scale(0.98, 1.1) skewX(-1.5deg);
+    transform: scale(0.99, 1.08) skewX(-1.2deg);
   }
   74% {
-    transform: scale(1.02, 0.99) skewX(3deg);
+    transform: scale(1.01, 0.99) skewX(2.5deg);
   }
   88% {
-    transform: scale(0.99, 1.05) skewX(-1deg);
+    transform: scale(0.99, 1.04) skewX(-0.8deg);
   }
 }
 

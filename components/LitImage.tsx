@@ -43,11 +43,12 @@ function Flicker({ src }: { src: string }) {
           animationDuration: `${(1.7 + rnd(i, 1) * 1.6).toFixed(2)}s`,
           animationDelay: `-${(rnd(i, 2) * 3).toFixed(2)}s`,
         }
-        // The flame itself, lifted from the photo and set swaying from its base. Tiny flames only glow.
+        // The flame itself, lifted from the photo and set swaying from its base. The patch is kept just
+        // wider than the flame, so the wall behind stays still. Tiny flames only glow.
         let flame: CSSProperties | null = null
         if (size >= 12) {
-          const bw = size * 0.9, bh = size * 1.45
-          const left = cx - bw / 2, top = cy + size * 0.6 - bh
+          const bw = size * 0.44, bh = size * 1.5
+          const left = cx - bw / 2, top = cy + size * 0.62 - bh
           flame = {
             left: pct((left / W) * 100),
             top: pct((top / H) * 100),
