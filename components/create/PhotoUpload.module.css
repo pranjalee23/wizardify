@@ -1,0 +1,113 @@
+.row {
+  margin-top: 28px;
+  width: 100%;
+  display: flex;
+  gap: 32px;
+  align-items: stretch;
+}
+
+.left {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drop {
+  height: 300px;
+  box-sizing: border-box;
+  border: 2px dashed #8A7550;
+  border-radius: 12px;
+  background: #0F1420;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.dropText {
+  font-size: 18px;
+  color: #F2DDB0;
+}
+
+.dropHint {
+  font-size: 14px;
+  color: #A89F90;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.thumbs {
+  display: flex;
+  gap: 16px;
+}
+
+.thumb {
+  width: 110px;
+  height: 110px;
+  border-radius: 8px;
+  border: 2px solid #D9B26A;
+  background: #1A1F2C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.add {
+  width: 110px;
+  height: 110px;
+  border-radius: 8px;
+  border: 1px dashed #8A7550;
+  background: transparent;
+  color: #E5DACA;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tips {
+  width: 340px;
+  flex-shrink: 0;
+  padding: 32px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tipsTitle {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.tipsList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 16px;
+}
+
+.tip {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}

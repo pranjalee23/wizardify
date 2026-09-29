@@ -1,0 +1,12 @@
+export const routes = {
+  home: '/',
+  frame: '/frame',
+  howItWorks: '/how-it-works',
+  houses: '/houses',
+  house: (id: string) => `/houses/${id}`,
+  gallery: '/gallery',
+  faq: '/faq',
+  drop: '/drop',
+  create: (step: number) => `/create/${step}`,
+  reserve: (step: number) => `/reserve/${step}`,
+} as const

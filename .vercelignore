@@ -1,0 +1,9 @@
+designs
+scripts
+.playwright-mcp
+.next
+node_modules
+tsconfig.tsbuildinfo
+AGENTS.md
+CLAUDE.md
+.env*.local

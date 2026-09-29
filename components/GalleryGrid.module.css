@@ -1,0 +1,56 @@
+.filters {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter {
+  padding: 0 22px;
+}
+
+.grid {
+  margin-top: 32px;
+  width: 100%;
+  min-height: 1000px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px 36px;
+  align-content: start;
+}
+
+.item {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.frame {
+  --w: 290px;
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.plaque {
+  padding: 6px 18px;
+  background: linear-gradient(180deg, #E8C77E, #9C7426);
+  border-radius: 3px;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 16px;
+  color: #2A1A06;
+}
+
+.house {
+  font-size: 13px;
+  color: #D9B26A;
+}

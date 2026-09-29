@@ -1,0 +1,61 @@
+.section {
+  width: 100%;
+  padding-top: 10px;
+  background: radial-gradient(ellipse at 50% 42%, #1A1838 0%, #0A0E18 65%);
+}
+
+.inner {
+  padding: 110px 64px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1.1;
+  max-width: 900px;
+}
+
+.lede {
+  margin: 0;
+  font-size: 19px;
+}
+
+.grid {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 44px;
+  width: 100%;
+}
+
+.card {
+  text-decoration: none;
+  color: #E5DACA;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.name {
+  font-family: var(--font-cinzel), serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #EFD9A7;
+}
+
+.motto {
+  font-size: 15px;
+  margin-top: -8px;
+}
+
+.cta {
+  margin-top: 44px;
+}

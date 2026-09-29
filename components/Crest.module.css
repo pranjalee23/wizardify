@@ -1,0 +1,14 @@
+.clip {
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.crest {
+  width: 160px;
+  height: 190px;
+  color: #F2DDB0;
+}
+
+.svg {
+  display: block;
+}

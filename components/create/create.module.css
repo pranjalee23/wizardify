@@ -1,0 +1,74 @@
+.main {
+  flex-grow: 1;
+  padding: 36px 200px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.block {
+  width: 100%;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: #D9B26A;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1.1;
+}
+
+.lede {
+  margin: 0;
+  font-size: 18px;
+}
+
+.center {
+  text-align: center;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionsMagic {
+  margin-top: 48px;
+}
+
+.actionsLife {
+  margin-top: 40px;
+}
+
+.actionsPhotos {
+  margin-top: 40px;
+}
+
+.actionsPreview {
+  margin-top: 36px;
+}
+
+.back {
+  height: 56px;
+  padding: 0 30px;
+  font-size: 15px;
+}
+
+.next {
+  height: 56px;
+  padding: 0 36px;
+  font-size: 15px;
+}

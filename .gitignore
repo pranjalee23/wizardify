@@ -23,6 +23,7 @@ build/
 
 # Environment variables (never commit secrets)
 .env
+.env*
 .env*.local
 .env.development
 .env.production
@@ -47,6 +48,8 @@ uploads/
 generated/
 *.mp4
 *.mov
+# ...except the site's own videos, which ship with the app
+!public/videos/*.mp4
 
 # OS / editor
 .DS_Store

@@ -1,0 +1,108 @@
+.main {
+  flex-grow: 1;
+  padding: 72px 0 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.spark {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: tw 2.2s ease-in-out infinite alternate;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 1.08;
+}
+
+.lede {
+  margin: 0;
+  font-size: 18px;
+}
+
+.email {
+  color: #F2DDB0;
+  font-weight: 600;
+}
+
+.card {
+  margin-top: 32px;
+  width: 720px;
+  padding: 44px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.cardText {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #4A3E32;
+}
+
+.perks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.perk {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cta {
+  margin-top: 8px;
+  height: 58px;
+  padding: 0 36px;
+  font-size: 15px;
+}
+
+.time {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: #C9BFAE;
+}
+
+.later {
+  font-size: 15px;
+  color: #5E4A2A;
+}
+
+@keyframes tw {
+  from {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark {
+    animation: none;
+  }
+}

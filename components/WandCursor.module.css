@@ -1,0 +1,109 @@
+.root {
+  --lit: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.wand {
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+}
+
+.glow {
+  position: absolute;
+  left: -12px;
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFF8E4 0%, rgba(255, 222, 150, 0.95) 35%, rgba(255, 190, 90, 0.4) 65%, rgba(255, 190, 90, 0) 100%);
+  transform: scale(calc(1 + var(--lit) * 1.5));
+  transition: transform 0.25s ease;
+  mix-blend-mode: screen;
+}
+
+.halo {
+  position: absolute;
+  left: -70px;
+  top: -70px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 205, 120, 0.55) 0%, rgba(255, 205, 120, 0.18) 40%, rgba(255, 205, 120, 0) 70%);
+  opacity: calc(0.45 + var(--lit) * 0.55);
+  transform: scale(calc(0.8 + var(--lit) * 0.9));
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  mix-blend-mode: screen;
+  animation: breathe 2.8s ease-in-out infinite;
+}
+
+.cast .glow {
+  transform: scale(2.6);
+}
+
+.cast .halo {
+  transform: scale(2);
+  opacity: 1;
+}
+
+.sparks {
+  position: fixed;
+  inset: 0;
+  z-index: 2147482999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.spark {
+  position: absolute;
+  width: var(--sz, 3px);
+  height: var(--sz, 3px);
+  margin: calc(var(--sz, 3px) / -2) 0 0 calc(var(--sz, 3px) / -2);
+  border-radius: 50%;
+  background: #FFE9B8;
+  box-shadow: 0 0 6px 1px rgba(255, 214, 140, 0.9);
+  mix-blend-mode: screen;
+  animation: sparkFly 0.8s ease-out forwards;
+}
+
+@keyframes sparkFly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx, 0), var(--dy, -20px)) scale(0);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halo {
+    animation: none;
+  }
+}

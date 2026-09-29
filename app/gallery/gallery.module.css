@@ -1,0 +1,66 @@
+.section {
+  padding: 64px 80px 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 62px;
+  line-height: 1.08;
+}
+
+.lede {
+  margin: 0;
+  font-size: 19px;
+  color: #F2E8D6;
+}
+
+.decoRight {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  width: 200px;
+  height: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.7));
+}
+
+.decoLeft {
+  position: absolute;
+  left: 40px;
+  bottom: 30px;
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.7));
+}
+
+.pager {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pageBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.pageOff {
+  border: 1px solid #5A5040;
+  background: transparent;
+  color: #E5DACA;
+}
+
+.pageOn {
+  border: none;
+  color: #16110A;
+  font-weight: 600;
+}
