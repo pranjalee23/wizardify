@@ -71,3 +71,67 @@
   right: 40px;
   bottom: 150px;
 }
+
+/* Narrower screens show the portrait first, with the choices listed beneath it. */
+@media (max-width: 1100px) {
+  .layout {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .stage {
+    order: -1;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .summary {
+    width: 100%;
+    max-width: 640px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .layout {
+    margin-top: 20px;
+    gap: 32px;
+  }
+
+  .stage .portrait {
+    width: 76%;
+  }
+
+  .play {
+    width: 64px;
+    height: 64px;
+  }
+
+  .candleL,
+  .candleR {
+    bottom: 26%;
+  }
+
+  .candleL {
+    left: 0;
+    transform: scale(0.6);
+    transform-origin: 0 100%;
+  }
+
+  .candleR {
+    right: 0;
+    transform: scale(0.6);
+    transform-origin: 100% 100%;
+  }
+
+  .summary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .dd {
+    font-size: 17px;
+  }
+}

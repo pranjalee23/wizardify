@@ -1,3 +1,4 @@
+import LitImage from './LitImage'
 import styles from './NightSky.module.css'
 
 let seed = 7
@@ -69,7 +70,7 @@ export default function NightSky({ scene = 'sky', castle = false, moon = true }:
       )}
       {chamber && (
         <>
-          <img className={`${styles.img} ${styles.chamberImg}`} src={chamberSrc} alt="" />
+          <LitImage className={`${styles.img} ${styles.chamberImg}`} src={chamberSrc} />
           <div className={styles.chamberShade} />
           <div className={styles.chamberFade} />
         </>

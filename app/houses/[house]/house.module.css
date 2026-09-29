@@ -8,7 +8,6 @@
   top: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   z-index: -1;
 }
 
@@ -25,14 +24,14 @@
 }
 
 .heroInner {
-  padding: 40px 64px 72px;
+  padding: 40px var(--gutter) 72px;
   display: flex;
   gap: 64px;
   align-items: center;
 }
 
 .copy {
-  width: 560px;
+  width: min(560px, 44vw);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -99,20 +98,21 @@
   filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.7));
 }
 
+/* Placed from the centre so they stay just outside the portrait however wide the column is. */
 .candleL {
   position: absolute;
-  left: 70px;
+  left: calc(50% - 274px);
   bottom: 150px;
 }
 
 .candleR {
   position: absolute;
-  right: 70px;
+  right: calc(50% - 274px);
   bottom: 150px;
 }
 
 .examples {
-  padding: 72px 64px 96px;
+  padding: 72px var(--gutter) 96px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -145,4 +145,147 @@
   height: 58px;
   padding: 0 36px;
   font-size: 15px;
+  text-align: center;
+}
+
+@media (max-width: 1300px) {
+  .title {
+    font-size: 4.6vw;
+  }
+}
+
+@media (max-width: 1100px) {
+  .heroShade {
+    background:
+      linear-gradient(180deg, rgba(8, 6, 16, 0.9) 0%, rgba(8, 6, 16, 0.78) 45%, rgba(8, 6, 16, 0.45) 75%, rgba(8, 6, 16, 0.6) 100%),
+      linear-gradient(180deg, rgba(10, 14, 24, 0) 80%, #0A0E18 100%);
+  }
+
+  .heroInner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 48px;
+    padding: 32px var(--gutter) 64px;
+  }
+
+  .copy {
+    width: auto;
+    max-width: 640px;
+  }
+
+  .title {
+    font-size: 60px;
+  }
+
+  .tagline {
+    font-size: 26px;
+  }
+
+  .stage {
+    align-self: center;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .stage .portrait {
+    width: min(400px, 72%);
+  }
+
+  .examples {
+    padding: 56px var(--gutter) 88px;
+  }
+
+  .exGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+
+  .exFig {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroInner {
+    padding: 24px var(--gutter) 48px;
+    gap: 36px;
+  }
+
+  .copy {
+    gap: 18px;
+  }
+
+  .titleRow {
+    margin-top: 8px;
+    gap: 14px;
+  }
+
+  .title {
+    font-size: min(38px, 8.4vw);
+  }
+
+  .tagline {
+    font-size: 22px;
+  }
+
+  .desc {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .stage .portrait {
+    width: 76%;
+  }
+
+  .owl {
+    width: 130px;
+    right: -8px;
+  }
+
+  .candleL,
+  .candleR {
+    bottom: 26%;
+  }
+
+  .candleL {
+    left: 0;
+    transform: scale(0.6);
+    transform-origin: 0 100%;
+  }
+
+  .candleR {
+    right: 0;
+    transform: scale(0.6);
+    transform-origin: 100% 100%;
+  }
+
+  .examples {
+    padding: 44px var(--gutter) 72px;
+    gap: 28px;
+  }
+
+  .examplesTitle {
+    font-size: 24px;
+  }
+
+  .exGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+  }
+
+  .exFig:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 8px);
+  }
+
+  .cta {
+    width: 100%;
+    height: auto;
+    min-height: 56px;
+    padding: 14px 22px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
 }

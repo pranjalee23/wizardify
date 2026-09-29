@@ -113,7 +113,7 @@
 }
 
 .expect {
-  padding: 72px 96px 96px;
+  padding: 72px calc(var(--gutter) + 32px) 96px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -149,4 +149,157 @@
 .cardLabel {
   font-size: 17px;
   color: #F2DDB0;
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    height: auto;
+    box-sizing: border-box;
+    padding: 56px var(--gutter) 230px;
+  }
+
+  .title {
+    font-size: 52px;
+  }
+
+  .subtitle {
+    font-size: 34px;
+  }
+
+  .candle1,
+  .candle2,
+  .candle3,
+  .candle4 {
+    bottom: 0;
+  }
+
+  .candle1 {
+    left: var(--gutter);
+  }
+
+  .candle2 {
+    left: calc(var(--gutter) + 76px);
+  }
+
+  .candle3 {
+    right: var(--gutter);
+  }
+
+  .candle4 {
+    right: calc(var(--gutter) + 68px);
+  }
+
+  .expect {
+    padding: 56px var(--gutter) 88px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 40px var(--gutter) 160px;
+  }
+
+  .stack {
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .kicker {
+    font-size: 16px;
+  }
+
+  .soldOut {
+    padding: 12px 38px;
+  }
+
+  .soldOutText {
+    font-size: 42px;
+  }
+
+  .copy {
+    margin-top: 8px;
+    font-size: 16px;
+  }
+
+  .rule {
+    width: 200px;
+  }
+
+  .subtitle {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .invite {
+    font-size: 16px;
+  }
+
+  .candle1,
+  .candle2,
+  .candle3,
+  .candle4 {
+    transform: scale(0.6);
+  }
+
+  .candle1,
+  .candle2 {
+    transform-origin: 0 100%;
+  }
+
+  .candle3,
+  .candle4 {
+    transform-origin: 100% 100%;
+  }
+
+  .candle1 {
+    left: 8px;
+  }
+
+  .candle2 {
+    left: 50px;
+  }
+
+  .candle3 {
+    right: 8px;
+  }
+
+  .candle4 {
+    right: 46px;
+  }
+
+  .expect {
+    padding: 48px var(--gutter) 72px;
+    gap: 28px;
+  }
+
+  .expectTitle {
+    font-size: 28px;
+  }
+
+  .grid {
+    gap: 12px;
+  }
+
+  .card {
+    padding: 22px 12px;
+    gap: 10px;
+  }
+
+  .card svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cardLabel {
+    font-size: 15px;
+    line-height: 1.35;
+  }
 }

@@ -17,7 +17,9 @@ export default function Footer() {
       <div className={s.inner}>
         <div className={s.top}>
           <div className={s.brand}>
-            <div className={s.wordmark}>Wizardify</div>
+            <Link href={routes.home} className={s.home}>
+              <img className={s.logo} src="/images/logo.webp" width={720} height={266} alt="Wizardify" />
+            </Link>
             <div className={s.tagline}>Pictures were never meant to stay still.</div>
           </div>
           <nav aria-label="Footer" className={s.nav}>

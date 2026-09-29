@@ -1,0 +1,115 @@
+/* Placed and sized by the className, which must position it; a width alone keeps the image's proportions. */
+.cover {
+  overflow: hidden;
+  aspect-ratio: var(--ar);
+  container-type: size;
+}
+
+.cover.bleed {
+  overflow: visible;
+}
+
+/* The image as object-fit: cover would draw it: at least as large as the box on both axes,
+   offset by --ox and --oy like object-position. */
+.box {
+  position: absolute;
+  width: max(100cqw, 100cqh * var(--ar, 1));
+  height: max(100cqh, 100cqw / var(--ar, 1));
+  left: calc((100cqw - max(100cqw, 100cqh * var(--ar, 1))) * var(--ox, 0.5));
+  top: calc((100cqh - max(100cqh, 100cqw / var(--ar, 1))) * var(--oy, 0.5));
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flame {
+  position: absolute;
+  background-repeat: no-repeat;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 42%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 42%, transparent 100%);
+  animation: dance 1.2s ease-in-out infinite;
+}
+
+.glow {
+  position: absolute;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 216, 146, 0.5) 0%, rgba(255, 172, 84, 0.2) 32%, rgba(255, 150, 60, 0) 66%);
+  mix-blend-mode: screen;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes dance {
+  0%,
+  100% {
+    transform: scale(1, 1) skewX(0deg);
+  }
+  18% {
+    transform: scale(0.97, 1.07) skewX(-3deg);
+  }
+  36% {
+    transform: scale(1.03, 0.97) skewX(2deg);
+  }
+  55% {
+    transform: scale(0.98, 1.1) skewX(-1.5deg);
+  }
+  74% {
+    transform: scale(1.02, 0.99) skewX(3deg);
+  }
+  88% {
+    transform: scale(0.99, 1.05) skewX(-1deg);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+    scale: 1;
+  }
+  14% {
+    opacity: 0.95;
+    scale: 1.04;
+  }
+  26% {
+    opacity: 0.66;
+    scale: 0.97;
+  }
+  41% {
+    opacity: 1;
+    scale: 1.06;
+  }
+  57% {
+    opacity: 0.78;
+    scale: 0.99;
+  }
+  72% {
+    opacity: 0.93;
+    scale: 1.03;
+  }
+  86% {
+    opacity: 0.62;
+    scale: 0.96;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame {
+    display: none;
+  }
+
+  .glow {
+    animation: none;
+    opacity: 0.8;
+  }
+}

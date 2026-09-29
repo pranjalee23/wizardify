@@ -4,6 +4,7 @@ import NightSky from '@/components/NightSky'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import GalleryGrid from '@/components/GalleryGrid'
+import LitImage from '@/components/LitImage'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import s from './gallery.module.css'
@@ -23,7 +24,7 @@ export default function GalleryPage() {
         </p>
         <GalleryGrid />
         <img className={s.decoRight} src="/images/deco-gallery-right.png" alt="" />
-        <img className={s.decoLeft} src="/images/deco-gallery-left.png" alt="" />
+        <LitImage className={s.decoLeft} src="/images/deco-gallery-left.png" bleed />
         <nav aria-label="Gallery pages" className={s.pager} data-reveal="0">
           <button type="button" aria-label="Previous page" className={`${s.pageBtn} ${s.pageOff}`}>
             &lt;

@@ -30,7 +30,7 @@ export default function CreateStep1() {
         <p className={c.lede} data-reveal="2">
           Every great story begins with a choice.
         </p>
-        <div data-reveal="3">
+        <div className={s.picker} data-reveal="3">
           <HousePicker />
         </div>
         <p className={s.hint}>Choose the house that feels like home. You can always change your mind.</p>

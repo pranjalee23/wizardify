@@ -1,5 +1,6 @@
 .note {
-  width: 880px;
+  width: 100%;
+  max-width: 880px;
   box-sizing: border-box;
   padding: 22px 32px;
   background: url('/images/parchment-strip.webp') center / 100% 100% no-repeat;
@@ -19,4 +20,25 @@
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: 22px;
   line-height: 1.45;
+}
+
+/* The strip texture suits a long, low note; once the note wraps into a block, the sheet fits better. */
+@media (max-width: 760px) {
+  .note {
+    padding: 26px 26px;
+    background-image: url('/images/parchment-sheet.webp');
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .star {
+    width: 26px;
+    height: 26px;
+    margin-top: 2px;
+  }
+
+  .noteText {
+    font-size: 19px;
+    line-height: 1.4;
+  }
 }

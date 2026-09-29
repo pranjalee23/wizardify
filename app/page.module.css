@@ -7,3 +7,9 @@
   pointer-events: none;
   overflow: hidden;
 }
+
+@media (max-width: 1100px) {
+  .sky {
+    height: 1500px;
+  }
+}

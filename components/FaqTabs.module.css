@@ -83,3 +83,67 @@
   line-height: 1.7;
   color: #C9BFAE;
 }
+
+@media (max-width: 1100px) {
+  .tabs {
+    width: 220px;
+  }
+
+  .tab {
+    padding: 0 22px;
+    font-size: 16px;
+  }
+
+  .item {
+    padding: 22px 26px;
+  }
+
+  .question {
+    font-size: 17px;
+  }
+}
+
+/* On phones the topics become a row above the answers that scrolls sideways. */
+@media (max-width: 760px) {
+  .box {
+    margin-top: 28px;
+    flex-direction: column;
+  }
+
+  .tabs {
+    width: auto;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid #3A3428;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    flex-shrink: 0;
+    height: 54px;
+    padding: 0 20px;
+    border-bottom: none;
+    border-right: 1px solid #2A261E;
+    white-space: nowrap;
+    font-size: 15px;
+  }
+
+  .item {
+    padding: 20px 18px;
+  }
+
+  .question {
+    gap: 16px;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .answer {
+    font-size: 15px;
+  }
+}

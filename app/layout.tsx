@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
 import { Cinzel, Cormorant_Garamond, Montserrat } from 'next/font/google'
 import RevealObserver from '@/components/RevealObserver'
@@ -12,6 +12,10 @@ const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '600'
 export const metadata: Metadata = {
   title: 'Wizardify',
   description: 'Pictures were never meant to stay still.',
+}
+
+export const viewport: Viewport = {
+  themeColor: '#0A0E18',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import LitImage from '@/components/LitImage'
 import { houses, type HouseId } from '@/lib/houses'
 import { useHydrated, useReservation } from '@/lib/reservation'
 import s from './HousePicker.module.css'
@@ -44,7 +45,7 @@ function Banners({ initial }: { initial: HouseId }) {
           >
             <div className={s.banner} style={{ '--c': h.banner } as CSSProperties}>
               <div className={s.bar} />
-              <img src={h.img} alt="" className={s.img} />
+              <LitImage src={h.img} className={s.img} />
               <div className={s.shade} />
               <div className={s.name}>{h.name}</div>
             </div>

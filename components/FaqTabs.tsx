@@ -1,16 +1,26 @@
 'use client'
 
-import { useRef, useState, type KeyboardEvent } from 'react'
+import { useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react'
 import { faqTopics } from '@/lib/faq'
 import s from './FaqTabs.module.css'
+
+// Matches the stylesheet's breakpoint, where the topics move from a column into a row.
+const ROW = '(max-width: 760px)'
+const subscribe = (cb: () => void) => {
+  const mq = window.matchMedia(ROW)
+  mq.addEventListener('change', cb)
+  return () => mq.removeEventListener('change', cb)
+}
 
 export default function FaqTabs() {
   const [current, setCurrent] = useState(0)
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
   const topic = faqTopics[current]
+  const row = useSyncExternalStore(subscribe, () => window.matchMedia(ROW).matches, () => false)
 
   const onKeyDown = (e: KeyboardEvent, i: number) => {
-    const step = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0
+    const [fwd, back] = row ? ['ArrowRight', 'ArrowLeft'] : ['ArrowDown', 'ArrowUp']
+    const step = e.key === fwd ? 1 : e.key === back ? -1 : 0
     if (!step) return
     e.preventDefault()
     const next = (i + step + faqTopics.length) % faqTopics.length
@@ -20,7 +30,7 @@ export default function FaqTabs() {
 
   return (
     <div className={s.box} data-reveal="2">
-      <div role="tablist" aria-label="Question topics" aria-orientation="vertical" className={s.tabs}>
+      <div role="tablist" aria-label="Question topics" aria-orientation={row ? 'horizontal' : 'vertical'} className={s.tabs}>
         {faqTopics.map((t, i) => {
           const on = i === current
           return (

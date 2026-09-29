@@ -1,5 +1,7 @@
 .group {
   position: relative;
+  width: var(--pw);
+  max-width: 100%;
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.75));
   animation: hover 9s ease-in-out infinite;
 }

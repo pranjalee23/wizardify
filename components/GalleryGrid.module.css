@@ -54,3 +54,56 @@
   font-size: 13px;
   color: #D9B26A;
 }
+
+@media (max-width: 1100px) {
+  .grid {
+    min-height: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px 24px;
+  }
+}
+
+/* On phones the filters scroll sideways in one row, running to the screen edges. */
+@media (max-width: 640px) {
+  .filters {
+    margin-top: 22px;
+    width: calc(100% + 2 * var(--gutter));
+    box-sizing: border-box;
+    padding: 0 var(--gutter) 4px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter {
+    flex-shrink: 0;
+    height: 40px;
+    padding: 0 18px;
+  }
+
+  .grid {
+    margin-top: 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 14px;
+  }
+
+  .item {
+    gap: 12px;
+  }
+
+  .plaque {
+    padding: 5px 12px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .house {
+    font-size: 12px;
+  }
+}

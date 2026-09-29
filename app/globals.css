@@ -2,7 +2,28 @@ html,
 body {
   margin: 0;
   padding: 0;
-  min-width: 1440px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Side padding for page content: roomy on desktop, tighter on tablets and phones. */
+:root {
+  --gutter: 64px;
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --gutter: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: 20px;
+  }
 }
 
 body {

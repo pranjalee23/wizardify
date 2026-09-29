@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Arrow from './Arrow'
+import PortraitFrame from './PortraitFrame'
 import { routes } from '@/lib/routes'
 import layout from './layout.module.css'
 import ui from './ui.module.css'
@@ -27,6 +28,9 @@ export default function Hero() {
             SEE THE MAGIC
           </Link>
         </div>
+      </div>
+      <div className={s.portrait} data-reveal="4">
+        <PortraitFrame width={400} height={536} />
       </div>
     </section>
   )

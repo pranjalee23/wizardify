@@ -1,6 +1,6 @@
 .main {
   flex-grow: 1;
-  padding: 48px 0 80px;
+  padding: 48px var(--gutter) 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,11 +8,13 @@
 }
 
 .narrow {
-  width: 640px;
+  width: 100%;
+  max-width: 640px;
 }
 
 .wide {
-  width: 880px;
+  width: 100%;
+  max-width: 880px;
 }
 
 .back {
@@ -36,7 +38,9 @@
 
 .progressText {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 6px 16px;
   font-size: 13px;
 }
 
@@ -72,11 +76,13 @@
   font-weight: 500;
   font-size: 52px;
   line-height: 1.08;
+  text-align: center;
 }
 
 .lede {
   margin: 0;
   font-size: 17px;
+  text-align: center;
 }
 
 .form {
@@ -111,4 +117,41 @@
 
 .ctaTall {
   height: 58px;
+}
+
+@media (max-width: 1100px) {
+  .title {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 28px var(--gutter) 64px;
+    gap: 14px;
+  }
+
+  .progressLabel {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+  }
+
+  .progressNote {
+    font-size: 12px;
+  }
+
+  .title {
+    margin-top: 16px;
+    font-size: 30px;
+  }
+
+  .lede {
+    font-size: 16px;
+  }
+
+  .cta {
+    height: 54px;
+    padding: 0 26px;
+    font-size: 14px;
+  }
 }

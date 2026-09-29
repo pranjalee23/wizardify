@@ -82,3 +82,19 @@
 .actions {
   margin-top: 14px;
 }
+
+@media (max-width: 640px) {
+  .fields {
+    margin-top: 16px;
+    gap: 20px;
+  }
+
+  .input,
+  .phone {
+    height: 54px;
+  }
+
+  .check {
+    align-items: flex-start;
+  }
+}

@@ -5,7 +5,8 @@
 
 .frame {
   margin-top: 32px;
-  width: 720px;
+  width: 100%;
+  max-width: 720px;
   box-sizing: border-box;
   padding: 14px;
   background: #A97E34;
@@ -117,5 +118,55 @@
 @media (prefers-reduced-motion: reduce) {
   .spark {
     animation: none;
+  }
+}
+
+/* On phones the certificate is taller than it is wide, so it uses the portrait sheet. */
+@media (max-width: 640px) {
+  .frame {
+    margin-top: 16px;
+    padding: 8px;
+  }
+
+  .paper {
+    padding: 34px 28px 30px;
+    gap: 16px;
+    background-image: url('/images/parchment-portrait.webp');
+  }
+
+  .heading {
+    gap: 8px;
+  }
+
+  .heading svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .headingText {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .number {
+    font-size: 32px;
+  }
+
+  .details {
+    gap: 14px 16px;
+    font-size: 14px;
+  }
+
+  .dt {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+
+  .photos {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
   }
 }

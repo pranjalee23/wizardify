@@ -36,3 +36,34 @@
 .opt {
   padding: 0 20px;
 }
+
+@media (max-width: 900px) {
+  .groups {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .groups {
+    margin-top: 20px;
+  }
+
+  .group {
+    padding: 18px 16px 22px;
+    gap: 12px;
+  }
+
+  .legend {
+    font-size: 16px;
+  }
+
+  .opts {
+    gap: 8px;
+  }
+
+  .opt {
+    height: 42px;
+    padding: 0 16px;
+  }
+}

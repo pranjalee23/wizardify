@@ -1,5 +1,5 @@
 .hero {
-  padding: 64px 64px 110px;
+  padding: 64px var(--gutter) 110px;
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -119,7 +119,7 @@
 }
 
 .closerInner {
-  padding: 110px 64px;
+  padding: 110px var(--gutter);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -222,7 +222,7 @@
 }
 
 .specs {
-  padding: 110px 64px;
+  padding: 110px var(--gutter);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 64px;
@@ -376,5 +376,224 @@
   .play,
   .turn {
     animation: none;
+  }
+}
+
+@media (max-width: 1300px) {
+  .showcase {
+    gap: 48px;
+  }
+
+  .stage {
+    width: 560px;
+    height: 560px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    padding: 56px var(--gutter) 88px;
+    gap: 36px;
+  }
+
+  .title {
+    font-size: 50px;
+  }
+
+  .lede {
+    font-size: 18px;
+  }
+
+  .showcase {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 40px;
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    aspect-ratio: 1;
+    align-self: center;
+  }
+
+  .stage .portrait {
+    width: 63%;
+  }
+
+  .closerInner {
+    padding: 88px var(--gutter);
+    gap: 40px;
+  }
+
+  .closerTitle {
+    font-size: 40px;
+  }
+
+  .views {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 560px;
+    gap: 40px;
+  }
+
+  .viewBox {
+    height: 440px;
+  }
+
+  .specs {
+    padding: 88px var(--gutter);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 72px;
+  }
+
+  .included {
+    width: 100%;
+    max-width: 640px;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 40px var(--gutter) 64px;
+    gap: 28px;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .lede {
+    font-size: 16px;
+  }
+
+  .stage .portrait {
+    width: 72%;
+  }
+
+  .candleA,
+  .candleB,
+  .candleC {
+    bottom: 22%;
+  }
+
+  .candleA {
+    left: 0;
+    transform: scale(0.6);
+    transform-origin: 0 100%;
+  }
+
+  .candleB {
+    left: 34px;
+    transform: scale(0.6);
+    transform-origin: 0 100%;
+  }
+
+  .candleC {
+    right: 0;
+    transform: scale(0.6);
+    transform-origin: 100% 100%;
+  }
+
+  .play {
+    width: 64px;
+    height: 64px;
+  }
+
+  .feature {
+    padding: 16px 0;
+    gap: 16px;
+    font-size: 16px;
+  }
+
+  .featureIcon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .closerInner {
+    padding: 64px var(--gutter);
+    gap: 32px;
+  }
+
+  .closerTitle {
+    font-size: 30px;
+  }
+
+  .viewBox {
+    height: 380px;
+  }
+
+  .front {
+    width: 240px;
+  }
+
+  .side {
+    width: 210px;
+  }
+
+  .viewCaption {
+    font-size: 15px;
+  }
+
+  .specs {
+    padding: 64px var(--gutter);
+    gap: 56px;
+  }
+
+  .dimsTitle {
+    font-size: 30px;
+  }
+
+  /* Rulers tuck in closer so the frame keeps as much width as it can. */
+  .dimsFigure {
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+    padding-left: 90px;
+  }
+
+  .ruleV {
+    left: 60px;
+  }
+
+  .labelV {
+    left: 0;
+    font-size: 15px;
+  }
+
+  .ruleH,
+  .labelH {
+    left: 90px;
+  }
+
+  .labelH {
+    font-size: 15px;
+  }
+
+  .included {
+    padding: 40px 26px 36px;
+    gap: 18px;
+  }
+
+  .includedTitle {
+    font-size: 24px;
+  }
+
+  .includedList {
+    font-size: 16px;
+    gap: 14px;
+  }
+
+  .buy {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .buyBtn {
+    padding: 0 20px;
   }
 }

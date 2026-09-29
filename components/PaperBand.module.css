@@ -15,7 +15,7 @@
 
 .inner {
   height: 100%;
-  padding: 0 80px;
+  padding: 0 calc(var(--gutter) + 16px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -93,5 +93,49 @@
   .open .stamp {
     opacity: 1;
     transform: rotate(-6deg) scale(1);
+  }
+}
+
+@media (max-width: 1100px) {
+  .inner {
+    gap: 28px;
+  }
+
+  .stamp {
+    flex-shrink: 0;
+    font-size: 22px;
+  }
+
+  .text {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .cta {
+    flex-shrink: 0;
+    padding: 0 24px;
+  }
+}
+
+/* On phones the band stacks, and uses the sheet texture, whose proportions suit a taller band. */
+@media (max-width: 640px) {
+  .band {
+    height: auto;
+    background-image: url('/images/parchment-sheet.webp');
+  }
+
+  .inner {
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    padding: 44px calc(var(--gutter) + 12px) 48px;
+  }
+
+  .stamp {
+    font-size: 20px;
+  }
+
+  .text {
+    font-size: 17px;
   }
 }

@@ -19,9 +19,10 @@
 
 .panelHead {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
-  gap: 20px;
+  gap: 10px 20px;
 }
 
 .panelTitle {
@@ -83,6 +84,21 @@
   color: #F2DDB0;
 }
 
+.touchText {
+  display: none;
+}
+
+/* Phones and tablets can't drag files in, so the prompt asks for a tap instead. */
+@media (hover: none) and (pointer: coarse) {
+  .pointerText {
+    display: none;
+  }
+
+  .touchText {
+    display: inline;
+  }
+}
+
 .dropHint {
   font-size: 13px;
   color: #A89F90;
@@ -120,4 +136,52 @@
   align-self: flex-end;
   font-size: 13px;
   color: #A89F90;
+}
+
+@media (max-width: 640px) {
+  .fields {
+    margin-top: 12px;
+    gap: 20px;
+  }
+
+  .panel {
+    padding: 24px 18px;
+    gap: 16px;
+  }
+
+  .panelTitle {
+    font-size: 19px;
+  }
+
+  .badge {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .panelText {
+    font-size: 14px;
+  }
+
+  .drop {
+    height: auto;
+    min-height: 130px;
+    padding: 20px 16px;
+    gap: 14px;
+  }
+
+  .thumbs {
+    gap: 8px;
+  }
+
+  .thumb {
+    box-sizing: border-box;
+    width: calc((100% - 24px) / 4);
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .textarea {
+    font-size: 16px;
+    padding: 14px 16px;
+  }
 }

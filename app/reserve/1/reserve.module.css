@@ -1,6 +1,6 @@
 .main {
   flex-grow: 1;
-  padding: 72px 0 80px;
+  padding: 72px var(--gutter) 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,7 +29,8 @@
 
 .card {
   margin-top: 32px;
-  width: 720px;
+  width: 100%;
+  max-width: 720px;
   padding: 44px 56px;
   display: flex;
   flex-direction: column;
@@ -99,5 +100,64 @@
 @media (prefers-reduced-motion: reduce) {
   .spark {
     animation: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .main {
+    padding-top: 56px;
+  }
+
+  .title {
+    font-size: 46px;
+  }
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 40px var(--gutter) 64px;
+    gap: 14px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .lede {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  .card {
+    margin-top: 20px;
+    padding: 40px 24px 36px;
+    gap: 18px;
+  }
+
+  .cardTitle {
+    font-size: 22px;
+  }
+
+  .cardText {
+    font-size: 15px;
+  }
+
+  .perks {
+    font-size: 15px;
+  }
+
+  .perk {
+    align-items: flex-start;
+  }
+
+  .perk svg {
+    flex-shrink: 0;
+  }
+
+  .cta {
+    align-self: stretch;
+    height: 54px;
+    padding: 0 18px;
+    font-size: 13px;
   }
 }

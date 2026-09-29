@@ -85,7 +85,7 @@ export default function CreateStep5() {
             ))}
           </dl>
           <div className={s.stage} data-reveal="2">
-            <PortraitFrame width={400} height={536}>
+            <PortraitFrame width={400} height={536} className={s.portrait}>
               <button type="button" className={s.play} aria-label="Play preview">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M8 5l12 7-12 7z" />

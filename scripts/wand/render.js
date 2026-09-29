@@ -79,21 +79,22 @@ window.renderWand = function ({ size = 100, scale = 3, tipX = 2.7, tipY = 2.7, a
       let alb, specS, shin, specCol
       const around = Math.atan2(sn, c) * r
       if (best.mat === 'wood') {
-        // Dark varnished walnut: fine grain lines running the length of the wand
-        const tone = clamp(0.5 + 0.9 * fbm(u / 40, around / 3, 2, 11), 0, 1)
+        // Pale oiled ash, near bone white, so the wand stands out on the site's dark pages: creamy
+        // wood with fine, slightly darker grain lines running its length
+        const tone = clamp(0.55 + 0.7 * fbm(u / 40, around / 3, 2, 11), 0, 1)
         const lines = fbm(u / 22, around / 0.28 + 3 * fbm(u / 30, around, 2, 7), 3, 13)
-        const t = clamp(tone + lines * 0.9, 0, 1)
-        alb = [mix(44, 104, t), mix(22, 52, t), mix(12, 28, t)]
+        const t = clamp(tone + lines * 0.8, 0, 1)
+        alb = [mix(186, 238, t), mix(164, 228, t), mix(128, 206, t)]
         // Slightly darker grooves (ambient occlusion)
         let occ = 0
         for (const gu of grooves) occ = Math.max(occ, Math.exp(-(((u - gu) / 1.3) ** 2)))
         if (u > collar[1] - 0.6 && u < collar[1] + 1.2) occ = Math.max(occ, 0.6)
         if (u > collar[0] - 1.2 && u < collar[0] + 0.6) occ = Math.max(occ, 0.6)
         alb = alb.map((ch) => ch * (1 - 0.55 * occ))
-        // Tiny bump from the grain so highlights break up like real varnish
+        // Tiny bump from the grain so highlights break up like a real oiled finish
         const bump = 0.18 * noise(u / 1.6, around / 0.5, 23)
         N = norm([N[0] + bump * e1[0], N[1] + bump * e1[1], N[2]])
-        specS = 0.9; shin = 70; specCol = [255, 238, 210]
+        specS = 0.55; shin = 45; specCol = [255, 246, 228]
       } else {
         // Brass: warm, reflective, faintly worn, with fine turned rings
         const wear = fbm(u / 2, around / 1.2, 3, 41)
@@ -117,7 +118,8 @@ window.renderWand = function ({ size = 100, scale = 3, tipX = 2.7, tipY = 2.7, a
         col = [0, 1, 2].map((k) => alb[k] * (0.06 + 0.5 * diff + fill) * (0.25 + 1.05 * env) * (1 - horizon) + specCol[k] * spec)
       } else {
         const sheen = Math.pow(Math.max(0, dot(N, Hk)), 8) * 0.12 // broad soft sheen under the sharp highlight
-        col = [0, 1, 2].map((k) => alb[k] * (0.18 + 0.95 * diff + fill) + specCol[k] * (spec * 0.6 + sheen))
+        // Pale wood would blow out under full light, so it takes a little less, keeping its shaded side dark
+        col = [0, 1, 2].map((k) => alb[k] * (0.22 + 0.7 * diff + fill) + specCol[k] * (spec * 0.6 + sheen))
       }
       const glowCol = [255, 196, 110]
       col = col.map((ch, k) => ch + glowCol[k] * (tipGlow * 0.55 + rim * 0.35 * Math.exp(-u / 40)))

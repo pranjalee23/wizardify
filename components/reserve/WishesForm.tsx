@@ -67,7 +67,10 @@ function Fields({ saved }: { saved: Reservation }) {
             <circle cx="16" cy="9" r="1.6" />
           </svg>
           <span className={s.dropText}>
-            <span className={s.dropMain}>Drag and drop, or click to upload</span>
+            <span className={s.dropMain}>
+              <span className={s.pointerText}>Drag and drop, or click to upload</span>
+              <span className={s.touchText}>Tap to choose photos</span>
+            </span>
             <span className={s.dropHint}>3 to 8 clear photos of your face</span>
           </span>
         </label>

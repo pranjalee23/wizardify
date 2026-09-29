@@ -12,6 +12,7 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   border: 0;
   border-radius: 999px;
@@ -63,6 +64,7 @@
   padding: 0 34px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   border-radius: 999px;
   background: #E4C991 url('/images/parchment-button.webp') center / cover no-repeat;
@@ -88,6 +90,7 @@
   padding: 0 30px;
   display: flex;
   align-items: center;
+  justify-content: center;
   border-radius: 999px;
   border: 1px solid #D9B26A;
   background: rgba(10, 14, 24, 0.4);
@@ -153,11 +156,14 @@
   background-image: url('/images/parchment-portrait.webp');
 }
 
+/* A gilt frame --w wide that shrinks to fit narrow columns. The window's margins are percentages of the
+   frame's width, so the opening scales with it. */
 .frame {
   position: relative;
   box-sizing: border-box;
+  display: flow-root;
   width: var(--w, 300px);
-  padding: calc(var(--w, 300px) * 0.24) calc(var(--w, 300px) * 0.185) calc(var(--w, 300px) * 0.2);
+  max-width: 100%;
   filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.7));
 }
 
@@ -172,7 +178,7 @@
 
 .window {
   display: block;
-  width: 100%;
+  margin: 24% 18.5% 20%;
   aspect-ratio: 0.738;
   overflow: hidden;
 }
@@ -239,6 +245,25 @@
   }
   to {
     transform: scale(1.06);
+  }
+}
+
+/* Tall, narrow cards on phones use the portrait sheet so the paper isn't squashed sideways. */
+@media (max-width: 640px) {
+  .paperCard {
+    background-image: url('/images/parchment-portrait.webp');
+  }
+
+  .paperBtn {
+    height: 54px;
+    padding: 0 26px;
+    font-size: 14px;
+  }
+
+  .outlineBtn {
+    height: 50px;
+    padding: 0 24px;
+    font-size: 13px;
   }
 }
 

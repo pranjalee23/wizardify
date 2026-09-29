@@ -1,6 +1,6 @@
 .wrap {
   height: 110px;
-  padding: 24px 260px 0;
+  padding: 24px clamp(64px, calc(64px + (100vw - 1100px) * 0.5765), 260px) 0;
   color: #E5DACA;
   font-family: var(--font-montserrat), 'Helvetica Neue', sans-serif;
 }
@@ -75,4 +75,41 @@
 .labelOn {
   font-weight: 600;
   color: #F2DDB0;
+}
+
+@media (max-width: 1100px) {
+  .wrap {
+    padding: 24px var(--gutter) 0;
+  }
+}
+
+/* On phones only the current step keeps its name on screen; the others stay readable to screen readers. */
+@media (max-width: 640px) {
+  .wrap {
+    height: 84px;
+    padding: 18px var(--gutter) 0;
+  }
+
+  .circle {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .line {
+    top: 16px;
+  }
+
+  .label {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .label:not(.labelOn) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
 }

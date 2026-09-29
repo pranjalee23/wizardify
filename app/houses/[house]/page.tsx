@@ -10,6 +10,7 @@ import Framed from '@/components/Framed'
 import Candle from '@/components/Candle'
 import Crest from '@/components/Crest'
 import Arrow from '@/components/Arrow'
+import LitImage from '@/components/LitImage'
 import { examplePortraits, houseById, houses } from '@/lib/houses'
 import { routes } from '@/lib/routes'
 import layout from '@/components/layout.module.css'
@@ -38,7 +39,7 @@ export default async function HousePage({ params }: Params) {
       <Nav active="houses" />
 
       <section className={`${layout.band} ${s.hero}`}>
-        <img className={s.heroBg} src={h.img} alt="" />
+        <LitImage className={s.heroBg} src={h.img} />
         <div className={s.heroShade} />
         <div className={`${layout.container} ${s.heroInner}`}>
           <div className={s.copy}>
@@ -61,7 +62,7 @@ export default async function HousePage({ params }: Params) {
           </div>
           <div className={s.stage} data-reveal="1">
             <img className={s.owl} src="/images/deco-house.png" alt="" />
-            <PortraitFrame width={400} height={536} />
+            <PortraitFrame width={400} height={536} className={s.portrait} />
             <Candle className={s.candleL} scale={0.62} delay={0} />
             <Candle className={s.candleR} scale={0.5} delay={0.8} />
           </div>

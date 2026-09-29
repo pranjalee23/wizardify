@@ -43,9 +43,12 @@ export default function PhotoUpload() {
             <circle cx="16" cy="9" r="1.6" />
           </svg>
           <span className={s.dropText}>
-            Drag and drop your photos here
-            <br />
-            or click to upload
+            <span className={s.pointerText}>
+              Drag and drop your photos here
+              <br />
+              or click to upload
+            </span>
+            <span className={s.touchText}>Tap to choose your photos</span>
           </span>
           <span className={s.dropHint}>(3 to 8 photos recommended)</span>
         </label>

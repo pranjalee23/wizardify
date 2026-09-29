@@ -37,7 +37,7 @@ export default function FramePage() {
         </div>
         <div className={s.showcase}>
           <div className={s.stage} data-reveal="1">
-            <PortraitFrame width={440} height={590}>
+            <PortraitFrame width={440} height={590} className={s.portrait}>
               <button type="button" className={s.play} aria-label="Watch it move">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M8 5l12 7-12 7z" />
@@ -45,7 +45,7 @@ export default function FramePage() {
               </button>
             </PortraitFrame>
             <Candle className={s.candleA} scale={0.7} delay={0} />
-            <Candle className={s.candleB} scale={0.5} delay={0.6} />
+            <Candle className={s.candleB} scale={0.5} delay={0.6} variant="b" />
             <Candle className={s.candleC} scale={0.6} delay={1.1} />
           </div>
           <ul className={s.features}>

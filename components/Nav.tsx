@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { routes } from '@/lib/routes'
+import NavMenu from './NavMenu'
 import s from './Nav.module.css'
 
 const links = [
@@ -17,10 +18,7 @@ export default function Nav({ active = 'home' }: { active?: NavId }) {
     <header className={s.header}>
       <div className={s.inner}>
         <Link href={routes.home} className={s.brand}>
-          Wizardify
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#D9B26A" />
-          </svg>
+          <img className={s.logo} src="/images/logo.webp" width={720} height={266} alt="Wizardify" />
         </Link>
         <nav aria-label="Main" className={s.nav}>
           {links.map((l) => {
@@ -38,8 +36,9 @@ export default function Nav({ active = 'home' }: { active?: NavId }) {
           })}
         </nav>
         <Link href={routes.drop} className={s.cta}>
-          Reserve Your Place
+          Reserve<span className={s.ctaMore}> Your Place</span>
         </Link>
+        <NavMenu links={links} active={active} />
       </div>
     </header>
   )
