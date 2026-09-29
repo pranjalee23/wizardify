@@ -4,4 +4,6 @@ scripts
 .next
 node_modules
 tsconfig.tsbuildinfo
+AGENTS.md
+CLAUDE.md
 .env*.local
