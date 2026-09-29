@@ -36,7 +36,7 @@ export default function CreateStep4() {
             <Arrow dir="left" />
             BACK
           </Link>
-          <Link href={routes.create(5)} className={`${ui.pill} ${ui.paper} ${c.next}`}>
+          <Link href={routes.create(5)} className={`${ui.pill} ${ui.paper} ${ui.glow} ${c.next}`}>
             CONTINUE
             <Arrow />
           </Link>

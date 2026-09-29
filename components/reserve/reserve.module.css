@@ -1,0 +1,114 @@
+.main {
+  flex-grow: 1;
+  padding: 48px 0 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.narrow {
+  width: 640px;
+}
+
+.wide {
+  width: 880px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #E8C77E;
+}
+
+.back:hover {
+  color: #F2DDB0;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progressText {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.progressLabel {
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #D9B26A;
+}
+
+.progressNote {
+  color: #A89F90;
+}
+
+.bars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.bar {
+  height: 4px;
+  border-radius: 2px;
+  background: #3A342A;
+}
+
+.barOn {
+  background: #D9B26A;
+}
+
+.title {
+  margin: 24px 0 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 1.08;
+}
+
+.lede {
+  margin: 0;
+  font-size: 17px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actionsEnd {
+  justify-content: flex-end;
+}
+
+.skip {
+  font-size: 15px;
+  color: #E8C77E;
+}
+
+.skip:hover {
+  color: #F2DDB0;
+}
+
+.cta {
+  height: 56px;
+  padding: 0 36px;
+  font-size: 15px;
+}
+
+.ctaTall {
+  height: 58px;
+}

@@ -1,0 +1,53 @@
+.section {
+  padding: 72px 160px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 1.08;
+}
+
+.lede {
+  margin: 0;
+  max-width: 620px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.candleL {
+  position: absolute;
+  left: 20px;
+  bottom: 150px;
+}
+
+.candleR {
+  position: absolute;
+  left: 84px;
+  bottom: 150px;
+}
+
+.decoRight {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  width: 200px;
+  height: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.7));
+}
+
+.decoLeft {
+  position: absolute;
+  left: 160px;
+  bottom: 0;
+  width: 140px;
+  height: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.7));
+}

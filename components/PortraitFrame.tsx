@@ -17,7 +17,7 @@ export default function PortraitFrame({
   children,
 }: Props) {
   return (
-    <div className={s.group} style={{ width, height }} data-wand="">
+    <div className={s.group} style={{ width, height }}>
       <div className={s.window}>
         <img className={s.painting} src={src} alt={alt} />
       </div>

@@ -1,0 +1,37 @@
+.form {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.label {
+  font-size: 13px;
+  color: #E5DACA;
+}
+
+.input {
+  width: 340px;
+  height: 58px;
+  box-sizing: border-box;
+  padding: 0 22px;
+  background: rgba(10, 14, 24, 0.75);
+  border: 1px solid #8A7550;
+  border-radius: 999px;
+  color: #F2DDB0;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.submit {
+  height: 58px;
+  padding: 0 34px;
+  font-size: 15px;
+}

@@ -12,13 +12,13 @@ import s from './how.module.css'
 
 export const metadata: Metadata = { title: 'How it works, Wizardify' }
 
-const steps: { title: string; src: string | null }[] = [
-  { title: 'Choose\nYour House', src: null },
-  { title: 'Tell Us\nYour Story', src: null },
-  { title: 'Send Us\nYour Photos', src: null },
-  { title: 'We Create\nYour Portrait', src: null },
+const steps = [
+  { title: 'Choose\nYour House', src: '/images/step-hat.png' },
+  { title: 'Tell Us\nYour Story', src: '/images/step-quill.png' },
+  { title: 'Send Us\nYour Photos', src: '/images/step-photos.png' },
+  { title: 'We Create\nYour Portrait', src: '/images/step-portrait.png' },
   { title: 'We Frame\nthe Magic', src: '/images/frame-front.png' },
-  { title: 'It Arrives\nat Your Door', src: null },
+  { title: 'It Arrives\nat Your Door', src: '/images/step-parcel.png' },
 ]
 
 export default function HowItWorksPage() {
@@ -45,21 +45,13 @@ export default function HowItWorksPage() {
                   </svg>
                 </div>
               )}
-              {st.src ? (
-                <img className={s.art} src={st.src} alt="" style={{ animationDelay: `-${i * 0.6}s` }} />
-              ) : (
-                <div className={`${s.art} ${s.placeholder}`} style={{ animationDelay: `-${i * 0.6}s` }}>
-                  <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#D9B26A" />
-                  </svg>
-                </div>
-              )}
+              <img className={s.art} src={st.src} alt="" style={{ animationDelay: `-${i * 0.6}s` }} />
               <div className={s.num}>{i + 1}</div>
               <div className={s.stepTitle}>{st.title}</div>
             </li>
           ))}
         </ol>
-        <Link href={routes.drop} className={`${ui.paperBtn} ${s.cta}`} data-reveal="5">
+        <Link href={routes.drop} className={`${ui.paperBtn} ${ui.glow} ${s.cta}`} data-reveal="5">
           RESERVE YOUR PORTRAIT
           <Arrow />
         </Link>

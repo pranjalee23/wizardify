@@ -78,7 +78,7 @@ export default function PhotoUpload() {
           </button>
         </div>
       </div>
-      <aside className={`${ui.paperCard} ${s.tips}`}>
+      <aside className={`${ui.paperCard} ${ui.paperTall} ${s.tips}`}>
         <h2 className={s.tipsTitle}>PHOTO TIPS</h2>
         <div className={s.tipsList}>
           {tips.map((t) => (

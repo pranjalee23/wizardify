@@ -19,7 +19,7 @@ export default function Hero() {
           Step into your own magical portrait.
         </p>
         <div className={s.actions} data-reveal="3">
-          <Link href={routes.drop} className={ui.paperBtn}>
+          <Link href={routes.drop} className={`${ui.paperBtn} ${ui.glow}`}>
             RESERVE YOUR PORTRAIT
             <Arrow />
           </Link>

@@ -1,0 +1,34 @@
+.main {
+  flex-grow: 1;
+  padding: 36px 64px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.hint {
+  margin: 28px 0 0;
+  font-size: 16px;
+  color: #C9BFAE;
+}
+
+.next {
+  margin-top: 14px;
+  height: 56px;
+  padding: 0 36px;
+  font-size: 15px;
+}
+
+.candleL {
+  position: absolute;
+  left: 60px;
+  bottom: 180px;
+}
+
+.candleR {
+  position: absolute;
+  right: 70px;
+  bottom: 180px;
+}

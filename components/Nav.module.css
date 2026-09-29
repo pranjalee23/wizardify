@@ -66,11 +66,12 @@
   display: flex;
   align-items: center;
   border-radius: 999px;
-  background: radial-gradient(ellipse at 50% 45%, #F7E9C8 0%, #E3C68E 62%, #B0823F 100%);
+  background: #E4C991 url('/images/parchment-button.webp') center / cover no-repeat;
   color: #2A1A08;
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
+  text-shadow: 0 1px 0 rgba(255, 245, 220, 0.5);
   box-shadow: inset 0 0 10px rgba(110, 70, 20, 0.55), 0 0 20px rgba(217, 178, 106, 0.3);
   transition: box-shadow 0.4s ease, filter 0.4s ease;
 }

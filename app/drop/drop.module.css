@@ -1,0 +1,152 @@
+.sky {
+  position: absolute;
+  left: 0;
+  top: 60px;
+  width: 100%;
+  height: 1100px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero {
+  height: 972px;
+  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 68px;
+  line-height: 1.06;
+}
+
+.kicker {
+  font-family: var(--font-cinzel), serif;
+  font-size: 22px;
+  letter-spacing: 0.24em;
+  color: #F2DDB0;
+}
+
+.soldOut {
+  margin-top: 6px;
+  padding: 18px 70px;
+  background: url('/images/parchment-label.webp') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.55));
+  transform: rotate(-3deg);
+}
+
+.soldOutText {
+  font-family: var(--font-cinzel), serif;
+  font-size: 66px;
+  font-weight: 700;
+  color: #8E2620;
+  letter-spacing: 0.04em;
+}
+
+.copy {
+  margin: 14px 0 0;
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #F2E8D6;
+}
+
+.rule {
+  margin: 8px 0;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 42px;
+}
+
+.invite {
+  margin: 0;
+  max-width: 520px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #F2E8D6;
+}
+
+.note {
+  margin: 0;
+  font-size: 13px;
+  color: #C9BFAE;
+}
+
+.candle1,
+.candle2,
+.candle3,
+.candle4 {
+  position: absolute;
+  bottom: 150px;
+}
+
+.candle1 {
+  left: 40px;
+}
+
+.candle2 {
+  left: 116px;
+}
+
+.candle3 {
+  right: 56px;
+}
+
+.candle4 {
+  right: 124px;
+}
+
+.expect {
+  padding: 72px 96px 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+}
+
+.expectTitle {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-weight: 500;
+  font-size: 36px;
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 16px;
+  border: 1px solid rgba(217, 178, 106, 0.22);
+  border-radius: 12px;
+  background: rgba(20, 16, 30, 0.5);
+}
+
+.cardLabel {
+  font-size: 17px;
+  color: #F2DDB0;
+}

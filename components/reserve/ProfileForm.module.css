@@ -1,0 +1,84 @@
+.fields {
+  margin-top: 28px;
+  gap: 22px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  color: #E5DACA;
+}
+
+.input {
+  height: 56px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  background: #0F1420;
+  border: 1px solid #5A5040;
+  border-radius: 10px;
+  color: #F2DDB0;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.phone {
+  display: flex;
+  height: 56px;
+  box-sizing: border-box;
+  border: 1px solid #5A5040;
+  border-radius: 10px;
+  background: #0F1420;
+  overflow: hidden;
+}
+
+.phone:focus-within {
+  outline: 2px solid #D9B26A;
+  outline-offset: 1px;
+}
+
+.prefix {
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #3A342A;
+  color: #C9BFAE;
+  font-size: 16px;
+}
+
+.phoneInput {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  padding: 0 18px;
+  color: #F2DDB0;
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+.check {
+  margin-top: 6px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 28px;
+  font-size: 14px;
+  color: #C9BFAE;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #D9B26A;
+}
+
+.actions {
+  margin-top: 14px;
+}

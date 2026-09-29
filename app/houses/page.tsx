@@ -31,6 +31,7 @@ export default function HousesPage() {
               key={h.id}
               className={s.card}
               data-reveal={String(1 + i)}
+              data-wand=""
               style={{ borderColor: h.border, background: `radial-gradient(circle at 50% 55%, ${h.core} 0%, #07090F 85%)` }}
             >
               <LivingPicture className={s.cardImg} src={h.video} poster={h.img} alt={h.cardAlt} />

@@ -1,0 +1,75 @@
+.fields {
+  margin-top: 20px;
+  gap: 32px;
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.legend {
+  margin-bottom: 14px;
+  padding: 0;
+  font-family: var(--font-cinzel), serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #F2DDB0;
+}
+
+.houses {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.house {
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  background: #0F1420;
+  border: 1px solid #3A3428;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.house:hover {
+  border-color: #8A7550;
+}
+
+.houseOn,
+.houseOn:hover {
+  background: #1F1A12;
+  border: 2px solid #D9B26A;
+  box-shadow: 0 0 22px rgba(217, 178, 106, 0.35);
+}
+
+.houseName {
+  font-family: var(--font-cinzel), serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #F2DDB0;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option {
+  padding: 0 20px;
+}
+
+.actions {
+  margin-top: 8px;
+}

@@ -81,7 +81,7 @@ export default async function HousePage({ params }: Params) {
             </figure>
           ))}
         </div>
-        <Link href={routes.create(1)} className={`${ui.pill} ${ui.paper} ${s.cta}`} data-reveal="6">
+        <Link href={`${routes.drop}?house=${h.id}`} className={`${ui.pill} ${ui.paper} ${ui.glow} ${s.cta}`} data-reveal="6">
           RESERVE MY {h.name} PORTRAIT
           <Arrow />
         </Link>

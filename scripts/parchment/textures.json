@@ -1,0 +1,138 @@
+[
+  {
+    "name": "parchment-sheet.webp",
+    "W": 1440,
+    "H": 880,
+    "seed": 7,
+    "light": 0.78,
+    "tear": 22,
+    "jag": 9,
+    "fibre": 4,
+    "notches": 3,
+    "notchDepth": 30,
+    "cornerCut": 42,
+    "folds": [
+      {
+        "x": 490,
+        "y": 0,
+        "angle": 1.6,
+        "depth": 0.045,
+        "width": 70
+      },
+      {
+        "x": 0,
+        "y": 440,
+        "angle": 0.03,
+        "depth": 0.04,
+        "width": 60
+      }
+    ]
+  },
+  {
+    "name": "parchment-portrait.webp",
+    "W": 700,
+    "H": 890,
+    "seed": 19,
+    "light": 0.78,
+    "burn": 60,
+    "spots": 30,
+    "tear": 18,
+    "jag": 8,
+    "fibre": 4,
+    "notches": 3,
+    "notchDepth": 26,
+    "cornerCut": 34,
+    "folds": [
+      {
+        "x": 0,
+        "y": 300,
+        "angle": 0.02,
+        "depth": 0.045,
+        "width": 60
+      },
+      {
+        "x": 0,
+        "y": 600,
+        "angle": -0.02,
+        "depth": 0.04,
+        "width": 60
+      }
+    ]
+  },
+  {
+    "name": "parchment-strip.webp",
+    "W": 3000,
+    "H": 400,
+    "seed": 31,
+    "light": 0.78,
+    "burn": 55,
+    "spots": 110,
+    "tear": 20,
+    "jag": 9,
+    "fibre": 4,
+    "notches": 2.5,
+    "notchDepth": 26,
+    "cornerCut": 30,
+    "folds": [
+      {
+        "x": 1000,
+        "y": 0,
+        "angle": 1.58,
+        "depth": 0.045,
+        "width": 60
+      },
+      {
+        "x": 2050,
+        "y": 0,
+        "angle": 1.54,
+        "depth": 0.04,
+        "width": 60
+      }
+    ]
+  },
+  {
+    "name": "parchment-label.webp",
+    "W": 1060,
+    "H": 304,
+    "seed": 43,
+    "light": 0.78,
+    "burn": 45,
+    "spots": 30,
+    "margin": 8,
+    "tear": 16,
+    "jag": 7,
+    "fibre": 3.5,
+    "notches": 3,
+    "notchDepth": 22,
+    "cornerCut": 26,
+    "folds": [
+      {
+        "x": 560,
+        "y": 0,
+        "angle": 1.35,
+        "depth": 0.045,
+        "width": 50
+      }
+    ]
+  },
+  {
+    "name": "parchment-button.webp",
+    "W": 600,
+    "H": 140,
+    "seed": 59,
+    "light": 0.7,
+    "cell": 120,
+    "spots": 8,
+    "swell": 8,
+    "torn": false,
+    "folds": [
+      {
+        "x": 300,
+        "y": 0,
+        "angle": 1.5,
+        "depth": 0.04,
+        "width": 30
+      }
+    ]
+  }
+]

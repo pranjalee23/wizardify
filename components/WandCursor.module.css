@@ -16,9 +16,11 @@
 
 .wand {
   position: absolute;
-  left: -6px;
-  top: -6px;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+  left: -2.7px;
+  top: -2.7px;
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.55));
 }
 
 .glow {
