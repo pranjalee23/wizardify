@@ -27,13 +27,18 @@ const save = (path, url) => writeFileSync(join(root, path), Buffer.from(url.spli
 // where the bottom of the kept part stands, and `width` the width of the wax there. Candles in the
 // foreground are out of focus, so they're blurred and keep their flames baked in.
 const candles = [
-  { sprite: [25, 20, 215, 640], keep: 'candle', base: [432, 491], width: 40 },
-  { sprite: [530, 200, 720, 610], keep: 'candle', base: [493, 459], width: 37 },
-  { sprite: [280, 80, 465, 625], keep: 'candle', base: [684, 577], width: 40 },
-  { sprite: [405, 715, 575, 965], keep: 'whole', base: [748, 614], width: 30 },
-  { sprite: [1080, 260, 1250, 580], keep: 'whole', base: [128, 692], width: 48 },
-  { sprite: [1340, 120, 1505, 610], keep: 'candle', base: [1403, 517], width: 36 },
+  // Left: the tall, medium and short candlesticks
+  { sprite: [25, 20, 215, 640], keep: 'candle', base: [259, 460], width: 42 },
+  { sprite: [530, 200, 720, 610], keep: 'candle', base: [193, 525], width: 40 },
+  { sprite: [630, 715, 760, 980], keep: 'candle', base: [142, 574], width: 36 },
+  // Beside the scroll on the mantel
+  { sprite: [280, 80, 465, 625], keep: 'candle', base: [711, 583], width: 32 },
+  // Right: the two candlesticks beside the owl; the second stands partly behind it
+  { sprite: [1340, 120, 1505, 610], keep: 'candle', base: [1404, 519], width: 34 },
+  { sprite: [785, 580, 965, 990], keep: 'candle', base: [1444, 528], width: 30 },
+  // The top shelf of the bookcase
   { sprite: [820, 270, 1005, 575], keep: 'candle', base: [1624, 224], width: 44 },
+  // Out of focus in the foreground corners
   { sprite: [45, 660, 380, 975], keep: 'whole', base: [96, 1000], width: 100, blur: 4 },
   { sprite: [405, 715, 575, 965], keep: 'whole', base: [1646, 1002], width: 62, blur: 4 },
 ]

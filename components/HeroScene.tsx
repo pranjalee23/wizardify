@@ -52,8 +52,10 @@ function Flames() {
 export default function HeroScene() {
   return (
     <div className={s.scene} aria-hidden="true">
-      <HeroOwl style={{ left: pct(heroOwl.x, W), top: pct(heroOwl.y, H), width: pct(heroOwl.w, W), height: pct(heroOwl.h, H) }} />
+
+      {/* Flames first, so the owl stands in front of the candle behind it */}
       <Flames />
+      <HeroOwl style={{ left: pct(heroOwl.x, W), top: pct(heroOwl.y, H), width: pct(heroOwl.w, W), height: pct(heroOwl.h, H) }} />
     </div>
   )
 }
