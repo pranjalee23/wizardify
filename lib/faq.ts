@@ -9,10 +9,13 @@ export const faqTopics = [
         'How is my portrait created?',
         'You choose your house, tell us your story and send us your photos. Our team turns them into a custom animated portrait, themed to your house and the life you imagine there.',
       ],
-      ['Can I request changes?', 'Yes. You see a preview before we make your frame, and you can ask for up to two rounds of changes.'],
+      [
+        'Can I request changes?',
+        "We don't make changes to a finished preview, but we can customise your portrait. Write to us at hello@wizardify.me with what you have in mind and we'll tell you what's possible. You see your preview first, and pay only once you approve it.",
+      ],
       [
         'How long does it take?',
-        'Your preview is usually ready within 7 days of receiving your photos. Once you approve it, we frame your portrait and ship it within 10 days.',
+        'Your preview is usually ready within 7 days of receiving your photos. We ship within 7 days of your approval and checkout.',
       ],
       [
         'Can I change my portrait later?',

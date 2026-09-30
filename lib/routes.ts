@@ -8,6 +8,7 @@ export const routes = {
   gallery: '/gallery',
   faq: '/faq',
   privacy: '/privacy',
+  terms: '/terms',
   drop: '/drop',
   create: (step: number) => `/create/${step}`,
   reserve: (step: number) => `/reserve/${step}`,

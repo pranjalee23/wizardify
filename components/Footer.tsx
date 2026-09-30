@@ -48,7 +48,10 @@ export default function Footer() {
             <Link href={routes.privacy} className={s.social}>
               Privacy
             </Link>{' '}
-            <span aria-hidden="true">·</span> Terms
+            <span aria-hidden="true">·</span>{' '}
+            <Link href={routes.terms} className={s.social}>
+              Terms
+            </Link>
           </span>
         </div>
       </div>

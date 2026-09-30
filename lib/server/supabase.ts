@@ -36,7 +36,10 @@ export type Database = {
       }
     }
     Views: Record<string, never>
-    Functions: Record<string, never>
+    Functions: {
+      // Space used, for the daily health check
+      usage: { Args: Record<string, never>; Returns: { database_bytes: number; storage_bytes: number }[] }
+    }
     Enums: Record<string, never>
     CompositeTypes: Record<string, never>
   }
