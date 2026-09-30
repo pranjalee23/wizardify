@@ -31,8 +31,10 @@
   height: 24px;
   border-radius: 50%;
   background: radial-gradient(circle, #FFF8E4 0%, rgba(255, 222, 150, 0.95) 35%, rgba(255, 190, 90, 0.4) 65%, rgba(255, 190, 90, 0) 100%);
-  transform: scale(calc(1 + var(--lit) * 1.5));
-  transition: transform 0.25s ease;
+  /* Softer over a link, so its text stays readable */
+  opacity: calc(0.7 - var(--lit) * 0.3);
+  transform: scale(calc(1 - var(--lit) * 0.3));
+  transition: transform 0.25s ease, opacity 0.25s ease;
   mix-blend-mode: screen;
 }
 
@@ -44,8 +46,8 @@
   height: 140px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 205, 120, 0.55) 0%, rgba(255, 205, 120, 0.18) 40%, rgba(255, 205, 120, 0) 70%);
-  opacity: calc(0.45 + var(--lit) * 0.55);
-  transform: scale(calc(0.8 + var(--lit) * 0.9));
+  opacity: calc(0.3 - var(--lit) * 0.18);
+  transform: scale(calc(0.8 - var(--lit) * 0.15));
   transition: transform 0.35s ease, opacity 0.35s ease;
   mix-blend-mode: screen;
   animation: breathe 2.8s ease-in-out infinite;
@@ -56,8 +58,17 @@
 }
 
 .cast .halo {
-  transform: scale(2);
-  opacity: 1;
+  transform: scale(1.8);
+  opacity: 0.6;
+}
+
+.trail {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2147482998;
+  pointer-events: none;
 }
 
 .sparks {

@@ -60,13 +60,18 @@
 }
 
 .link {
+  /* Underlined on hover like the header's links; the negative margin keeps the spacing as it was */
+  padding-bottom: 8px;
+  margin-bottom: -8px;
   text-decoration: none;
   color: #E5DACA;
-  transition: color 0.3s ease;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .link:hover {
   color: #F2DDB0;
+  border-bottom-color: rgba(217, 178, 106, 0.45);
 }
 
 .bottom {
@@ -141,7 +146,9 @@
   }
 
   .link {
+    justify-self: start;
     padding: 10px 0;
+    margin-bottom: 0;
   }
 
   .bottom {
