@@ -1,3 +1,4 @@
+import HeroOwl from './HeroOwl'
 import LitImage from './LitImage'
 import PortraitFrame from './PortraitFrame'
 import Sparkles from './Sparkles'
@@ -6,7 +7,9 @@ import s from './Sky.module.css'
 export default function Sky() {
   return (
     <>
-      <LitImage className={s.bg} src="/images/hero-bg.jpg" />
+      <LitImage className={s.bg} src="/images/hero-bg.jpg">
+        <HeroOwl />
+      </LitImage>
       <div className={s.shade} />
       <div className={s.fade} />
       <div className={s.inner}>
