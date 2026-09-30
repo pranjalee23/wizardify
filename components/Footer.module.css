@@ -72,10 +72,41 @@
 .bottom {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-top: 18px;
   border-top: 1px solid #1B1914;
   font-size: 13px;
   color: #8E8578;
+}
+
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  color: #D9C9AA;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social:hover {
+  color: #F2DDB0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 @media (max-width: 1100px) {

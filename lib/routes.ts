@@ -1,6 +1,7 @@
 export const routes = {
   home: '/',
   frame: '/frame',
+  pricing: '/frame#pricing',
   howItWorks: '/how-it-works',
   houses: '/houses',
   house: (id: string) => `/houses/${id}`,

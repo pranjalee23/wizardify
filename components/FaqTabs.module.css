@@ -79,6 +79,15 @@
   transform: rotate(45deg);
 }
 
+.link {
+  color: #E8C77E;
+  text-underline-offset: 3px;
+}
+
+.link:hover {
+  color: #F2DDB0;
+}
+
 .answer {
   margin: 14px 0 0;
   font-size: 16px;

@@ -5,9 +5,10 @@ import NightSky from '@/components/NightSky'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import PortraitFrame from '@/components/PortraitFrame'
-import Framed from '@/components/Framed'
 import Candle from '@/components/Candle'
-import Check from '@/components/Check'
+import PricingCard from '@/components/PricingCard'
+import { frameTiers, startingPrice } from '@/lib/frames'
+import Arrow from '@/components/Arrow'
 import { routes } from '@/lib/routes'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
@@ -23,11 +24,34 @@ const features = [
   { text: 'Plugs into a standard power outlet', d: 'M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0zM12 17v5' },
 ]
 
-const included = ['Wizardify frame', 'Your personalised portrait (video)', 'Wall mounting kit', 'Power adapter and cable', 'Setup guide']
+const addons = [
+  {
+    name: 'More Magic',
+    text: 'Extra clips or a longer run time, beyond the standard 6 clips and 2 minutes.',
+    icon: (
+      <>
+        <rect x="3" y="6" width="13" height="12" rx="1.5" />
+        <path d="M16 10l5-3v10l-5-3z" />
+      </>
+    ),
+  },
+  {
+    name: 'Enchanted Mode',
+    text: 'Motion and sound sensors, so your portrait wakes when someone walks by or speaks.',
+    icon: (
+      <>
+        <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" />
+      </>
+    ),
+  },
+]
+
 
 export default function FramePage() {
   return (
-    <PageShell sky={<NightSky scene="chamber" />} minHeight={2780}>
+    <PageShell sky={<NightSky scene="chamber" />} minHeight={3380}>
       <Nav active="frame" />
 
       <section className={`${layout.container} ${s.hero}`}>
@@ -79,7 +103,6 @@ export default function FramePage() {
               <div className={`${s.viewBox} ${s.viewBox3d}`}>
                 <div className={s.turn}>
                   <img className={s.side} src="/images/frame-front.png" alt="Side view of the frame" />
-                  <div className={s.edge} />
                 </div>
               </div>
               <figcaption className={s.viewCaption}>SIDE VIEW</figcaption>
@@ -95,40 +118,46 @@ export default function FramePage() {
         </div>
       </section>
 
-      <section className={`${layout.container} ${s.specs}`}>
-        <div className={s.dims} data-reveal="0">
-          <h2 className={`${ui.shimmer} ${s.dimsTitle}`}>DIMENSIONS</h2>
-          <div className={s.dimsFigure}>
-            <Framed width={302} float={false}>
-              <img src="/images/portrait.jpg" alt="The frame at actual proportions" />
-            </Framed>
-            <div className={s.ruleV}>
-              <div className={s.ruleVLine} />
-            </div>
-            <div className={s.labelV}>49.9 cm</div>
-            <div className={s.ruleH}>
-              <div className={s.ruleHLine} />
-            </div>
-            <div className={s.labelH}>30.2 cm</div>
-          </div>
+      <section id="pricing" aria-labelledby="pricing-title" className={`${layout.container} ${s.pricing}`}>
+        <div className={s.pricingEyebrow} data-reveal="0">
+          Pricing
         </div>
-        <div className={`${ui.paperCard} ${s.included}`} data-reveal="1">
-          <h2 className={s.includedTitle}>WHAT'S INCLUDED</h2>
-          <div className={s.includedList}>
-            {included.map((item) => (
-              <div key={item} className={s.includedItem}>
-                <Check size={22} />
-                {item}
+        <h2 id="pricing-title" className={`${ui.shimmer} ${s.pricingTitle}`} data-reveal="0">
+          CHOOSE YOUR PORTRAIT
+        </h2>
+        <p className={s.pricingLede} data-reveal="1">
+          Two sizes, two frame styles, and a little extra magic if you want it. Prices shown now; you&apos;ll choose when the doors reopen.
+        </p>
+        <div className={s.plans}>
+          {frameTiers.map((t, i) => (
+            <div key={t.id} data-reveal={String(1 + i)}>
+              <PricingCard tier={t} price={`From ${startingPrice}`} />
+            </div>
+          ))}
+        </div>
+        <div className={`${s.pricingEyebrow} ${s.addonsEyebrow}`} data-reveal="0">
+          Add a little more magic
+        </div>
+        <div className={s.addons}>
+          {addons.map((a, i) => (
+            <div key={a.name} className={`${ui.paperCard} ${s.addon}`} data-reveal={String(1 + i)}>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7A5A22" strokeWidth="1.4" aria-hidden="true" className={s.addonIcon}>
+                {a.icon}
+              </svg>
+              <div className={s.addonText}>
+                <h3 className={s.addonName}>{a.name}</h3>
+                <p className={s.addonDesc}>{a.text}</p>
               </div>
-            ))}
-          </div>
-          <div className={s.buy}>
-            <span className={s.price}>[₹ PRICE]</span>
-            <Link href={routes.drop} className={`${ui.pill} ${ui.dark} ${s.buyBtn}`}>
-              RESERVE YOUR PORTRAIT
-            </Link>
-          </div>
+              {/* Add-on prices are still to be set */}
+              <div className={s.addonPrice}>+[₹ PRICE]</div>
+            </div>
+          ))}
         </div>
+        <p className={s.pricingNote}>Classic mode (no sensors) plays your portrait on a gentle loop and is included in the starting price.</p>
+        <Link href={routes.drop} className={`${ui.paperBtn} ${ui.glow} ${s.pricingCta}`}>
+          RESERVE YOUR PORTRAIT
+          <Arrow />
+        </Link>
       </section>
 
       <div className={layout.spacer} />

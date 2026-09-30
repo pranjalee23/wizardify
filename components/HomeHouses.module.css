@@ -4,6 +4,55 @@
   background: radial-gradient(ellipse at 50% 42%, #1A1838 0%, #0A0E18 65%);
 }
 
+.pricing {
+  padding: 44px var(--gutter) 0;
+  display: flex;
+  justify-content: center;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 16px 30px;
+  border: 1px solid rgba(217, 178, 106, 0.45);
+  border-radius: 999px;
+  background: rgba(10, 14, 24, 0.55);
+  color: #F2E8D6;
+  text-decoration: none;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pill:hover {
+  border-color: #D9B26A;
+  box-shadow: 0 0 24px rgba(217, 178, 106, 0.25);
+}
+
+.pillPrice {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #EFD9A7;
+  white-space: nowrap;
+  font-variant-numeric: lining-nums;
+}
+
+.pillRule {
+  width: 1px;
+  height: 22px;
+  background: rgba(217, 178, 106, 0.45);
+}
+
+.pillCta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #E8C77E;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .inner {
   padding: 110px var(--gutter) 120px;
   display: flex;
@@ -113,5 +162,32 @@
 
   .cta {
     margin-top: 28px;
+  }
+}
+
+/* On narrow screens the pill becomes a small stacked card */
+@media (max-width: 820px) {
+  .pill {
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 26px;
+    border-radius: 22px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .pillRule {
+    display: none;
+  }
+
+  .pillCta {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing {
+    padding-top: 36px;
   }
 }

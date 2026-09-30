@@ -24,7 +24,10 @@ export const faqTopics = [
     id: 'frame',
     label: 'The Frame',
     questions: [
-      ['How big is the frame?', '49.9 cm tall and 30.2 cm wide.'],
+      [
+        'How big is the frame?',
+        'There are two sizes: the Heirloom, a wall frame 49.9 cm tall and 30.2 cm wide, and the Keepsake, a smaller frame that stands on its own on a desk or shelf, or hangs on the wall.',
+      ],
       ['How is it powered?', 'It plugs into a standard power outlet. The adapter and cable are included.'],
       [
         'Does it need Wi-Fi or an app?',
@@ -32,7 +35,7 @@ export const faqTopics = [
       ],
       [
         'Does the portrait have sound?',
-        'Yes. Your portrait can speak, and it reacts to the room around it: a motion sensor wakes it when someone walks by, and a sound sensor lets it respond to voices nearby.',
+        'Every frame comes in Classic mode, which plays your portrait on a gentle loop. Add Enchanted mode and motion and sound sensors wake your portrait when someone walks by or speaks.',
       ],
     ],
   },
@@ -63,6 +66,32 @@ export const faqTopics = [
       [
         'Does the waitlist guarantee a frame?',
         "No, because each drop is limited. Reserving gives you early access before the public, and members whose portrait preferences are on record are first in line.",
+      ],
+    ],
+  },
+  {
+    id: 'pricing',
+    label: 'Pricing and sizes',
+    questions: [
+      [
+        'What sizes are there?',
+        'Two. The Keepsake is a smaller frame that stands on its own on a desk or shelf, or hangs on the wall with the hooks and mounting kit included. The Heirloom is a wall frame, 49.9 × 30.2 cm. See both, with prices, on The Frame page.',
+      ],
+      [
+        'Does the frame style change the price?',
+        'No. Antique gold or modern black, the price is the same. Smaller sizes default to black and larger to gold, but you can choose either.',
+      ],
+      [
+        'What does the starting price include?',
+        'Both sizes start at ₹10,999. That includes up to 6 clips and 2 minutes of playback, in Classic mode, which plays your portrait on a gentle loop.',
+      ],
+      [
+        'What is More Magic?',
+        'An add-on for extra clips or a longer run time than the standard 6 clips and 2 minutes. You can add it when you order.',
+      ],
+      [
+        'What is Enchanted mode?',
+        'An add-on with motion and sound sensors, so your portrait wakes when someone walks by or speaks. Without it, your portrait plays in Classic mode on a gentle loop.',
       ],
     ],
   },

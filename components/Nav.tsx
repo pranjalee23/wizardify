@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { routes } from '@/lib/routes'
 import NavMenu from './NavMenu'
+import StickyHeader from './StickyHeader'
 import s from './Nav.module.css'
 
 const links = [
@@ -8,6 +9,7 @@ const links = [
   { id: 'how', label: 'How It Works', href: routes.howItWorks },
   { id: 'houses', label: 'The Houses', href: routes.houses },
   { id: 'gallery', label: 'Gallery', href: routes.gallery },
+  { id: 'pricing', label: 'Pricing', href: routes.pricing },
   { id: 'faq', label: 'FAQ', href: routes.faq },
 ] as const
 
@@ -15,7 +17,7 @@ export type NavId = 'home' | 'create' | (typeof links)[number]['id']
 
 export default function Nav({ active = 'home' }: { active?: NavId }) {
   return (
-    <header className={s.header}>
+    <StickyHeader className={s.header} hiddenClassName={s.headerHidden}>
       <div className={s.inner}>
         <Link href={routes.home} className={s.brand}>
           <img className={s.logo} src="/images/logo.webp" width={720} height={266} alt="Wizardify" />
@@ -40,6 +42,6 @@ export default function Nav({ active = 'home' }: { active?: NavId }) {
         </Link>
         <NavMenu links={links} active={active} />
       </div>
-    </header>
+    </StickyHeader>
   )
 }

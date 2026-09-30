@@ -2,6 +2,7 @@
 
 import { useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react'
 import { faqTopics } from '@/lib/faq'
+import { social } from '@/lib/social'
 import s from './FaqTabs.module.css'
 
 // Matches the stylesheet's breakpoint, where the topics move from a column into a row.
@@ -10,6 +11,19 @@ const subscribe = (cb: () => void) => {
   const mq = window.matchMedia(ROW)
   mq.addEventListener('change', cb)
   return () => mq.removeEventListener('change', cb)
+}
+
+// Answers are plain text; a mention of Instagram becomes a link to Wizardify's account.
+function answer(text: string) {
+  return text.split(/(Instagram)/).map((part, i) =>
+    part === 'Instagram' ? (
+      <a key={i} href={social.instagram} target="_blank" rel="noopener noreferrer" className={s.link}>
+        Instagram
+      </a>
+    ) : (
+      part
+    ),
+  )
 }
 
 export default function FaqTabs() {
@@ -63,7 +77,7 @@ export default function FaqTabs() {
                 +
               </span>
             </summary>
-            <p className={s.answer}>{a}</p>
+            <p className={s.answer}>{answer(a)}</p>
           </details>
         ))}
       </div>
