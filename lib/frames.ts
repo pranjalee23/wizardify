@@ -38,7 +38,7 @@ export const frameTiers: FrameTier[] = [
     id: 'keep',
     kind: 'Tabletop',
     name: 'The Keepsake',
-    size: '[SIZE] cm · stands on its own, or hangs on the wall',
+    size: '49.9 × 30.2 cm · stands on its own, or hangs on the wall',
     img: '/images/portrait-keeper-of-keys.jpg',
     alt: 'A portrait of a keeper of keys',
     initial: 'black',
@@ -49,9 +49,9 @@ export const frameTiers: FrameTier[] = [
     ],
     details: {
       kind: 'Tabletop · modern black by default',
-      h: '[H] cm',
-      w: '[W] cm',
-      specs: [['Size', '[H] × [W] cm'], ['Depth', '3 in (7.6 cm)'], ['Weight', '2.5 kg'], ['Mounting', 'Stands on its own on a desk or shelf. To hang it, wall hooks and a mounting kit are included'], ...common],
+      h: '49.9 cm',
+      w: '30.2 cm',
+      specs: [['Size', '49.9 × 30.2 cm'], ['Depth', '3 in (7.6 cm)'], ['Weight', '2.5 kg'], ['Mounting', 'Stands on its own on a desk or shelf. To hang it, wall hooks and a mounting kit are included'], ...common],
       box: ['Wizardify frame with your portrait', 'Wall hooks and mounting kit', 'Power adapter and cable', 'Setup guide', 'A handwritten card'],
       care: [
         'Dust the frame with a soft, dry cloth.',

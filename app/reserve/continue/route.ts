@@ -4,7 +4,8 @@ import { holdReservation, readContinueToken } from '@/lib/server/reservations'
 import { db } from '@/lib/server/supabase'
 
 // The "continue your reservation" link from an email: holds the reservation in this browser, then
-// opens the first step still to fill in (or the certificate, if it's all done)
+// opens the first step still to fill in (or the certificate, if it's all done). Photo reminders add
+// to=photos, to open the photos step.
 export async function GET(request: NextRequest) {
   const to = (path: string) => NextResponse.redirect(new URL(path, request.url))
   const id = readContinueToken(request.nextUrl.searchParams.get('t') ?? '')
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
   if (!r) return to(routes.drop)
 
   await holdReservation(r.id)
+  if (request.nextUrl.searchParams.get('to') === 'photos') return to(routes.reserve(4))
   if (!r.name) return to(routes.reserve(2))
   if (!r.house && !r.known_for && !r.setting) return to(routes.reserve(3))
   if (!r.photos) return to(routes.reserve(4))

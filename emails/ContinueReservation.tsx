@@ -1,13 +1,13 @@
 import { Text } from '@react-email/components'
 import EmailLayout, { Cta, Title, numberFont, small, text } from './EmailLayout'
 
-type Props = { number: string; continueUrl: string; site: string }
+type Props = { number: string; continueUrl: string; site: string; unsubscribeUrl?: string }
 
 // Sent when someone reserves with an email that's already on the list. Only the owner of the inbox
 // can pick the reservation back up, so typing someone's email never reveals their details.
-export default function ContinueReservation({ number, continueUrl, site }: Props) {
+export default function ContinueReservation({ number, continueUrl, site, unsubscribeUrl }: Props) {
   return (
-    <EmailLayout preview={`You're already on the list as ${number}.`} site={site}>
+    <EmailLayout preview={`You're already on the list as ${number}.`} site={site} unsubscribeUrl={unsubscribeUrl}>
       <Title>WELCOME BACK.</Title>
       <Text style={text}>
         Your place is already held as{' '}

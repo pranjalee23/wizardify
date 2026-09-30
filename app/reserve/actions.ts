@@ -2,11 +2,13 @@
 
 import { randomUUID } from 'node:crypto'
 import { redirect, unstable_rethrow } from 'next/navigation'
+import { after } from 'next/server'
 import { z } from 'zod'
 import { houses, type HouseId } from '@/lib/houses'
 import { MAX_PHOTOS, MAX_PHOTO_MB, photoTypes, type PhotoType } from '@/lib/photos'
 import { knownForOptions, settingOptions } from '@/lib/preferences'
 import { routes } from '@/lib/routes'
+import { notifyProblem, notifyTeam } from '@/lib/server/alerts'
 import { sendConfirmation, sendContinueLink } from '@/lib/server/reservationEmails'
 import { currentReservation, heldReservationId, holdReservation, reservationNumber } from '@/lib/server/reservations'
 import { db, PHOTO_BUCKET, type Database } from '@/lib/server/supabase'
@@ -20,14 +22,16 @@ export type FormState = { error?: string; notice?: string } | null
 
 const trouble = { error: 'Something went wrong on our side. Please try again in a moment.' }
 
-// If the database or storage can't be reached, the form says so instead of the page breaking.
-// Redirects pass through.
-async function safely<T>(run: () => Promise<T>, fallback: T): Promise<T> {
+// If the database or storage can't be reached, the form says so instead of the page breaking, and
+// the team hears about it. Redirects pass through.
+async function safely<T>(step: string, run: () => Promise<T>, fallback: T): Promise<T> {
   try {
     return await run()
   } catch (e) {
     unstable_rethrow(e)
     console.error('[reserve]', e)
+    const message = e instanceof Error ? e.message : String(e)
+    after(() => notifyProblem(step, `A member couldn't ${step}: ${message}`))
     return fallback
   }
 }
@@ -75,7 +79,7 @@ async function update(patch: Database['public']['Tables']['reservations']['Updat
 
 // /drop: reserve a place with an email and WhatsApp number
 export async function startReservation(_: FormState, form: FormData) {
-  return safely(() => reserve(form), trouble)
+  return safely('reserve', () => reserve(form), trouble)
 }
 
 async function reserve(form: FormData): Promise<FormState> {
@@ -104,6 +108,11 @@ async function reserve(form: FormData): Promise<FormState> {
     if (created) {
       await holdReservation(created.id)
       await sendConfirmation(created)
+      after(async () => {
+        const { count } = await db().from('reservations').select('*', { count: 'exact', head: true })
+        const houseName = houses.find((h) => h.id === house)?.name
+        await notifyTeam(`🪄 New reservation: ${reservationNumber(created.number)}${houseName ? `, ${houseName}` : ''}. ${count ?? '?'} members in all.`)
+      })
       redirect(routes.reserve(1))
     }
     // Anything but the same email arriving twice at once is a real failure
@@ -124,7 +133,7 @@ async function reserve(form: FormData): Promise<FormState> {
 
 // /reserve/2
 export async function saveProfile(_: FormState, form: FormData) {
-  return safely(async (): Promise<FormState> => {
+  return safely('save their profile', async (): Promise<FormState> => {
     const profile = z.object({ name: optionalText(100), city: optionalText(100) }).safeParse({ name: field(form, 'name'), city: field(form, 'city') })
     if (!profile.success) return { error: 'Please keep your name and city under 100 characters.' }
     await update(profile.data)
@@ -134,7 +143,7 @@ export async function saveProfile(_: FormState, form: FormData) {
 
 // /reserve/3
 export async function savePreferences(_: FormState, form: FormData) {
-  return safely(async (): Promise<FormState> => {
+  return safely('save their preferences', async (): Promise<FormState> => {
     await update({
       house: houseId.parse(field(form, 'house') || null),
       known_for: oneOf(knownForOptions).parse(field(form, 'knownFor') || null),
@@ -170,7 +179,7 @@ async function photosIn(folder: string) {
 }
 
 export async function photoUploadLinks(files: { type: string; size: number }[]) {
-  return safely(() => uploadLinks(files), trouble as UploadLinks)
+  return safely('upload photos', () => uploadLinks(files), trouble as UploadLinks)
 }
 
 async function uploadLinks(files: { type: string; size: number }[]): Promise<UploadLinks> {
@@ -197,13 +206,17 @@ async function uploadLinks(files: { type: string; size: number }[]): Promise<Upl
 
 // Saves the wish, and counts the photos now in the reservation's folder
 export async function saveWishes(_: FormState, form: FormData) {
-  return safely(async (): Promise<FormState> => {
+  return safely('save their photos and wishes', async (): Promise<FormState> => {
     const r = await currentReservation()
     if (!r) redirect(routes.drop)
     const wish = optionalText(500).safeParse(field(form, 'wish'))
     if (!wish.success) return { error: 'Please keep your wishes under 500 characters.' }
     const photos = Math.min(await photosIn(reservationNumber(r.number)), MAX_PHOTOS)
     await update({ wish: wish.data, photos })
+    if (photos > r.photos) {
+      const added = photos - r.photos
+      after(() => notifyTeam(`📷 ${reservationNumber(r.number)} added ${added} photo${added === 1 ? '' : 's'} (${photos} in all).`))
+    }
     redirect(routes.reserve(5))
   }, trouble)
 }

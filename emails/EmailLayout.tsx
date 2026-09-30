@@ -53,9 +53,9 @@ export function Cta({ href, children }: { href: string; children: ReactNode }) {
   )
 }
 
-type Props = { preview: string; site: string; children: ReactNode }
+type Props = { preview: string; site: string; unsubscribeUrl?: string; children: ReactNode }
 
-export default function EmailLayout({ preview, site, children }: Props) {
+export default function EmailLayout({ preview, site, unsubscribeUrl, children }: Props) {
   return (
     <Html lang="en">
       <Head>
@@ -85,6 +85,14 @@ export default function EmailLayout({ preview, site, children }: Props) {
               </Link>
               .
             </Text>
+            {unsubscribeUrl && (
+              <Text style={small}>
+                Don&apos;t want drop alerts?{' '}
+                <Link href={unsubscribeUrl} style={{ color: colors.gold }}>
+                  Unsubscribe
+                </Link>
+              </Text>
+            )}
           </Section>
         </Container>
       </Body>

@@ -47,30 +47,38 @@ export async function requireReservation() {
   return r
 }
 
-// Links in emails that bring a member back to their reservation on any device: the reservation id
-// and an expiry, signed so they can't be forged or altered.
-const LINK_DAYS = 30
+// Links in emails: the reservation id and an expiry, signed so they can't be forged or altered. Each
+// kind of link is signed for its purpose, so an unsubscribe link can't be used to open a reservation.
+type Purpose = 'continue' | 'unsubscribe'
 
-function sign(payload: string) {
+function sign(purpose: Purpose, payload: string) {
   const secret = process.env.RESERVATION_SECRET
   if (!secret) throw new Error('RESERVATION_SECRET is not set (see .env.example)')
-  return createHmac('sha256', secret).update(payload).digest('base64url')
+  return createHmac('sha256', secret).update(`${purpose}.${payload}`).digest('base64url')
 }
 
-export function continueToken(id: string) {
-  const payload = `${id}.${Math.floor(Date.now() / 1000) + LINK_DAYS * 86400}`
-  return `${payload}.${sign(payload)}`
+function linkToken(purpose: Purpose, id: string, days: number) {
+  const payload = `${id}.${Math.floor(Date.now() / 1000) + days * 86400}`
+  return `${payload}.${sign(purpose, payload)}`
 }
 
-export function readContinueToken(token: string) {
+function readLinkToken(purpose: Purpose, token: string) {
   const [id, expires, sig] = token.split('.')
   if (!id || !expires || !sig) return undefined
-  const expected = Buffer.from(sign(`${id}.${expires}`))
+  const expected = Buffer.from(sign(purpose, `${id}.${expires}`))
   const given = Buffer.from(sig)
   if (given.length !== expected.length || !timingSafeEqual(given, expected)) return undefined
   if (Number(expires) * 1000 < Date.now()) return undefined
   return id
 }
+
+// Brings a member back to their reservation on any device, for 30 days
+export const continueToken = (id: string) => linkToken('continue', id, 30)
+export const readContinueToken = (token: string) => readLinkToken('continue', token)
+
+// Changes which drop alerts a member gets; works for as long as the emails are kept
+export const unsubscribeToken = (id: string) => linkToken('unsubscribe', id, 3650)
+export const readUnsubscribeToken = (token: string) => readLinkToken('unsubscribe', token)
 
 // Where links in emails point: the live site in production, this deployment on previews, and the
 // dev server locally

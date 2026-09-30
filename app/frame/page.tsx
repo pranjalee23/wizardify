@@ -27,6 +27,7 @@ const features = [
 const addons = [
   {
     name: 'More Magic',
+    price: '₹1,500',
     text: 'Extra clips or a longer run time, beyond the standard 6 clips and 2 minutes.',
     icon: (
       <>
@@ -37,6 +38,7 @@ const addons = [
   },
   {
     name: 'Enchanted Mode',
+    price: '₹5,000',
     text: 'Motion and sound sensors, so your portrait wakes when someone walks by or speaks.',
     icon: (
       <>
@@ -148,8 +150,7 @@ export default function FramePage() {
                 <h3 className={s.addonName}>{a.name}</h3>
                 <p className={s.addonDesc}>{a.text}</p>
               </div>
-              {/* Add-on prices are still to be set */}
-              <div className={s.addonPrice}>+[₹ PRICE]</div>
+              <div className={s.addonPrice}>+{a.price}</div>
             </div>
           ))}
         </div>

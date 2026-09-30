@@ -29,7 +29,7 @@ export const faqTopics = [
     questions: [
       [
         'How big is the frame?',
-        'There are two sizes: the Heirloom, a wall frame 49.9 cm tall and 30.2 cm wide, and the Keepsake, a smaller frame that stands on its own on a desk or shelf, or hangs on the wall.',
+        'There are two frames, both 49.9 cm tall and 30.2 cm wide: the Heirloom, made for the wall, and the Keepsake, which stands on its own on a desk or shelf, or hangs on the wall.',
       ],
       ['How is it powered?', 'It plugs into a standard power outlet. The adapter and cable are included.'],
       [
@@ -78,11 +78,11 @@ export const faqTopics = [
     questions: [
       [
         'What sizes are there?',
-        'Two. The Keepsake is a smaller frame that stands on its own on a desk or shelf, or hangs on the wall with the hooks and mounting kit included. The Heirloom is a wall frame, 49.9 × 30.2 cm. See both, with prices, on The Frame page.',
+        'Two, both 49.9 × 30.2 cm. The Keepsake stands on its own on a desk or shelf, or hangs on the wall with the hooks and mounting kit included. The Heirloom is made for the wall. See both, with prices, on The Frame page.',
       ],
       [
         'Does the frame style change the price?',
-        'No. Antique gold or modern black, the price is the same. Smaller sizes default to black and larger to gold, but you can choose either.',
+        'No. Antique gold or modern black, the price is the same. The Keepsake comes in black and the Heirloom in gold by default, but you can choose either.',
       ],
       [
         'What does the starting price include?',
@@ -90,11 +90,11 @@ export const faqTopics = [
       ],
       [
         'What is More Magic?',
-        'An add-on for extra clips or a longer run time than the standard 6 clips and 2 minutes. You can add it when you order.',
+        'An add-on for extra clips or a longer run time than the standard 6 clips and 2 minutes, for ₹1,500. You can add it when you order.',
       ],
       [
         'What is Enchanted mode?',
-        'An add-on with motion and sound sensors, so your portrait wakes when someone walks by or speaks. Without it, your portrait plays in Classic mode on a gentle loop.',
+        'An add-on with motion and sound sensors, so your portrait wakes when someone walks by or speaks, for ₹5,000. Without it, your portrait plays in Classic mode on a gentle loop.',
       ],
     ],
   },

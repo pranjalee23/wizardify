@@ -25,7 +25,7 @@ const sections: LegalSection[] = [
     title: 'Why we use it',
     body: (
       <ul>
-        <li>To hold your reservation and send you its confirmation.</li>
+        <li>To hold your reservation, send you its confirmation, and remind you to add your photos.</li>
         <li>To send you drop alerts by email and WhatsApp when the doors reopen, as you agreed when you reserved.</li>
         <li>To create your portrait from your photos and preferences.</li>
         <li>To keep the reservation form safe from bots.</li>
@@ -57,7 +57,11 @@ const sections: LegalSection[] = [
     title: 'Your choices',
     body: (
       <>
-        <p>You can ask us at any time to see, correct or delete your details, or to stop sending you drop alerts. You can also reply STOP to any WhatsApp message from us.</p>
+        <p>You can ask us at any time to see, correct or delete your details.</p>
+        <p>
+          To stop drop alerts, use the unsubscribe link at the bottom of any email from us, where you can turn off email or WhatsApp
+          alerts. You can also reply STOP to any WhatsApp message from us.
+        </p>
         <p>
           Write to us at <a href={`mailto:${contact}`}>{contact}</a> and we&apos;ll take care of it. This is also where to raise any concern
           about how we handle your details.

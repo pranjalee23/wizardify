@@ -1,12 +1,12 @@
 import { Section, Text } from '@react-email/components'
 import EmailLayout, { Cta, Title, colors, label, numberFont, small, text } from './EmailLayout'
 
-type Props = { number: string; continueUrl: string; site: string }
+type Props = { number: string; continueUrl: string; site: string; unsubscribeUrl?: string }
 
 // Sent as soon as someone reserves on /drop
-export default function ReservationConfirmed({ number, continueUrl, site }: Props) {
+export default function ReservationConfirmed({ number, continueUrl, site, unsubscribeUrl }: Props) {
   return (
-    <EmailLayout preview={`Your place is held. Your reservation number is ${number}.`} site={site}>
+    <EmailLayout preview={`Your place is held. Your reservation number is ${number}.`} site={site} unsubscribeUrl={unsubscribeUrl}>
       <Title>YOUR PLACE IS HELD.</Title>
       <Section style={{ textAlign: 'center', margin: '0 0 24px' }}>
         <Text style={label}>RESERVATION NUMBER</Text>
@@ -32,4 +32,5 @@ ReservationConfirmed.PreviewProps = {
   number: 'WZ-0001',
   continueUrl: 'https://www.wizardify.me/reserve/continue?t=example',
   site: 'https://www.wizardify.me',
+  unsubscribeUrl: 'https://www.wizardify.me/unsubscribe?t=example',
 } satisfies Props

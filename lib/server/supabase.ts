@@ -19,6 +19,8 @@ export type ReservationRow = {
   alerts_whatsapp: boolean
   consent_at: string
   continue_sent_at: string | null
+  photo_reminders: number
+  photo_reminded_at: string | null
   created_at: string
   updated_at: string
 }

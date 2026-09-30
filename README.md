@@ -65,6 +65,29 @@ The backend runs inside this Next.js app: Server Actions in `app/reserve/actions
 
 All server-only code lives in `lib/server/`.
 
+### Managing members
+
+The Supabase dashboard is the admin (supabase.com/dashboard, then the Wizardify project).
+
+- **See members:** open Table Editor, then `reservations`. Each row is one member. `number` is their reservation number, so `1` is WZ-0001.
+- **Find someone:** use Filter on `email` or `number`.
+- **Photos:** open Storage, then `reservation-photos`. Each member's photos are in a folder named after their number, e.g. `WZ-0001`.
+- **Export the list:** in Table Editor, choose Export, then CSV.
+- **Delete a member on request:** delete their row in Table Editor. Their photos are removed automatically the next morning.
+- **Stop someone's alerts:** set `alerts_email` or `alerts_whatsapp` to false. Members can also do this themselves from the unsubscribe link in any email.
+
+### The daily check
+
+Every morning at 9:00 IST, Vercel runs `app/api/cron/daily`, which:
+
+1. Checks the database is up. It also keeps the free Supabase plan from pausing.
+2. Emails and messages the team if the database is down or a free-plan limit passes 70%.
+3. Sends the photo reminders that are due.
+4. Removes the photos of deleted members.
+5. Posts a summary on Telegram.
+
+The team also gets a Telegram message for each new reservation, each time a member adds photos, and whenever a member hits an error. These messages never include members' names, emails or phone numbers.
+
 ## Deployment
 
 Pushes to the main branch deploy to production on Vercel; other branches get preview deployments once the GitHub repo is connected to the Vercel project.

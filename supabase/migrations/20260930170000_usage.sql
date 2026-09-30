@@ -1,4 +1,4 @@
--- How much space the project uses, for the daily health check (app/api/cron/health), which warns
+-- How much space the project uses, for the daily check (app/api/cron/daily), which warns
 -- as usage nears the free plan's limits. Only the server's service key can call it.
 create function public.usage()
 returns table (database_bytes bigint, storage_bytes bigint)
