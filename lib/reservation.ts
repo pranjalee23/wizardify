@@ -9,7 +9,6 @@ export type Reservation = {
   email?: string
   name?: string
   whatsapp?: string
-  whatsappAlerts?: boolean
   city?: string
   house?: HouseId
   knownFor?: string

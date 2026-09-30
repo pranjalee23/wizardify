@@ -1,14 +1,32 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { heroOwl } from '@/lib/hero-scene'
-import s from './HeroScene.module.css'
+import s from './LivingOwl.module.css'
 
-// The hero's owl, brought to life by bending its one image rather than moving cut-out pieces, so its
-// neck and wing flex without seams. owl-rig.png says how much each part moves (see scripts/hero): the
+// An owl brought to life by bending its one picture rather than moving cut-out pieces, so its neck and
+// wing flex without seams. Its rig says how much each part moves (built by scripts/owl/rig.js): the
 // head tilts and the neck follows it down into the still chest; the face slides as the owl looks aside;
-// the wing lifts from the shoulder; and the lids, drawn from the feathers under each eye, close in blinks.
-// Without WebGL, or for visitors who prefer less motion, the owl stays a still image.
+// the wing lifts from the shoulder; and the lids, drawn from the feathers around each eye, close in
+// blinks. Without WebGL, or for visitors who prefer less motion, the owl stays a still picture.
+// The className places and sizes it; its height follows the picture's proportions.
+
+// Positions are in the picture's own pixels
+export type OwlRig = {
+  src: string
+  rig: string
+  size: [number, number]
+  headPivot: [number, number]
+  wingPivot: [number, number]
+  faceCentre: [number, number]
+  feetY: number
+  // centre x, centre y, half width, half height of each eye
+  eyes: [number, number, number, number][]
+  // how far the face slides as the owl looks aside
+  look: number
+  // which way the wing lifts (1 for a wing on the owl's right, as seen, -1 for one on its left), and how far
+  wingTurn: number
+  wingAmp: number
+}
 
 const VERT = `
 attribute vec2 aPos;
@@ -30,6 +48,7 @@ uniform vec2 uSize;
 uniform float uTilt;
 uniform vec2 uHeadPivot;
 uniform float uLook;
+uniform float uNarrow;
 uniform vec2 uFace;
 uniform float uWing;
 uniform vec2 uWingPivot;
@@ -83,7 +102,7 @@ void main() {
   q = uWingPivot + turn(q - uWingPivot, uWing * w.r);
   q = uHeadPivot + turn(q - uHeadPivot, -uTilt * w.g);
   q.x -= uLook * (w.b + 0.3 * w.g * (1.0 - w.b));
-  q.x = uFace.x + (q.x - uFace.x) * (1.0 + 0.0025 * abs(uLook) * w.b);
+  q.x = uFace.x + (q.x - uFace.x) * (1.0 + uNarrow * w.b);
   vec4 col = texture2D(uOwl, q / uSize);
   col = lid(col, q, uEye0);
   col = lid(col, q, uEye1);
@@ -102,9 +121,9 @@ const track = (keys: Keys, period: number, t: number) => {
   return keys[keys.length - 1][1]
 }
 
-// Seconds and degrees (clockwise); the look is in the rig's pixels, the lid from open (0) to shut (1)
+// Seconds and degrees (clockwise); the look from right (1) to left (-1), the lid from open (0) to shut (1)
 const TILT: Keys = [[0, 0], [1.9, 0], [3, -7], [4.8, -7], [5.8, 0], [6.9, 2.5], [9, 2.5], [9.9, 0], [11.2, -2], [12.8, -2], [13.8, 0], [16, 0]]
-const LOOK: Keys = [[0, 0], [5.8, 0], [6.9, 30], [9, 30], [9.9, 0], [11.2, -30], [12.8, -30], [13.8, 0], [16, 0]]
+const LOOK: Keys = [[0, 0], [5.8, 0], [6.9, 1], [9, 1], [9.9, 0], [11.2, -1], [12.8, -1], [13.8, 0], [16, 0]]
 const WING: Keys = [[0, 0], [6.3, 0], [6.55, 1.8], [6.8, 0.5], [7.1, 1.4], [7.35, 0.3], [7.65, 0.9], [8.1, 0], [9, 0]]
 const BLINK: Keys = [
   [0, 0], [2.6, 0], [2.72, 1], [2.77, 1], [2.9, 0],
@@ -120,7 +139,9 @@ const load = (src: string) =>
     img.src = src
   })
 
-export default function HeroOwl({ style }: { style: CSSProperties }) {
+type Props = { owl: OwlRig; className?: string; style?: CSSProperties }
+
+export default function LivingOwl({ owl, className, style }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [live, setLive] = useState(false)
 
@@ -159,7 +180,7 @@ export default function HeroOwl({ style }: { style: CSSProperties }) {
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0)
 
     const u = (name: string) => gl.getUniformLocation(prog, name)
-    const { size, headPivot, wingPivot, faceCentre, feetY, eyes } = heroOwl
+    const { size, headPivot, wingPivot, faceCentre, feetY, eyes } = owl
     gl.uniform2f(u('uSize'), size[0], size[1])
     gl.uniform2f(u('uHeadPivot'), headPivot[0], headPivot[1])
     gl.uniform2f(u('uWingPivot'), wingPivot[0], wingPivot[1])
@@ -167,7 +188,7 @@ export default function HeroOwl({ style }: { style: CSSProperties }) {
     gl.uniform1f(u('uFeet'), feetY)
     gl.uniform4f(u('uEye0'), ...(eyes[0] as [number, number, number, number]))
     gl.uniform4f(u('uEye1'), ...(eyes[1] as [number, number, number, number]))
-    const uTilt = u('uTilt'), uLook = u('uLook'), uWing = u('uWing'), uBreath = u('uBreath'), uLid = u('uLid')
+    const uTilt = u('uTilt'), uLook = u('uLook'), uNarrow = u('uNarrow'), uWing = u('uWing'), uBreath = u('uBreath'), uLid = u('uLid')
 
     const texture = (img: HTMLImageElement, unit: number, premultiply: boolean) => {
       const tex = gl.createTexture()
@@ -193,8 +214,11 @@ export default function HeroOwl({ style }: { style: CSSProperties }) {
     const draw = (now: number) => {
       const t = (now - start) / 1000
       gl.uniform1f(uTilt, track(TILT, 16, t) * rad)
-      gl.uniform1f(uLook, track(LOOK, 16, t))
-      gl.uniform1f(uWing, track(WING, 9, t + 3) * rad)
+      const look = track(LOOK, 16, t)
+      gl.uniform1f(uLook, look * owl.look)
+      // The face narrows a little as it turns aside
+      gl.uniform1f(uNarrow, 0.075 * Math.abs(look))
+      gl.uniform1f(uWing, track(WING, 9, t + 3) * rad * owl.wingAmp * owl.wingTurn)
       gl.uniform1f(uLid, track(BLINK, 6.4, t))
       gl.uniform1f(uBreath, 0.004 * (0.5 - 0.5 * Math.cos((t / 4.2) * Math.PI * 2)))
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
@@ -207,7 +231,7 @@ export default function HeroOwl({ style }: { style: CSSProperties }) {
       if (!raf && visible && !document.hidden && !stopped) raf = requestAnimationFrame(loop)
     }
 
-    Promise.all([load(heroOwl.src), load(heroOwl.rig)])
+    Promise.all([load(owl.src), load(owl.rig)])
       .then(([owlImg, rigImg]) => {
         if (stopped) return
         gl.uniform1i(u('uOwl'), 0)
@@ -239,11 +263,11 @@ export default function HeroOwl({ style }: { style: CSSProperties }) {
       if (raf) cancelAnimationFrame(raf)
       cleanups.forEach((c) => c())
     }
-  }, [])
+  }, [owl])
 
   return (
-    <div className={s.owl} style={style}>
-      <img className={s.layer} src={heroOwl.src} alt="" style={live ? { visibility: 'hidden' } : undefined} />
+    <div className={className} style={{ aspectRatio: `${owl.size[0]} / ${owl.size[1]}`, ...style }} aria-hidden="true">
+      <img className={s.layer} src={owl.src} alt="" style={live ? { visibility: 'hidden' } : undefined} />
       <canvas ref={canvasRef} className={s.layer} />
     </div>
   )

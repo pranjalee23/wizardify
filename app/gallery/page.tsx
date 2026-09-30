@@ -5,6 +5,8 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import GalleryGrid from '@/components/GalleryGrid'
 import LitImage from '@/components/LitImage'
+import LivingOwl from '@/components/LivingOwl'
+import { galleryOwl } from '@/lib/owls'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import s from './gallery.module.css'
@@ -23,7 +25,7 @@ export default function GalleryPage() {
           A collection of witches, wizards and magical stories.
         </p>
         <GalleryGrid />
-        <img className={s.decoRight} src="/images/deco-gallery-right.png" alt="" />
+        <LivingOwl owl={galleryOwl} className={s.decoRight} />
         <LitImage className={s.decoLeft} src="/images/deco-gallery-left.png" bleed />
         <nav aria-label="Gallery pages" className={s.pager} data-reveal="0">
           <button type="button" aria-label="Previous page" className={`${s.pageBtn} ${s.pageOff}`}>

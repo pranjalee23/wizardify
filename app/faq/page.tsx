@@ -5,7 +5,8 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Candle from '@/components/Candle'
 import FaqTabs from '@/components/FaqTabs'
-import LitImage from '@/components/LitImage'
+import LivingOwl from '@/components/LivingOwl'
+import { galleryOwl } from '@/lib/owls'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import s from './faq.module.css'
@@ -26,8 +27,7 @@ export default function FaqPage() {
         <FaqTabs />
         <Candle className={s.candleL} scale={0.66} delay={0} />
         <Candle className={s.candleR} scale={0.46} delay={0.8} />
-        <img className={s.decoRight} src="/images/deco-gallery-right.png" alt="" />
-        <LitImage className={s.decoLeft} src="/images/deco-faq-books.png" bleed />
+        <LivingOwl owl={galleryOwl} className={s.decoRight} />
       </section>
       <div className={layout.spacer} />
       <Footer />

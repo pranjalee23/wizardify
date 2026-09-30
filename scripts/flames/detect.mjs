@@ -1,5 +1,5 @@
 // Finds candle flames in images under public/images, as a starting point for lib/flames.ts.
-// Usage: node scripts/flames/detect.mjs <out-dir> sky-chamber.jpg sky-study.jpg ...   (needs Google Chrome)
+// Usage: node scripts/flames/detect.mjs <out-dir> room-lit.webp sky-study.jpg ...   (needs Google Chrome)
 // Prints each candidate as index:x,y,w,h (the box around its white-hot core) and writes a copy of each
 // image with the candidates boxed and numbered to <out-dir>. Brass and glass glints also get through,
 // so check the boxes by eye and keep only real flames.
@@ -14,7 +14,8 @@ const [outDir, ...names] = process.argv.slice(2)
 const browser = await chromium.launch({ channel: 'chrome' })
 const page = await browser.newPage()
 for (const name of names) {
-  const data = `data:image/${name.endsWith('png') ? 'png' : 'jpeg'};base64,${readFileSync(join(images, name)).toString('base64')}`
+  const type = { png: 'png', webp: 'webp' }[name.split('.').pop()] ?? 'jpeg'
+  const data = `data:image/${type};base64,${readFileSync(join(images, name)).toString('base64')}`
   const { boxes, png } = await page.evaluate(async (data) => {
     const img = new Image()
     img.src = data

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PageShell from '@/components/PageShell'
-import NightSky from '@/components/NightSky'
+import CastleNight, { castleNightArea } from '@/components/CastleNight'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Arrow from '@/components/Arrow'
@@ -23,7 +23,7 @@ const steps = [
 
 export default function HowItWorksPage() {
   return (
-    <PageShell sky={<NightSky castle />} skyClassName={s.sky} minHeight={1440}>
+    <PageShell sky={<CastleNight shade={s.shade} />} skyClassName={`${castleNightArea} ${s.backdrop}`} minHeight={1240}>
       <Nav active="how" />
       <section className={`${layout.container} ${s.section}`}>
         <h1 className={`${ui.shimmer} ${s.title}`} data-reveal="0">

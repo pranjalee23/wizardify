@@ -2,8 +2,11 @@
 //   room.png     the room, with no candles or owl
 //   candles.png  candle cut-outs on a transparent sheet
 //   owl.png      the snowy owl, cut out
+//   room-lit.png the same room with its candles lit, for the inner pages' backgrounds
 // Usage: node scripts/hero/build.mjs   (needs Google Chrome installed)
 // Writes:
+//   public/images/room-lit.webp     the lit room, for the inner pages (components/NightSky); its flames
+//                                   flicker from lib/flames.ts
 //   public/images/hero-room.webp    the room with each candle's wax set into its holder, and warm light
 //                                   around the flames; the flames themselves are left out
 //   public/images/hero-flames.webp  every flame, side by side, to be set swaying on the page
@@ -72,8 +75,9 @@ const OWL_RES = 2.6 // owl image pixels per room pixel; it's resampled as it ben
 
 const browser = await chromium.launch({ channel: 'chrome' })
 const page = await browser.newPage()
+await page.addScriptTag({ content: readFileSync(join(root, 'scripts/owl/rig.js'), 'utf8') })
 const out = await page.evaluate(
-  async ({ roomData, sheetData, owlData, candles, owl, ROOM_Q, FLAME_RES, OWL_RES, RIG_SCALE }) => {
+  async ({ roomData, sheetData, owlData, litData, candles, owl, ROOM_Q, FLAME_RES, OWL_RES, RIG_SCALE }) => {
     const load = async (u) => {
       const img = new Image()
       img.src = u
@@ -113,7 +117,7 @@ const out = await page.evaluate(
       return o
     }
 
-    const [room, sheet, owlImg] = await Promise.all([load(roomData), load(sheetData), load(owlData)])
+    const [room, sheet, owlImg, litImg] = await Promise.all([load(roomData), load(sheetData), load(owlData), load(litData)])
     const RW = room.width, RH = room.height
     const S = pixels(sheet)
 
@@ -252,65 +256,33 @@ const out = await page.evaluate(
     crop.getContext('2d').drawImage(owlImg, -cx0, -cy0)
     const owlUrl = resize(crop, box.w * OWL_RES, box.h * OWL_RES).toDataURL('image/webp', 0.86)
 
-    // The rig, over the same crop at a quarter of the size
-    const GW = Math.round(CW * RIG_SCALE), GH = Math.round(CH * RIG_SCALE)
-    const mask = (draw, blur) => {
-      const c = canvas(GW, GH)
-      const g = c.getContext('2d')
-      g.filter = `blur(${blur * RIG_SCALE}px)`
-      g.fillStyle = '#fff'
-      g.strokeStyle = '#fff'
-      g.scale(RIG_SCALE, RIG_SCALE)
-      g.translate(-cx0, -cy0)
-      draw(g)
-      const d = g.getImageData(0, 0, GW, GH).data
-      return Float32Array.from({ length: GW * GH }, (_, i) => d[i * 4 + 3] / 255)
-    }
-    const wingShape = (g) => {
-      g.beginPath()
-      owl.wing.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)))
-      g.closePath()
-    }
-    // The wing as traced, and grown outward so that as it lifts, it has room to draw past its old edge
-    const wingTight = mask((g) => { wingShape(g); g.fill() }, 6)
-    const wingWide = mask((g) => { wingShape(g); g.fill(); g.lineWidth = 36; g.stroke() }, 14)
-    const rig = new ImageData(GW, GH)
-    for (let gy = 0; gy < GH; gy++) for (let gx = 0; gx < GW; gx++) {
-      const i = gy * GW + gx
-      const x = cx0 + (gx + 0.5) / RIG_SCALE, y = cy0 + (gy + 0.5) / RIG_SCALE
-      // Beside the lower head the wing's top edge is near, so the head's pull stops at its own right edge
-      const beside = smooth(650, 720, x) * smooth(200, 290, y)
-      const head = (1 - smooth(owl.neck[0], owl.neck[1], y)) * (1 - 0.95 * wingTight[i]) * (1 - beside)
-      const [fx, fy, frx, fry] = owl.face
-      const face = 1 - smooth(0.45, 1, Math.hypot((x - fx) / frx, (y - fy) / fry))
-      rig.data[i * 4] = Math.round(255 * wingWide[i])
-      rig.data[i * 4 + 1] = Math.round(255 * head)
-      rig.data[i * 4 + 2] = Math.round(255 * face)
-      rig.data[i * 4 + 3] = 255
-    }
-    // Soften the head weight once more where the wing's hold meets it
-    const rc = canvas(GW, GH)
-    rc.getContext('2d').putImageData(rig, 0, 0)
-    const rs = canvas(GW, GH)
-    const rsg = rs.getContext('2d')
-    rsg.filter = `blur(${10 * RIG_SCALE}px)`
-    rsg.drawImage(rc, 0, 0)
-    const soft = rsg.getImageData(0, 0, GW, GH)
-    for (let i = 0; i < GW * GH; i++) {
-      rig.data[i * 4 + 1] = soft.data[i * 4 + 1]
-    }
-    rc.getContext('2d').putImageData(rig, 0, 0)
+    // The rig, over the same crop (scripts/owl/rig.js). Beside the lower head the wing's top edge is
+    // near, so the head's pull stops at its own right edge.
+    const rigUrl = window.buildOwlRig({
+      origin: [cx0, cy0],
+      size: [CW, CH],
+      scale: RIG_SCALE,
+      neck: owl.neck,
+      wing: owl.wing,
+      face: owl.face,
+      holds: [{ x: [650, 720], y: [200, 290] }],
+    })
 
     const inCrop = ([x, y]) => [x - cx0, y - cy0]
 
     return {
       room: R.toDataURL('image/webp', ROOM_Q),
+      lit: (() => {
+        const c = canvas(litImg.width, litImg.height)
+        c.getContext('2d').drawImage(litImg, 0, 0)
+        return c.toDataURL('image/webp', ROOM_Q)
+      })(),
       atlas: A.toDataURL('image/webp', 0.92),
       atlasSize: [A.width, A.height],
       flames: flames.map((f) => ({ x: f.x, y: f.y, w: f.w, h: f.h, baseY: f.baseY, atlas: f.atlas })),
       owl: {
         url: owlUrl,
-        rig: rc.toDataURL('image/png'),
+        rig: rigUrl,
         box,
         size: [CW, CH],
         head: inCrop(owl.headPivot),
@@ -322,11 +294,12 @@ const out = await page.evaluate(
       size: [RW, RH],
     }
   },
-  { roomData: png('room.png'), sheetData: png('candles.png'), owlData: png('owl.png'), candles, owl, ROOM_Q, FLAME_RES, OWL_RES, RIG_SCALE },
+  { roomData: png('room.png'), sheetData: png('candles.png'), owlData: png('owl.png'), litData: png('room-lit.png'), candles, owl, ROOM_Q, FLAME_RES, OWL_RES, RIG_SCALE },
 )
 await browser.close()
 
 save('public/images/hero-room.webp', out.room)
+save('public/images/room-lit.webp', out.lit)
 save('public/images/hero-flames.webp', out.atlas)
 save('public/images/owl.webp', out.owl.url)
 save('public/images/owl-rig.png', out.owl.rig)
@@ -334,6 +307,8 @@ save('public/images/owl-rig.png', out.owl.rig)
 const r = (v, d = 2) => Number(v.toFixed(d))
 const ts = `// Generated by scripts/hero/build.mjs; don't edit by hand. Positions are in hero-room.webp's pixels,
 // except the owl's rig, which is in its own image's pixels at full size (\`size\`).
+import type { OwlRig } from '@/components/LivingOwl'
+
 export const heroRoom = { src: '/images/hero-room.webp', w: ${out.size[0]}, h: ${out.size[1]} }
 
 export const heroFlames = {
@@ -346,7 +321,8 @@ ${out.flames.map((f) => `    { x: ${r(f.x)}, y: ${r(f.y)}, w: ${r(f.w)}, h: ${r(
   ],
 }
 
-export const heroOwl = {
+// Where the owl stands in the room (x, y, w, h), and its rig
+export const heroOwl: OwlRig & { x: number; y: number; w: number; h: number } = {
   src: '/images/owl.webp',
   rig: '/images/owl-rig.png',
   x: ${r(out.owl.box.x)},
@@ -358,6 +334,9 @@ export const heroOwl = {
   wingPivot: [${out.owl.wing.join(', ')}],
   faceCentre: [${out.owl.face.slice(0, 2).join(', ')}],
   feetY: ${out.owl.feet},
+  look: 30,
+  wingTurn: 1,
+  wingAmp: 1,
   // centre x, centre y, half width, half height of each eye
   eyes: [
 ${out.owl.eyes.map((e) => `    [${e.join(', ')}],`).join('\n')}

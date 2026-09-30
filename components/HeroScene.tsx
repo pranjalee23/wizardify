@@ -1,11 +1,11 @@
 import type { CSSProperties } from 'react'
 import { heroFlames, heroOwl, heroRoom } from '@/lib/hero-scene'
-import HeroOwl from './HeroOwl'
+import LivingOwl from './LivingOwl'
 import s from './HeroScene.module.css'
 
 // The home hero's candles and owl, drawn over hero-room.webp inside its LitImage box, so they stay in
 // place at every crop. The room already holds the candles' wax; here the flames sway and glow, and the
-// owl (components/HeroOwl) comes to life. Built by scripts/hero.
+// owl (components/LivingOwl) comes to life. Built by scripts/hero.
 const W = heroRoom.w
 const H = heroRoom.h
 const pct = (v: number, of = 100) => `${((v / of) * 100).toFixed(3)}%`
@@ -55,7 +55,7 @@ export default function HeroScene() {
 
       {/* Flames first, so the owl stands in front of the candle behind it */}
       <Flames />
-      <HeroOwl style={{ left: pct(heroOwl.x, W), top: pct(heroOwl.y, H), width: pct(heroOwl.w, W), height: pct(heroOwl.h, H) }} />
+      <LivingOwl owl={heroOwl} className={s.owl} style={{ left: pct(heroOwl.x, W), top: pct(heroOwl.y, H), width: pct(heroOwl.w, W), height: pct(heroOwl.h, H) }} />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PageShell from '@/components/PageShell'
-import NightSky from '@/components/NightSky'
+import CastleNight, { castleNightArea } from '@/components/CastleNight'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Arrow from '@/components/Arrow'
@@ -16,7 +16,7 @@ export const metadata: Metadata = { title: 'The Houses, Wizardify' }
 
 export default function HousesPage() {
   return (
-    <PageShell sky={<NightSky scene="chamber" />} minHeight={1880}>
+    <PageShell sky={<CastleNight />} skyClassName={castleNightArea} minHeight={1880}>
       <Nav active="houses" />
       <section className={`${layout.container} ${s.section}`}>
         <h1 className={`${ui.shimmer} ${s.title}`} data-reveal="0">

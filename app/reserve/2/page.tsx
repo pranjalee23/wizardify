@@ -18,7 +18,7 @@ export default function ReserveStep2() {
       <main className={`${layout.container} ${r.main}`}>
         <ReserveHeader step={1} label="YOUR PROFILE" note="About 30 seconds" back={routes.reserve(1)} />
         <h1 className={`${ui.shimmer} ${r.title}`}>TELL US WHO YOU ARE</h1>
-        <p className={r.lede}>So we know where to find you when the doors reopen.</p>
+        <p className={r.lede}>So your reservation is in your name when the doors reopen.</p>
         <ProfileForm />
       </main>
     </PageShell>

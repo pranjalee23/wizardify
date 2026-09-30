@@ -20,7 +20,7 @@ export default function Certificate() {
   const rows = [
     ['NAME', r.name || '—'],
     ['HOUSE', house?.title ?? '—'],
-    ['DROP ALERTS', r.whatsappAlerts && r.whatsapp ? 'Email and WhatsApp' : 'Email'],
+    ['DROP ALERTS', r.whatsapp ? 'Email and WhatsApp' : 'Email'],
     ['PRIORITY', hasPreferences ? 'First in line' : 'Standard'],
   ]
 

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import PageShell from '@/components/PageShell'
-import NightSky from '@/components/NightSky'
+import CastleNight, { castleNightArea } from '@/components/CastleNight'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Candle from '@/components/Candle'
@@ -57,7 +57,7 @@ export default async function DropPage({ searchParams }: Props) {
   const picked = houseById(typeof house === 'string' ? house : undefined)
 
   return (
-    <PageShell sky={<NightSky castle />} skyClassName={s.sky} minHeight={1740}>
+    <PageShell sky={<CastleNight />} skyClassName={castleNightArea} minHeight={1740}>
       <Nav active="home" />
       <section className={`${layout.container} ${s.hero}`}>
         <div className={s.stack}>
@@ -82,7 +82,7 @@ export default async function DropPage({ searchParams }: Props) {
           <h2 className={`${ui.shimmer} ${s.subtitle}`}>THE NEXT CHAPTER BEGINS SOON.</h2>
           <p className={s.invite}>Reserve your place and be the first to know when the doors open again.</p>
           <DropForm house={picked?.id} />
-          <p className={s.note}>Free. No payment. Takes 10 seconds.</p>
+          <p className={s.note}>Free. No payment. We&apos;ll send drop alerts to your email and WhatsApp.</p>
         </div>
         <Candle className={s.candle1} scale={0.8} delay={0} />
         <Candle className={s.candle2} scale={0.55} delay={0.8} />

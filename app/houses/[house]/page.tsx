@@ -11,6 +11,8 @@ import Candle from '@/components/Candle'
 import Crest from '@/components/Crest'
 import Arrow from '@/components/Arrow'
 import LitImage from '@/components/LitImage'
+import LivingOwl from '@/components/LivingOwl'
+import { houseOwl } from '@/lib/owls'
 import { examplePortraits, houseById, houses } from '@/lib/houses'
 import { routes } from '@/lib/routes'
 import layout from '@/components/layout.module.css'
@@ -61,7 +63,7 @@ export default async function HousePage({ params }: Params) {
             </p>
           </div>
           <div className={s.stage} data-reveal="1">
-            <img className={s.owl} src="/images/deco-house.png" alt="" />
+            <LivingOwl owl={houseOwl} className={s.owl} />
             <PortraitFrame width={400} height={536} className={s.portrait} />
             <Candle className={s.candleL} scale={0.62} delay={0} />
             <Candle className={s.candleR} scale={0.5} delay={0.8} />

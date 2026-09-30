@@ -1,15 +1,33 @@
-.sky {
-  position: absolute;
-  left: 0;
-  top: 60px;
-  width: 100%;
-  height: 1100px;
-  overflow: hidden;
-  pointer-events: none;
+/* On desktop the picture is drawn at its full height but cropped 200px from the bottom, and the page
+   is 200px shorter to match */
+@media (min-width: 1101px) {
+  .backdrop.backdrop {
+    --photo-h: 1160px;
+    height: 960px;
+  }
+}
+
+/* On desktop the picture's gradient follows the crop: 62% behind the title, 72% behind the steps and
+   their titles, 50% around the button, then blending gradually into the page at the new bottom edge */
+@media (min-width: 1101px) {
+  .shade.shade {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.62) 0px,
+      rgba(0, 0, 0, 0.66) 300px,
+      rgba(0, 0, 0, 0.72) 420px,
+      rgba(0, 0, 0, 0.72) 760px,
+      rgba(0, 0, 0, 0.52) 815px,
+      rgba(0, 0, 0, 0.5) 870px,
+      rgba(10, 14, 24, 0.62) 905px,
+      rgba(10, 14, 24, 0.85) 940px,
+      #0A0E18 960px
+    );
+  }
 }
 
 .section {
-  height: 1112px;
+  height: 912px;
   box-sizing: border-box;
   padding: 80px 0 0;
   display: flex;
@@ -24,12 +42,14 @@
   font-weight: 400;
   font-size: 72px;
   line-height: 1.06;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.75));
 }
 
 .lede {
   margin: 20px 0 0;
   font-size: 19px;
   color: #F2E8D6;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.6);
 }
 
 .steps {
@@ -93,6 +113,7 @@
   line-height: 1.15;
   color: #F2DDB0;
   white-space: pre-line;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.95), 0 0 3px rgba(0, 0, 0, 0.7);
 }
 
 .cta {

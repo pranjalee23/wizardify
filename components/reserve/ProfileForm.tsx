@@ -24,8 +24,6 @@ export default function ProfileForm() {
         const text = (k: string) => String(f.get(k) ?? '').trim()
         saveReservation({
           name: text('name'),
-          whatsapp: text('whatsapp').replace(/\D/g, ''),
-          whatsappAlerts: f.get('whatsappAlerts') === 'on',
           city: text('city'),
         })
         router.push(routes.reserve(3))
@@ -36,27 +34,6 @@ export default function ProfileForm() {
           Full name
         </label>
         <input id="r-name" name="name" type="text" autoComplete="name" defaultValue={saved.name} className={s.input} />
-      </div>
-      <div className={s.field}>
-        <label htmlFor="r-wa" className={s.label}>
-          WhatsApp number
-        </label>
-        <div className={s.phone}>
-          <span className={s.prefix}>+91</span>
-          <input
-            id="r-wa"
-            name="whatsapp"
-            type="tel"
-            autoComplete="tel-national"
-            inputMode="numeric"
-            defaultValue={saved.whatsapp}
-            className={s.phoneInput}
-          />
-        </div>
-        <label className={s.check}>
-          <input type="checkbox" name="whatsappAlerts" defaultChecked={saved.whatsappAlerts ?? true} className={s.checkbox} />
-          Send me drop alerts on WhatsApp
-        </label>
       </div>
       <div className={s.field}>
         <label htmlFor="r-city" className={s.label}>

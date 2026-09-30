@@ -44,15 +44,6 @@
   filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.7));
 }
 
-.decoLeft {
-  position: absolute;
-  left: 160px;
-  bottom: 0;
-  width: 140px;
-  height: auto;
-  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.7));
-}
-
 /* Narrower screens have no side margins for the candles and books, so they stand along the bottom. */
 @media (max-width: 1100px) {
   .section {
@@ -74,11 +65,6 @@
 
   .candleR {
     left: calc(var(--gutter) + 62px);
-  }
-
-  .decoLeft {
-    left: calc(var(--gutter) + 120px);
-    width: 120px;
   }
 
   .decoRight {
@@ -110,11 +96,6 @@
     left: 50px;
     transform: scale(0.72);
     transform-origin: 0 100%;
-  }
-
-  .decoLeft {
-    left: 88px;
-    width: 88px;
   }
 
   .decoRight {

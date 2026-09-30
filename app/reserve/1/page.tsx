@@ -12,7 +12,7 @@ import s from './reserve.module.css'
 
 export const metadata: Metadata = { title: 'Your place is held' }
 
-const perks = ['Drop alerts on WhatsApp, before anyone else', 'Your details saved for a faster order', 'An official reservation number']
+const perks = ['Your reservation in your name', 'Your details saved for a faster order', 'An official reservation number']
 
 export default function ReserveStep1() {
   return (
@@ -30,7 +30,7 @@ export default function ReserveStep1() {
         </p>
         <div className={`${ui.paperCard} ${s.card}`} data-reveal="3">
           <h2 className={s.cardTitle}>SECURE YOUR PLACE IN LINE</h2>
-          <p className={s.cardText}>Complete your profile so we can reach you the moment the doors reopen.</p>
+          <p className={s.cardText}>Complete your profile so everything is ready the moment the doors reopen.</p>
           <div className={s.perks}>
             {perks.map((p) => (
               <div key={p} className={s.perk}>

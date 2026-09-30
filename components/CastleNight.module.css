@@ -1,0 +1,228 @@
+/* The area behind the page the scene fills: from behind the header down past the page's opening
+   content */
+.area {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1160px;
+  pointer-events: none;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* The photograph fills the scene like object-fit: cover. --ox sets where it's cropped from side to
+   side (0 to 1): the moon to the left and the castle to the right on desktop, the castle's towers
+   in view on narrow screens. */
+.cover {
+  --ox: 0.335;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* A page can draw the photograph taller than its area (--photo-h), cropping it from the bottom */
+  height: var(--photo-h, 100%);
+}
+
+/* A very slow drift, however the photograph is placed */
+.photo {
+  transform-origin: 60% 100%;
+  animation: drift 40s ease-in-out infinite alternate;
+}
+
+.alive {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* A soft light that breathes around the moon */
+.moon {
+  position: absolute;
+  width: 16%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(236, 240, 255, 0.5) 0%, rgba(200, 214, 255, 0.18) 34%, rgba(200, 214, 255, 0) 68%);
+  mix-blend-mode: screen;
+  animation: moon 7s ease-in-out infinite;
+}
+
+/* A faint shimmer along the Milky Way */
+.milky {
+  position: absolute;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(214, 190, 255, 0.35) 0%, rgba(170, 160, 255, 0.12) 45%, rgba(170, 160, 255, 0) 72%);
+  mix-blend-mode: screen;
+  filter: blur(6px);
+  animation: milky 11s ease-in-out infinite;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+}
+
+.twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* Glittering stars rest dim and small, then flash bright, turning only slightly so they stay star-shaped */
+.glitter {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: glitter 6s ease-in-out infinite;
+}
+
+/* A shooting star: a streak with a bright head that travels along its own angle, then waits */
+.meteor {
+  position: absolute;
+  height: 2.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 246, 216, 0), rgba(255, 246, 216, 0.35) 60%, rgba(255, 250, 235, 0.95));
+  opacity: 0;
+  transform-origin: 0 50%;
+  animation: meteor 12s linear infinite;
+}
+
+.meteor::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background: #FFFDF4;
+  box-shadow: 0 0 10px 4px rgba(255, 246, 216, 0.9);
+}
+
+/* A black gradient over the photograph, in page pixels from the top: about 62% behind the page's
+   title, 72% behind its main content, easing to 50% below it, then blending gradually into the page
+   at the bottom of the scene */
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.62) 0px,
+    rgba(0, 0, 0, 0.66) 300px,
+    rgba(0, 0, 0, 0.72) 420px,
+    rgba(0, 0, 0, 0.72) 780px,
+    rgba(0, 0, 0, 0.55) 880px,
+    rgba(0, 0, 0, 0.5) 960px,
+    rgba(10, 14, 24, 0.62) 1040px,
+    rgba(10, 14, 24, 0.85) 1110px,
+    #0A0E18 1160px
+  );
+}
+
+@keyframes drift {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes moon {
+  0%,
+  100% {
+    opacity: 0.65;
+    scale: 1;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.12;
+  }
+}
+
+@keyframes milky {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes glitter {
+  0%,
+  62%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.45) rotate(0deg);
+  }
+  74% {
+    opacity: 1;
+    transform: scale(1.25) rotate(12deg);
+  }
+  84% {
+    opacity: 0.55;
+    transform: scale(0.8) rotate(4deg);
+  }
+}
+
+@keyframes meteor {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(0);
+  }
+  1.5%,
+  6.5% {
+    opacity: 1;
+  }
+  9% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(var(--travel));
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(var(--travel));
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1100px) {
+  .cover {
+    --ox: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo,
+  .moon,
+  .milky,
+  .twinkle,
+  .glitter {
+    animation: none;
+  }
+
+  .meteor {
+    display: none;
+  }
+
+  /* Held still, the sparkles rest at a soft glow rather than their flash */
+  .glitter {
+    opacity: 0.6;
+    transform: scale(0.7);
+  }
+}
