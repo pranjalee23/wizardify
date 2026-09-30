@@ -1,5 +1,5 @@
 .section {
-  height: 860px;
+  height: 760px;
   display: flex;
   align-items: flex-start;
   padding: 90px var(--gutter) 0;

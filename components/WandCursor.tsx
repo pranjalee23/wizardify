@@ -103,8 +103,8 @@ export default function WandCursor() {
       <div ref={rootRef} className={s.root} aria-hidden="true">
         <div className={s.halo} />
         <div className={s.glow} />
-        {/* Rendered by scripts/wand; the tip sits at (2.7, 2.7) in this 100x100 image. */}
-        <img className={s.wand} src="/images/wand.png" width={100} height={100} alt="" draggable={false} />
+        {/* Cut out by scripts/wand; the tip sits at (0.3, 0.6) in this 100 x 84 image. */}
+        <img className={s.wand} src="/images/wand.png" width={100} height={84} alt="" draggable={false} />
       </div>
     </>
   )

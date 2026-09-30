@@ -2,16 +2,16 @@ import type { CSSProperties, ReactNode } from 'react'
 import { imageFlames } from '@/lib/flames'
 import s from './LitImage.module.css'
 
-type Props = { src: string; className?: string; bleed?: boolean; children?: ReactNode }
+type Props = { src: string; className?: string; bleed?: boolean; ratio?: number; children?: ReactNode }
 
 // A decorative photograph whose candle flames flicker. It fills its box the way object-fit: cover does
 // (set --ox and --oy in the className, 0 to 1, for object-position), but as a real box the size of the
 // cropped image, so the flames can be placed on it in the image's own proportions. An uncropped image
 // can `bleed`, letting the glow spread past its edges. Children are drawn over the image in the same box,
-// for other things in the photo brought to life.
-export default function LitImage({ src, className, bleed = false, children }: Props) {
+// for other things in the photo brought to life. An image with no flames listed needs its `ratio`.
+export default function LitImage({ src, className, bleed = false, ratio: given, children }: Props) {
   const lit = imageFlames[src]
-  const ratio = lit ? lit.w / lit.h : undefined
+  const ratio = lit ? lit.w / lit.h : given
   const classes = [s.cover, bleed && s.bleed, className].filter(Boolean).join(' ')
   return (
     <div className={classes} style={ratio ? ({ '--ar': ratio } as CSSProperties) : undefined}>

@@ -10,7 +10,7 @@ import s from './page.module.css'
 
 export default function Home() {
   return (
-    <PageShell sky={<Sky />} skyClassName={s.sky} minHeight={3040}>
+    <PageShell sky={<Sky />} skyClassName={s.sky} minHeight={2940}>
       <Nav active="home" />
       <Hero />
       <HomeHouses />

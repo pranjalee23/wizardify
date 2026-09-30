@@ -1,5 +1,5 @@
 // Finds candle flames in images under public/images, as a starting point for lib/flames.ts.
-// Usage: node scripts/flames/detect.mjs <out-dir> hero-bg.jpg sky-chamber.jpg ...   (needs Google Chrome)
+// Usage: node scripts/flames/detect.mjs <out-dir> sky-chamber.jpg sky-study.jpg ...   (needs Google Chrome)
 // Prints each candidate as index:x,y,w,h (the box around its white-hot core) and writes a copy of each
 // image with the candidates boxed and numbered to <out-dir>. Brass and glass glints also get through,
 // so check the boxes by eye and keep only real flames.

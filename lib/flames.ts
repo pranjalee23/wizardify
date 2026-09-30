@@ -4,24 +4,6 @@
 export type ImageFlames = { w: number; h: number; flames: [number, number, number][] }
 
 export const imageFlames: Record<string, ImageFlames> = {
-  '/images/hero-bg.jpg': {
-    w: 1672,
-    h: 941,
-    flames: [
-      [1629, 179, 17],
-      [436, 359, 52],
-      [503, 415, 55],
-      [1405, 456, 52],
-      [714, 527, 44],
-      [684, 553, 47],
-      [1667, 550, 23],
-      [126, 579, 52],
-      [1641, 880, 26],
-      [16, 820, 52],
-      [142, 924, 44],
-      [93, 887, 30],
-    ],
-  },
   '/images/sky-chamber.jpg': {
     w: 2048,
     h: 768,
