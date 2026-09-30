@@ -23,8 +23,10 @@
 
 .dt {
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  font-family: var(--font-cinzel), serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
   color: #D9B26A;
 }
 

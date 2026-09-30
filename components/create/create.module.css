@@ -17,15 +17,17 @@
 
 .eyebrow {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: var(--font-cinzel), serif;
+  text-transform: uppercase;
   letter-spacing: 0.24em;
   color: #D9B26A;
 }
 
 .title {
   margin: 0;
-  font-family: var(--font-cinzel), serif;
-  font-weight: 500;
+  font-family: var(--font-uncial), serif;
+  font-weight: 400;
   font-size: 56px;
   line-height: 1.1;
   text-align: center;

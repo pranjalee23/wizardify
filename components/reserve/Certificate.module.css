@@ -33,9 +33,11 @@
 
 .headingText {
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  color: #7A5A22;
+  font-weight: 700;
+  font-family: var(--font-cinzel), serif;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #5A3E12;
 }
 
 .spark {
@@ -73,9 +75,11 @@
 
 .dt {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: var(--font-cinzel), serif;
+  text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: #7A5A22;
+  color: #5A3E12;
 }
 
 .dd {
@@ -91,6 +95,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   text-align: left;
   font-size: 15px;
 }

@@ -14,8 +14,8 @@
 
 .title {
   margin: 0;
-  font-family: var(--font-cinzel), serif;
-  font-weight: 500;
+  font-family: var(--font-uncial), serif;
+  font-weight: 400;
   font-size: 68px;
   line-height: 1.06;
 }
@@ -128,7 +128,7 @@
 
 .closerTitle {
   margin: 0;
-  font-family: var(--font-cinzel), serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   font-weight: 500;
   font-size: 48px;
 }
@@ -172,6 +172,8 @@
 .viewCaption {
   font-family: var(--font-cinzel), serif;
   font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #F2DDB0;
 }
@@ -239,7 +241,7 @@
 .dimsTitle {
   margin: 0;
   align-self: flex-start;
-  font-family: var(--font-cinzel), serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   font-weight: 500;
   font-size: 40px;
 }
@@ -313,8 +315,8 @@
 
 .includedTitle {
   margin: 0;
-  font-family: var(--font-cinzel), serif;
-  font-weight: 600;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 500;
   font-size: 30px;
 }
 
@@ -341,9 +343,9 @@
 }
 
 .price {
-  font-family: var(--font-cinzel), serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   font-size: 26px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .buyBtn {

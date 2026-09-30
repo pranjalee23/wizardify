@@ -45,8 +45,10 @@
 }
 
 .progressLabel {
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  font-family: var(--font-cinzel), serif;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
   color: #D9B26A;
 }
 
@@ -72,8 +74,8 @@
 
 .title {
   margin: 24px 0 0;
-  font-family: var(--font-cinzel), serif;
-  font-weight: 500;
+  font-family: var(--font-uncial), serif;
+  font-weight: 400;
   font-size: 52px;
   line-height: 1.08;
   text-align: center;

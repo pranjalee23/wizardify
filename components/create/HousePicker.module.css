@@ -70,9 +70,9 @@
   position: relative;
   margin-top: auto;
   margin-bottom: 70px;
-  font-family: var(--font-cinzel), serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.06em;
   color: #F2DDB0;
 }

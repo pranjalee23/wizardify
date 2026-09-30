@@ -16,8 +16,9 @@
   padding: 0;
   font-family: var(--font-cinzel), serif;
   font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: #F2DDB0;
 }
 
@@ -54,9 +55,9 @@
 }
 
 .houseName {
-  font-family: var(--font-cinzel), serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: #F2DDB0;
 }
 

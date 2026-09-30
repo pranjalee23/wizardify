@@ -27,9 +27,9 @@
 
 .panelTitle {
   margin: 0;
-  font-family: var(--font-cinzel), serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 500;
   color: #F2DDB0;
 }
 
@@ -38,8 +38,10 @@
   border-radius: 999px;
   border: 1px solid #6E5A34;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  font-family: var(--font-cinzel), serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: #E8C77E;
 }
 
