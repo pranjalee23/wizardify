@@ -3,17 +3,11 @@
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import LitImage from '@/components/LitImage'
 import { houses, type HouseId } from '@/lib/houses'
-import { useHydrated, useReservation } from '@/lib/reservation'
 import s from './HousePicker.module.css'
 
-export default function HousePicker() {
-  const saved = useReservation()
-  const hydrated = useHydrated()
-  return <Banners key={hydrated ? 'saved' : 'initial'} initial={saved.house ?? 'nightbloom'} />
-}
-
-function Banners({ initial }: { initial: HouseId }) {
-  const [pick, setPick] = useState<HouseId>(initial)
+// Starts on the member's house, if their reservation has one
+export default function HousePicker({ initial }: { initial?: HouseId }) {
+  const [pick, setPick] = useState<HouseId>(initial ?? 'nightbloom')
   const refs = useRef<(HTMLButtonElement | null)[]>([])
 
   const onKeyDown = (e: KeyboardEvent, i: number) => {

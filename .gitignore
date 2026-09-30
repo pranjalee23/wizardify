@@ -27,6 +27,8 @@ build/
 .env*.local
 .env.development
 .env.production
+# ...except the template listing them
+!.env.example
 
 # Logs
 npm-debug.log*
@@ -58,3 +60,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 *.swp
+
+# Supabase CLI cache
+supabase/.temp/

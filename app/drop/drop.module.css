@@ -76,8 +76,25 @@
 
 .note {
   margin: 0;
+  max-width: 600px;
   font-size: 13px;
+  line-height: 1.6;
   color: #C9BFAE;
+}
+
+.noteLink {
+  color: #E8C77E;
+}
+
+.noteLink:hover {
+  color: #F2DDB0;
+}
+
+/* Shown when a "continue your reservation" link from an email has run out */
+.linkNote {
+  margin: 0;
+  font-size: 15px;
+  color: #F2DDB0;
 }
 
 .candle1,

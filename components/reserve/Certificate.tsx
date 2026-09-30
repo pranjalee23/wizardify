@@ -1,27 +1,18 @@
-'use client'
-
 import Link from 'next/link'
 import { houseById } from '@/lib/houses'
-import { useReservation } from '@/lib/reservation'
 import { routes } from '@/lib/routes'
+import { reservationNumber, type Reservation } from '@/lib/server/reservations'
 import s from './Certificate.module.css'
 
 const spark = 'M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z'
 
-export function ConfirmationEmail({ fallback = 'your inbox' }: { fallback?: string }) {
-  const { email } = useReservation()
-  return email ? <span className={s.email}>{email}</span> : fallback
-}
-
-export default function Certificate() {
-  const r = useReservation()
-  const house = houseById(r.house)
-  const hasPreferences = Boolean(r.house || r.knownFor || r.setting)
+export default function Certificate({ reservation: r }: { reservation: Reservation }) {
+  const house = houseById(r.house ?? undefined)
   const rows = [
     ['NAME', r.name || '—'],
     ['HOUSE', house?.title ?? '—'],
-    ['DROP ALERTS', r.whatsapp ? 'Email and WhatsApp' : 'Email'],
-    ['PRIORITY', hasPreferences ? 'First in line' : 'Standard'],
+    ['DROP ALERTS', r.alerts_whatsapp ? 'Email and WhatsApp' : 'Email'],
+    ['PRIORITY', r.priority === 'first' ? 'First in line' : 'Standard'],
   ]
 
   return (
@@ -36,8 +27,7 @@ export default function Certificate() {
             <path className={`${s.spark} ${s.sparkLate}`} d={spark} fill="#8A6526" />
           </svg>
         </div>
-        {/* Placeholder until reservations are stored and numbered on a server. */}
-        <div className={s.number}>WZ-[0421]</div>
+        <div className={s.number}>{reservationNumber(r.number)}</div>
         <div className={s.divider} />
         <dl className={s.details}>
           {rows.map(([dt, dd]) => (

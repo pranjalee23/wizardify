@@ -60,3 +60,9 @@
     gap: 12px;
   }
 }
+
+/* The member's email address, picked out in the sentence */
+.email {
+  color: #F2DDB0;
+  font-weight: 600;
+}

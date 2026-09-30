@@ -53,6 +53,18 @@ npx vercel link
 npx vercel env pull .env.local
 ```
 
+`.env.example` lists every variable and what it's for.
+
+### Backend
+
+The backend runs inside this Next.js app: Server Actions in `app/reserve/actions.ts` and route handlers such as `app/reserve/continue/route.ts`.
+
+- **Database and photo storage:** Supabase, in the Mumbai region. The schema is in `supabase/migrations/`. Apply new migrations with `npx supabase db push --db-url "$POSTGRES_URL_NON_POOLING"`.
+- **Email:** Resend. The templates are React components in `emails/`.
+- **Bot check:** Cloudflare Turnstile on the drop form.
+
+All server-only code lives in `lib/server/`.
+
 ## Deployment
 
 Pushes to the main branch deploy to production on Vercel; other branches get preview deployments once the GitHub repo is connected to the Vercel project.

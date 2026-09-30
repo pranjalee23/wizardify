@@ -1,44 +1,38 @@
 'use client'
 
-import { useState } from 'react'
+import { startTransition, useActionState, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import Arrow from '@/components/Arrow'
 import Crest from '@/components/Crest'
+import { savePreferences } from '@/app/reserve/actions'
 import { houses, type HouseId } from '@/lib/houses'
-import { saveReservation, useHydrated, useReservation, type Reservation } from '@/lib/reservation'
+import { knownForOptions, settingOptions } from '@/lib/preferences'
 import { routes } from '@/lib/routes'
 import ui from '@/components/ui.module.css'
+import FormMessage from './FormMessage'
 import r from './reserve.module.css'
 import s from './PreferencesForm.module.css'
 
 const groups = [
-  {
-    key: 'knownFor',
-    title: 'KNOWN FOR',
-    options: ['Potions', 'Shadow Warding', 'Charms', 'Shapeshifting', 'Herbology', 'Astronomy', 'Beast Keeping', 'Something else'],
-  },
-  { key: 'setting', title: 'YOUR SETTING', options: ['Castle at sunset', 'The great library', 'Starlit tower', 'Enchanted forest'] },
+  { key: 'knownFor', title: 'KNOWN FOR', options: knownForOptions },
+  { key: 'setting', title: 'YOUR SETTING', options: settingOptions },
 ] as const
 
-export default function PreferencesForm() {
-  const saved = useReservation()
-  const hydrated = useHydrated()
-  return <Fields key={hydrated ? 'saved' : 'initial'} saved={saved} />
-}
+type Props = { house: HouseId | null; knownFor: string | null; setting: string | null }
 
-function Fields({ saved }: { saved: Reservation }) {
-  const router = useRouter()
-  const [house, setHouse] = useState<HouseId | undefined>(saved.house)
-  const [picks, setPicks] = useState({ knownFor: saved.knownFor, setting: saved.setting })
+export default function PreferencesForm(saved: Props) {
+  const [state, save, pending] = useActionState(savePreferences, null)
+  const [house, setHouse] = useState(saved.house ?? undefined)
+  const [picks, setPicks] = useState({ knownFor: saved.knownFor ?? undefined, setting: saved.setting ?? undefined })
 
   return (
     <form
       className={`${r.form} ${r.wide} ${s.fields}`}
       onSubmit={(e) => {
         e.preventDefault()
-        saveReservation({ house, ...picks })
-        router.push(routes.reserve(4))
+        const form = new FormData()
+        for (const [k, v] of Object.entries({ house, ...picks })) if (v) form.set(k, v)
+        startTransition(() => save(form))
       }}
     >
       <fieldset className={s.fieldset}>
@@ -86,11 +80,12 @@ function Fields({ saved }: { saved: Reservation }) {
         <Link href={routes.reserve(4)} className={r.skip}>
           Skip this step
         </Link>
-        <button type="submit" className={`${ui.pill} ${ui.paper} ${ui.glow} ${r.cta}`}>
-          CONTINUE
+        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${ui.glow} ${r.cta}`}>
+          {pending ? 'SAVING…' : 'CONTINUE'}
           <Arrow />
         </button>
       </div>
+      <FormMessage state={state} />
     </form>
   )
 }

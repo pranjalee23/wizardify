@@ -44,7 +44,11 @@ export default function Footer() {
               Instagram
               <span className={s.srOnly}> (opens in a new tab)</span>
             </a>
-            <span aria-hidden="true">·</span> YouTube <span aria-hidden="true">·</span> Privacy <span aria-hidden="true">·</span> Terms
+            <span aria-hidden="true">·</span> YouTube <span aria-hidden="true">·</span>{' '}
+            <Link href={routes.privacy} className={s.social}>
+              Privacy
+            </Link>{' '}
+            <span aria-hidden="true">·</span> Terms
           </span>
         </div>
       </div>

@@ -3,15 +3,17 @@ import Link from 'next/link'
 import PageShell from '@/components/PageShell'
 import NightSky from '@/components/NightSky'
 import Nav from '@/components/Nav'
-import Certificate, { ConfirmationEmail } from '@/components/reserve/Certificate'
+import Certificate from '@/components/reserve/Certificate'
 import { routes } from '@/lib/routes'
+import { requireReservation } from '@/lib/server/reservations'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import s from './reserved.module.css'
 
 export const metadata: Metadata = { title: 'Your place is reserved, Wizardify' }
 
-export default function ReserveStep5() {
+export default async function ReserveStep5() {
+  const r = await requireReservation()
   return (
     <PageShell sky={<NightSky scene="study" />} minHeight={1100}>
       <Nav active="home" />
@@ -20,10 +22,10 @@ export default function ReserveStep5() {
           YOUR PLACE IS RESERVED.
         </h1>
         <p className={s.lede} data-reveal="1">
-          A confirmation is on its way to <ConfirmationEmail />.
+          A confirmation is on its way to <span className={s.email}>{r.email}</span>.
         </p>
         <div data-reveal="2">
-          <Certificate />
+          <Certificate reservation={r} />
         </div>
         <div className={s.actions} data-reveal="3">
           <Link href={routes.houses} className={`${ui.pill} ${ui.outline} ${s.btn}`}>

@@ -7,7 +7,9 @@ import Stepper from '@/components/Stepper'
 import Arrow from '@/components/Arrow'
 import Candle from '@/components/Candle'
 import HousePicker from '@/components/create/HousePicker'
+import { houseById } from '@/lib/houses'
 import { routes } from '@/lib/routes'
+import { currentReservation } from '@/lib/server/reservations'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import c from '@/components/create/create.module.css'
@@ -15,7 +17,8 @@ import s from './house.module.css'
 
 export const metadata: Metadata = { title: 'Create your portrait, step 1: your house' }
 
-export default function CreateStep1() {
+export default async function CreateStep1() {
+  const reservation = await currentReservation()
   return (
     <PageShell sky={<NightSky scene="study" />} minHeight={1100}>
       <Nav active="create" />
@@ -31,7 +34,7 @@ export default function CreateStep1() {
           Every great story begins with a choice.
         </p>
         <div className={s.picker} data-reveal="3">
-          <HousePicker />
+          <HousePicker initial={houseById(reservation?.house ?? undefined)?.id} />
         </div>
         <p className={s.hint}>Choose the house that feels like home. You can always change your mind.</p>
         <Link href={routes.create(2)} className={`${ui.pill} ${ui.paper} ${ui.glow} ${s.next}`}>

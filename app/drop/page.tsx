@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import Link from 'next/link'
 import PageShell from '@/components/PageShell'
 import CastleNight, { castleNightArea } from '@/components/CastleNight'
 import Nav from '@/components/Nav'
@@ -7,6 +8,7 @@ import Footer from '@/components/Footer'
 import Candle from '@/components/Candle'
 import DropForm from '@/components/reserve/DropForm'
 import { houseById } from '@/lib/houses'
+import { routes } from '@/lib/routes'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import s from './drop.module.css'
@@ -50,10 +52,10 @@ const expect = [
   },
 ]
 
-type Props = { searchParams: Promise<{ house?: string | string[] }> }
+type Props = { searchParams: Promise<{ house?: string | string[]; link?: string | string[] }> }
 
 export default async function DropPage({ searchParams }: Props) {
-  const { house } = await searchParams
+  const { house, link } = await searchParams
   const picked = houseById(typeof house === 'string' ? house : undefined)
 
   return (
@@ -81,8 +83,18 @@ export default async function DropPage({ searchParams }: Props) {
           </svg>
           <h2 className={`${ui.shimmer} ${s.subtitle}`}>THE NEXT CHAPTER BEGINS SOON.</h2>
           <p className={s.invite}>Reserve your place and be the first to know when the doors open again.</p>
+          {link === 'expired' && (
+            <p className={s.linkNote} role="status">
+              That link has expired. Enter your email again and we&apos;ll send you a new one.
+            </p>
+          )}
           <DropForm house={picked?.id} />
-          <p className={s.note}>Free. No payment. We&apos;ll send drop alerts to your email and WhatsApp.</p>
+          <p className={s.note}>
+            Free. No payment. By reserving, you agree to get drop alerts from Wizardify by email and WhatsApp.{' '}
+            <Link href={routes.privacy} className={s.noteLink}>
+              Privacy notice
+            </Link>
+          </p>
         </div>
         <Candle className={s.candle1} scale={0.8} delay={0} />
         <Candle className={s.candle2} scale={0.55} delay={0.8} />

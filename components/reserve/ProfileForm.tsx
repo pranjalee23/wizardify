@@ -1,55 +1,51 @@
 'use client'
 
+import { startTransition, useActionState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import Arrow from '@/components/Arrow'
-import { saveReservation, useHydrated, useReservation } from '@/lib/reservation'
+import { saveProfile } from '@/app/reserve/actions'
 import { routes } from '@/lib/routes'
 import ui from '@/components/ui.module.css'
+import FormMessage from './FormMessage'
 import r from './reserve.module.css'
 import s from './ProfileForm.module.css'
 
-export default function ProfileForm() {
-  const router = useRouter()
-  const saved = useReservation()
-  const hydrated = useHydrated()
+type Props = { name: string | null; city: string | null }
+
+export default function ProfileForm({ name, city }: Props) {
+  const [state, save, pending] = useActionState(saveProfile, null)
 
   return (
     <form
-      key={hydrated ? 'saved' : 'initial'}
       className={`${r.form} ${r.narrow} ${s.fields}`}
       onSubmit={(e) => {
         e.preventDefault()
-        const f = new FormData(e.currentTarget)
-        const text = (k: string) => String(f.get(k) ?? '').trim()
-        saveReservation({
-          name: text('name'),
-          city: text('city'),
-        })
-        router.push(routes.reserve(3))
+        const form = new FormData(e.currentTarget)
+        startTransition(() => save(form))
       }}
     >
       <div className={s.field}>
         <label htmlFor="r-name" className={s.label}>
           Full name
         </label>
-        <input id="r-name" name="name" type="text" autoComplete="name" defaultValue={saved.name} className={s.input} />
+        <input id="r-name" name="name" type="text" autoComplete="name" maxLength={100} defaultValue={name ?? ''} className={s.input} />
       </div>
       <div className={s.field}>
         <label htmlFor="r-city" className={s.label}>
           City
         </label>
-        <input id="r-city" name="city" type="text" autoComplete="address-level2" defaultValue={saved.city} className={s.input} />
+        <input id="r-city" name="city" type="text" autoComplete="address-level2" maxLength={100} defaultValue={city ?? ''} className={s.input} />
       </div>
       <div className={`${r.actions} ${s.actions}`}>
         <Link href={routes.reserve(5)} className={r.skip}>
           Skip for now
         </Link>
-        <button type="submit" className={`${ui.pill} ${ui.paper} ${ui.glow} ${r.cta}`}>
-          CONTINUE
+        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${ui.glow} ${r.cta}`}>
+          {pending ? 'SAVING…' : 'CONTINUE'}
           <Arrow />
         </button>
       </div>
+      <FormMessage state={state} />
     </form>
   )
 }

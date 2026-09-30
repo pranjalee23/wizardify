@@ -4,7 +4,9 @@ import NightSky from '@/components/NightSky'
 import Nav from '@/components/Nav'
 import ReserveHeader from '@/components/reserve/ReserveHeader'
 import PreferencesForm from '@/components/reserve/PreferencesForm'
+import { houseById } from '@/lib/houses'
 import { routes } from '@/lib/routes'
+import { requireReservation } from '@/lib/server/reservations'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import r from '@/components/reserve/reserve.module.css'
@@ -12,7 +14,8 @@ import s from './preferences.module.css'
 
 export const metadata: Metadata = { title: 'Portrait preferences, Wizardify' }
 
-export default function ReserveStep3() {
+export default async function ReserveStep3() {
+  const reservation = await requireReservation()
   return (
     <PageShell sky={<NightSky scene="study" />} minHeight={1240}>
       <Nav active="home" />
@@ -27,7 +30,7 @@ export default function ReserveStep3() {
             Members whose portrait preferences are on record will be the first to receive their portraits when the doors reopen.
           </p>
         </div>
-        <PreferencesForm />
+        <PreferencesForm house={houseById(reservation.house ?? undefined)?.id ?? null} knownFor={reservation.known_for} setting={reservation.setting} />
       </main>
     </PageShell>
   )

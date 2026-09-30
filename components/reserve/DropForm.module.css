@@ -81,6 +81,21 @@
   font-size: 15px;
 }
 
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.message {
+  max-width: 600px;
+}
+
+/* The bot check's box, on the rare occasions it asks for a click */
+.challenge {
+  display: flex;
+  justify-content: center;
+}
+
 /* Narrower screens put the two fields side by side and the button beneath them */
 @media (max-width: 1100px) {
   .form {

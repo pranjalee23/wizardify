@@ -4,8 +4,8 @@ import PageShell from '@/components/PageShell'
 import NightSky from '@/components/NightSky'
 import Nav from '@/components/Nav'
 import Check from '@/components/Check'
-import { ConfirmationEmail } from '@/components/reserve/Certificate'
 import { routes } from '@/lib/routes'
+import { requireReservation } from '@/lib/server/reservations'
 import layout from '@/components/layout.module.css'
 import ui from '@/components/ui.module.css'
 import s from './reserve.module.css'
@@ -14,7 +14,8 @@ export const metadata: Metadata = { title: 'Your place is held' }
 
 const perks = ['Your reservation in your name', 'Your details saved for a faster order', 'An official reservation number']
 
-export default function ReserveStep1() {
+export default async function ReserveStep1() {
+  const r = await requireReservation()
   return (
     <PageShell sky={<NightSky scene="study" />} minHeight={920}>
       <Nav active="home" />
@@ -26,7 +27,7 @@ export default function ReserveStep1() {
           YOUR PLACE IS HELD.
         </h1>
         <p className={s.lede} data-reveal="2">
-          We've added <ConfirmationEmail fallback="you" /> to the list.
+          We've added <span className={s.email}>{r.email}</span> to the list.
         </p>
         <div className={`${ui.paperCard} ${s.card}`} data-reveal="3">
           <h2 className={s.cardTitle}>SECURE YOUR PLACE IN LINE</h2>

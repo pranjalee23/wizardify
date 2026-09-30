@@ -7,6 +7,7 @@ export const routes = {
   house: (id: string) => `/houses/${id}`,
   gallery: '/gallery',
   faq: '/faq',
+  privacy: '/privacy',
   drop: '/drop',
   create: (step: number) => `/create/${step}`,
   reserve: (step: number) => `/reserve/${step}`,
