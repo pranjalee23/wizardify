@@ -101,7 +101,7 @@ export default function CreateStep5() {
             <Arrow dir="left" />
             MAKE CHANGES
           </Link>
-          <Link href={routes.frame} className={`${ui.pill} ${ui.paper} ${ui.glow} ${c.next}`}>
+          <Link href={routes.frame} className={`${ui.pill} ${ui.paper} ${c.next}`}>
             PROCEED TO ORDER
             <Arrow />
           </Link>

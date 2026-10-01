@@ -59,7 +59,7 @@
 }
 
 .cta:hover {
-  box-shadow: 0 0 24px rgba(217, 178, 106, 0.35);
+  box-shadow: 0 0 20px rgba(217, 178, 106, 0.17);
 }
 
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {

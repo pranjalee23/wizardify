@@ -155,7 +155,7 @@ export default function FramePage() {
           ))}
         </div>
         <p className={s.pricingNote}>Classic mode (no sensors) plays your portrait on a gentle loop and is included in the starting price.</p>
-        <Link href={routes.drop} className={`${ui.paperBtn} ${ui.glow} ${s.pricingCta}`}>
+        <Link href={routes.drop} className={`${ui.paperBtn} ${s.pricingCta}`}>
           RESERVE YOUR PORTRAIT
           <Arrow />
         </Link>

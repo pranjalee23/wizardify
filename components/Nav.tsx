@@ -22,7 +22,8 @@ export default function Nav({ active = 'home' }: { active?: NavId }) {
         <Link href={routes.home} className={s.brand}>
           <img className={s.logo} src="/images/logo.webp" width={720} height={266} alt="Wizardify" />
         </Link>
-        <nav aria-label="Main" className={s.nav}>
+        {/* The wand gives the menu links its full halo; everything else on the site gets a softer one */}
+        <nav aria-label="Main" className={s.nav} data-wand-halo="full">
           {links.map((l) => {
             const on = l.id === active
             return (

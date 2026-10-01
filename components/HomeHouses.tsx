@@ -43,7 +43,7 @@ export default function HomeHouses() {
             </Link>
           ))}
         </div>
-        <Link href={routes.houses} className={`${ui.paperBtn} ${ui.glow} ${s.cta}`} data-reveal="5">
+        <Link href={routes.houses} className={`${ui.paperBtn} ${s.cta}`} data-reveal="5">
           DISCOVER YOUR HOUSE
           <Arrow />
         </Link>

@@ -39,7 +39,7 @@
 }
 
 .home:hover {
-  filter: drop-shadow(0 0 10px rgba(217, 178, 106, 0.45));
+  filter: drop-shadow(0 0 8px rgba(217, 178, 106, 0.22));
 }
 
 .logo {

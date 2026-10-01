@@ -59,7 +59,7 @@ export default function DropForm({ house }: { house?: HouseId }) {
             </div>
           </div>
         </div>
-        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${ui.glow} ${s.submit}`}>
+        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${s.submit}`}>
           {pending ? 'RESERVING…' : 'RESERVE MY PLACE'}
         </button>
       </form>

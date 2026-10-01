@@ -26,7 +26,7 @@
 
 .pill:hover {
   border-color: #D9B26A;
-  box-shadow: 0 0 24px rgba(217, 178, 106, 0.25);
+  box-shadow: 0 0 20px rgba(217, 178, 106, 0.12);
 }
 
 .pillPrice {

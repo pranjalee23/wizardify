@@ -37,7 +37,7 @@ export default async function CreateStep1() {
           <HousePicker initial={houseById(reservation?.house ?? undefined)?.id} />
         </div>
         <p className={s.hint}>Choose the house that feels like home. You can always change your mind.</p>
-        <Link href={routes.create(2)} className={`${ui.pill} ${ui.paper} ${ui.glow} ${s.next}`}>
+        <Link href={routes.create(2)} className={`${ui.pill} ${ui.paper} ${s.next}`}>
           CONTINUE
           <Arrow />
         </Link>

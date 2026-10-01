@@ -51,7 +51,7 @@
 .houseOn:hover {
   background: #1F1A12;
   border: 2px solid #D9B26A;
-  box-shadow: 0 0 22px rgba(217, 178, 106, 0.35);
+  box-shadow: 0 0 18px rgba(217, 178, 106, 0.17);
 }
 
 .houseName {

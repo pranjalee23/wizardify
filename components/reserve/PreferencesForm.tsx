@@ -80,7 +80,7 @@ export default function PreferencesForm(saved: Props) {
         <Link href={routes.reserve(4)} className={r.skip}>
           Skip this step
         </Link>
-        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${ui.glow} ${r.cta}`}>
+        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${r.cta}`}>
           {pending ? 'SAVING…' : 'CONTINUE'}
           <Arrow />
         </button>

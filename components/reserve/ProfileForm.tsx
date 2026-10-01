@@ -40,7 +40,7 @@ export default function ProfileForm({ name, city }: Props) {
         <Link href={routes.reserve(5)} className={r.skip}>
           Skip for now
         </Link>
-        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${ui.glow} ${r.cta}`}>
+        <button type="submit" disabled={pending} className={`${ui.pill} ${ui.paper} ${r.cta}`}>
           {pending ? 'SAVING…' : 'CONTINUE'}
           <Arrow />
         </button>

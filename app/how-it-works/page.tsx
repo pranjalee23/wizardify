@@ -51,7 +51,7 @@ export default function HowItWorksPage() {
             </li>
           ))}
         </ol>
-        <Link href={routes.drop} className={`${ui.paperBtn} ${ui.glow} ${s.cta}`} data-reveal="5">
+        <Link href={routes.drop} className={`${ui.paperBtn} ${s.cta}`} data-reveal="5">
           RESERVE YOUR PORTRAIT
           <Arrow />
         </Link>

@@ -19,8 +19,10 @@ const TARGETS = [
   '[data-wand]',
 ].join(', ')
 
-// That glow: a thin dark edge keeps text crisp against it, then a soft gold halo
+// That glow: a thin dark edge keeps text crisp against it, then a gold halo. The header's menu links
+// (data-wand-halo="full") get the full halo; everything else a softer one, under half as strong.
 const HALO = 'drop-shadow(0 0 1.5px rgba(12, 8, 2, 0.85)) drop-shadow(0 0 3px rgba(255, 200, 110, 0.45)) drop-shadow(0 0 9px rgba(255, 190, 90, 0.55))'
+const SOFT_HALO = 'drop-shadow(0 0 1.5px rgba(12, 8, 2, 0.85)) drop-shadow(0 0 3px rgba(255, 200, 110, 0.2)) drop-shadow(0 0 6px rgba(255, 190, 90, 0.24))'
 const NO_HALO = 'drop-shadow(0 0 0 rgba(12, 8, 2, 0)) drop-shadow(0 0 0 rgba(255, 200, 110, 0)) drop-shadow(0 0 0 rgba(255, 190, 90, 0))'
 
 // A short streak of gold that follows the wand tip and draws back into it when the wand stops,
@@ -212,7 +214,8 @@ export default function WandCursor() {
         return
       }
       if (!on) return
-      const b = el.animate([{ filter: NO_HALO }, { filter: HALO }], { duration: 250, easing: 'ease-out', fill: 'both', composite: 'add' })
+      const glow = el.closest('[data-wand-halo="full"]') ? HALO : SOFT_HALO
+      const b = el.animate([{ filter: NO_HALO }, { filter: glow }], { duration: 250, easing: 'ease-out', fill: 'both', composite: 'add' })
       b.onfinish = () => {
         if (b.playbackRate > 0) return
         b.cancel()

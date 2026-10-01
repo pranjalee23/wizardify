@@ -32,8 +32,8 @@
 }
 
 .paper:hover {
-  filter: brightness(1.06);
-  box-shadow: inset 0 0 14px rgba(110, 70, 20, 0.6), inset 0 0 2px rgba(80, 50, 10, 0.7), 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 30px rgba(217, 178, 106, 0.45);
+  filter: brightness(1.03);
+  box-shadow: inset 0 0 14px rgba(110, 70, 20, 0.6), inset 0 0 2px rgba(80, 50, 10, 0.7), 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 24px rgba(217, 178, 106, 0.22);
 }
 
 .outline {
@@ -45,7 +45,7 @@
 
 .outline:hover {
   border-color: #E8C77E;
-  box-shadow: 0 0 24px rgba(217, 178, 106, 0.28);
+  box-shadow: 0 0 20px rgba(217, 178, 106, 0.14);
 }
 
 .dark {
@@ -55,7 +55,7 @@
 }
 
 .dark:hover {
-  box-shadow: 0 0 24px rgba(217, 178, 106, 0.3);
+  box-shadow: 0 0 20px rgba(217, 178, 106, 0.15);
 }
 
 .paperBtn {
@@ -80,8 +80,8 @@
 }
 
 .paperBtn:hover {
-  filter: brightness(1.06);
-  box-shadow: inset 0 0 14px rgba(110, 70, 20, 0.6), inset 0 0 2px rgba(80, 50, 10, 0.7), 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 30px rgba(217, 178, 106, 0.45);
+  filter: brightness(1.03);
+  box-shadow: inset 0 0 14px rgba(110, 70, 20, 0.6), inset 0 0 2px rgba(80, 50, 10, 0.7), 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 24px rgba(217, 178, 106, 0.22);
 }
 
 .outlineBtn {
@@ -105,11 +105,7 @@
 
 .outlineBtn:hover {
   border-color: #E8C77E;
-  box-shadow: 0 0 24px rgba(217, 178, 106, 0.28);
-}
-
-.glow {
-  animation: glowBtn 3s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(217, 178, 106, 0.14);
 }
 
 .srOnly {
@@ -219,16 +215,6 @@
   }
 }
 
-@keyframes glowBtn {
-  0%,
-  100% {
-    box-shadow: inset 0 0 14px rgba(110, 70, 20, 0.6), inset 0 0 2px rgba(80, 50, 10, 0.7), 0 0 22px rgba(217, 178, 106, 0.35);
-  }
-  50% {
-    box-shadow: inset 0 0 14px rgba(110, 70, 20, 0.6), inset 0 0 2px rgba(80, 50, 10, 0.7), 0 0 44px rgba(217, 178, 106, 0.7);
-  }
-}
-
 @keyframes float {
   0%,
   100% {
@@ -269,7 +255,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .shimmer,
-  .glow,
   .float,
   .window > img {
     animation: none;

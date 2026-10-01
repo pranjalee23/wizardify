@@ -148,7 +148,7 @@ export default function WishesForm({ wish: savedWish, photos: saved }: Props) {
       </section>
 
       <div className={`${r.actions} ${r.actionsEnd}`}>
-        <button type="submit" disabled={uploading || pending} className={`${ui.pill} ${ui.paper} ${ui.glow} ${r.cta} ${r.ctaTall}`}>
+        <button type="submit" disabled={uploading || pending} className={`${ui.pill} ${ui.paper} ${r.cta} ${r.ctaTall}`}>
           {uploading ? 'UPLOADING PHOTOS…' : pending ? 'SAVING…' : 'RESERVE MY PLACE'}
           <Arrow />
         </button>
