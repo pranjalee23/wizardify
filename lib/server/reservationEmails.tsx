@@ -4,6 +4,8 @@ import { after } from 'next/server'
 import ContinueReservation from '@/emails/ContinueReservation'
 import DropAlert from '@/emails/DropAlert'
 import PhotoReminder from '@/emails/PhotoReminder'
+import PreviewReady from '@/emails/PreviewReady'
+import { changesLeft } from '@/lib/previews'
 import ReservationConfirmed from '@/emails/ReservationConfirmed'
 import { db } from './supabase'
 import { sendBatch, sendEmail, type Email } from './email'
@@ -18,7 +20,7 @@ function firstName(name: string | null) {
   return first === first.toLowerCase() ? first[0].toUpperCase() + first.slice(1) : first
 }
 
-const continueUrl = (site: string, id: string, to?: 'photos') => `${site}/reserve/continue?t=${continueToken(id)}${to ? `&to=${to}` : ''}`
+const continueUrl = (site: string, id: string, to?: 'photos' | 'preview') => `${site}/reserve/continue?t=${continueToken(id)}${to ? `&to=${to}` : ''}`
 
 // Emails answering something the member just did (the confirmation, the continue link) are
 // transactional. Reminders and drop alerts are bulk mail, so they carry a way to stop them: a footer
@@ -99,4 +101,14 @@ export async function sendDropAlerts(members: Held[]) {
       ))
     }),
   )
+}
+
+// "Your portrait is ready", when the team uploads a preview (first, or after changes). Transactional:
+// it answers the member's own reservation, so no unsubscribe link. Says whether it went.
+export function sendPreviewReady(r: Held, round: number) {
+  const first = firstName(r.name)
+  const subject = round > 1 ? 'Your updated portrait is ready' : 'Your portrait is ready'
+  return toMember(r, 'transactional', first ? `${subject}, ${first} ✨` : `${subject} ✨`, (site) => (
+    <PreviewReady firstName={first} round={round} changesLeft={changesLeft(round)} previewUrl={continueUrl(site, r.id, 'preview')} site={site} />
+  ))
 }

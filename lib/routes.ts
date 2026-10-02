@@ -11,4 +11,5 @@ export const routes = {
   terms: '/terms',
   drop: '/drop',
   reserve: (step: number) => `/reserve/${step}`,
+  preview: '/reserve/preview',
 } as const

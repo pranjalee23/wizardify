@@ -7,6 +7,7 @@ import { LIMITS, mb, readUsage } from '@/lib/server/daily'
 import { applyFilters, cities, countMembers, filterQuery, indiaTime, readFilters } from '@/lib/server/members'
 import { reservationNumber } from '@/lib/server/reservations'
 import { db } from '@/lib/server/supabase'
+import { chatLink } from '@/lib/server/whatsapp'
 import s from './admin.module.css'
 
 const PAGE = 50
@@ -120,7 +121,11 @@ export default async function AdminHome({ searchParams }: Props) {
                       </td>
                       <td>{m.name}</td>
                       <td>{m.email}</td>
-                      <td>{m.whatsapp}</td>
+                      <td>
+                        <a href={chatLink(m.whatsapp)} target="_blank" rel="noopener noreferrer" title="Open a WhatsApp chat">
+                          {m.whatsapp}
+                        </a>
+                      </td>
                       <td>{m.approx_city ?? '—'}</td>
                       <td>{m.ip ?? '—'}</td>
                       <td>{houseById(m.house ?? undefined)?.name ?? '—'}</td>

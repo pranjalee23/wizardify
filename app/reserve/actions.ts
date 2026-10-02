@@ -7,6 +7,7 @@ import { after } from 'next/server'
 import { z } from 'zod'
 import { houses, type HouseId } from '@/lib/houses'
 import { MAX_PHOTOS, MAX_PHOTO_MB, photoTypes, type PhotoType } from '@/lib/photos'
+import { MAX_PREVIEWS } from '@/lib/previews'
 import { companionOptions, knownForOptions, roleOptions, settingOptions, skyballOptions } from '@/lib/preferences'
 import { routes } from '@/lib/routes'
 import { notifyProblem, notifyTeam } from '@/lib/server/alerts'
@@ -259,5 +260,41 @@ export async function saveWishes(_: FormState, form: FormData) {
       after(() => notifyTeam(`📷 ${reservationNumber(r.number)} added ${added} photo${added === 1 ? '' : 's'} (${photos} in all).`))
     }
     redirect(routes.reserve(4))
+  }, trouble)
+}
+
+// /reserve/preview: the member approves their preview, or asks for changes (up to MAX_PREVIEWS - 1
+// rounds). Both work on the latest preview of the reservation in their cookie, if it's waiting.
+
+async function waitingPreview() {
+  const r = await currentReservation()
+  if (!r) redirect(routes.drop)
+  const { data: latest } = await db().from('previews').select('id, round, status').eq('reservation_id', r.id).order('round', { ascending: false }).limit(1).maybeSingle()
+  return { r, latest: latest?.status === 'sent' ? latest : null }
+}
+
+export async function approvePreview(_: FormState) {
+  return safely('approve their preview', async (): Promise<FormState> => {
+    const { r, latest } = await waitingPreview()
+    if (!latest) return { error: 'There is no preview waiting for you.' }
+    const now = new Date().toISOString()
+    await db().from('previews').update({ status: 'approved', decided_at: now }).eq('id', latest.id)
+    await update({ preview_status: 'approved', approved_at: now })
+    after(() => notifyTeam(`✅ ${reservationNumber(r.number)} approved their preview${latest.round > 1 ? ` (round ${latest.round})` : ''}.`))
+    redirect(routes.preview)
+  }, trouble)
+}
+
+export async function requestChanges(_: FormState, form: FormData) {
+  return safely('ask for changes', async (): Promise<FormState> => {
+    const feedback = z.string().trim().min(5).max(1000).safeParse(field(form, 'feedback'))
+    if (!feedback.success) return { error: "Please tell us what you'd like changed (up to 1,000 characters)." }
+    const { r, latest } = await waitingPreview()
+    if (!latest) return { error: 'There is no preview waiting for you.' }
+    if (latest.round >= MAX_PREVIEWS) return { error: 'That was your last round of changes. Please write to us at hello@wizardify.me.' }
+    await db().from('previews').update({ status: 'changes', feedback: feedback.data, decided_at: new Date().toISOString() }).eq('id', latest.id)
+    await update({ preview_status: 'changes' })
+    after(() => notifyTeam(`✏️ ${reservationNumber(r.number)} asked for changes to their preview (round ${latest.round}). Their notes are in the admin.`))
+    redirect(routes.preview)
   }, trouble)
 }

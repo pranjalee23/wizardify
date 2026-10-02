@@ -56,6 +56,7 @@ export default function FilterForm({ action, f, cities }: Props) {
         {select('house', 'House', houses.map((h): Option => [h.id, h.name]), f.house)}
         {select('first', 'First in line', [['yes', 'Yes'], ['no', 'No']], f.first)}
         {select('photos', 'Photos', [['yes', 'Added'], ['no', 'None yet']], f.photos)}
+        {select('preview', 'Preview', [['none', 'Not sent yet'], ['sent', 'Waiting for them'], ['changes', 'Changes asked for'], ['approved', 'Approved']], f.preview)}
       </div>
       <details className={s.more} open={moreOpen}>
         <summary>More filters</summary>

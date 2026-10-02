@@ -18,6 +18,8 @@ export type Filters = {
   whatsapp?: 'on' | 'off'
   // Whether they've been sent the current drop's alert
   alert?: 'sent' | 'not-sent'
+  // Where their portrait preview is up to
+  preview?: 'none' | 'sent' | 'changes' | 'approved'
   from?: string
   to?: string
   knownFor?: string
@@ -61,6 +63,7 @@ export function readFilters(params: Record<string, string | string[] | undefined
     email: pick('email', ['on', 'off']),
     whatsapp: pick('whatsapp', ['on', 'off']),
     alert: pick('alert', ['sent', 'not-sent']),
+    preview: pick('preview', ['none', 'sent', 'changes', 'approved']),
     from: day('from'),
     to: day('to'),
   }
@@ -92,6 +95,7 @@ export function applyFilters<T>(query: T, f: Filters): T {
   if (f.photos) q = f.photos === 'yes' ? q.gt('photos', 0) : q.eq('photos', 0)
   if (f.email) q = q.eq('alerts_email', f.email === 'on')
   if (f.whatsapp) q = q.eq('alerts_whatsapp', f.whatsapp === 'on')
+  if (f.preview) q = f.preview === 'none' ? q.is('preview_status', null) : q.eq('preview_status', f.preview)
   if (f.alert === 'sent') q = q.eq('drop_alert', CURRENT_DROP.key)
   if (f.alert === 'not-sent') q = q.or(`drop_alert.is.null,drop_alert.neq.${CURRENT_DROP.key}`)
   // Days are India days

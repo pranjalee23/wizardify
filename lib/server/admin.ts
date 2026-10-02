@@ -16,6 +16,7 @@ export const PERMISSIONS = {
   'members.photos': "See members' photos",
   'members.edit': "Change members' names and alerts",
   'members.delete': 'Delete members',
+  'previews.send': 'Upload previews and send them to members',
   'export.members': 'Download the member list (CSV)',
   'export.cities': 'Download the cities summary (CSV)',
   'alerts.send': 'Send drop alerts',
@@ -28,7 +29,7 @@ export const ROLES = {
   super_admin: { label: 'Super admin', can: Object.keys(PERMISSIONS) as Permission[] },
   manager: {
     label: 'Manager',
-    can: ['stats', 'members.view', 'members.photos', 'members.edit', 'export.members', 'export.cities', 'alerts.send'] as Permission[],
+    can: ['stats', 'members.view', 'members.photos', 'members.edit', 'previews.send', 'export.members', 'export.cities', 'alerts.send'] as Permission[],
   },
   marketing: { label: 'Marketing', can: ['stats', 'export.members', 'export.cities', 'alerts.send'] as Permission[] },
   viewer: { label: 'Viewer', can: ['stats', 'members.view'] as Permission[] },

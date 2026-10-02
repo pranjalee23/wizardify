@@ -101,9 +101,35 @@ export async function removeDeletedMembersPhotos() {
   return removed
 }
 
+// Photos are deleted 7 days after a member approves their preview, as the privacy notice and terms
+// promise. Their preview video stays, for making the portrait.
+export async function deleteApprovedPhotos() {
+  const { data, error } = await db()
+    .from('reservations')
+    .select('id, number')
+    .lte('approved_at', new Date(Date.now() - 7 * DAY).toISOString())
+    .is('photos_deleted_at', null)
+    .limit(200)
+  if (error) throw error
+  const bucket = db().storage.from(PHOTO_BUCKET)
+  for (const r of data) {
+    const folder = reservationNumber(r.number)
+    const { data: files, error: listError } = await bucket.list(folder, { limit: 100 })
+    if (listError) throw listError
+    const paths = files.filter((f) => f.id).map((f) => `${folder}/${f.name}`)
+    if (paths.length) {
+      const { error: removeError } = await bucket.remove(paths)
+      if (removeError) throw removeError
+    }
+    const { error: saveError } = await db().from('reservations').update({ photos_deleted_at: new Date().toISOString() }).eq('id', r.id)
+    if (saveError) throw saveError
+  }
+  return data.length
+}
+
 // The morning check's message for the team's Telegram: short, e.g. "☀️ Daily check: all good. 45
 // members (3 new), 12 with photos. Photos 120 MB of 1024 MB."
-export async function summary(usage: { database: number; storage: number }, reminders: number | string, cleaned: number | string) {
+export async function summary(usage: { database: number; storage: number }, reminders: number | string, cleaned: number | string, approvedDeleted: number | string = 0) {
   const base = () => db().from('reservations').select('*', { count: 'exact', head: true })
   const count = async (q: ReturnType<typeof base>) => {
     const { count, error } = await q
@@ -117,6 +143,11 @@ export async function summary(usage: { database: number; storage: number }, remi
   const extras = [
     reminders === 'failed' ? 'Photo reminders failed.' : reminders ? `${reminders} photo reminder${reminders === 1 ? '' : 's'} sent.` : '',
     cleaned === 'failed' ? 'Photo clean-up failed.' : cleaned ? `Removed photos of ${cleaned} deleted member${cleaned === 1 ? '' : 's'}.` : '',
+    approvedDeleted === 'failed'
+      ? 'Deleting approved members’ photos failed.'
+      : approvedDeleted
+        ? `Deleted photos of ${approvedDeleted} member${approvedDeleted === 1 ? '' : 's'} who approved a week ago.`
+        : '',
   ].filter(Boolean)
   return [`☀️ Daily check: all good. ${total} members (${fresh} new), ${withPhotos} with photos. Photos ${mb(usage.storage)} of ${mb(LIMITS.storage)}.`, ...extras].join(' ')
 }

@@ -31,11 +31,27 @@ export type ReservationRow = {
   // The latest drop alert they were sent (see lib/drops.ts), and when
   drop_alert: string | null
   drop_alert_at: string | null
+  // Their latest preview's status, when they approved it, and when their photos were deleted
+  preview_status: 'sent' | 'approved' | 'changes' | null
+  approved_at: string | null
+  photos_deleted_at: string | null
   created_at: string
   updated_at: string
 }
 
 type Generated = 'id' | 'number' | 'priority' | 'created_at' | 'updated_at'
+
+export type PreviewRow = {
+  id: string
+  reservation_id: string
+  round: number
+  video_path: string
+  status: 'sent' | 'approved' | 'changes'
+  feedback: string | null
+  sent_by: string | null
+  created_at: string
+  decided_at: string | null
+}
 
 export type AdminRow = {
   id: string
@@ -54,6 +70,12 @@ export type Database = {
         Row: ReservationRow
         Insert: Partial<Omit<ReservationRow, Generated>> & Pick<ReservationRow, 'email' | 'whatsapp'>
         Update: Partial<Omit<ReservationRow, Generated>>
+        Relationships: []
+      }
+      previews: {
+        Row: PreviewRow
+        Insert: Pick<PreviewRow, 'reservation_id' | 'round' | 'video_path'> & Partial<Pick<PreviewRow, 'status' | 'feedback' | 'sent_by'>>
+        Update: Partial<Pick<PreviewRow, 'status' | 'feedback' | 'decided_at'>>
         Relationships: []
       }
       admins: {
@@ -80,6 +102,7 @@ export type Database = {
 }
 
 export const PHOTO_BUCKET = 'reservation-photos'
+export const PREVIEW_BUCKET = 'previews'
 
 let client: SupabaseClient<Database> | undefined
 

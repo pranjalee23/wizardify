@@ -6,14 +6,16 @@ import { after } from 'next/server'
 import { refresh } from 'next/cache'
 import { z } from 'zod'
 import AdminCode from '@/emails/AdminCode'
+import { randomUUID } from 'node:crypto'
 import { CURRENT_DROP } from '@/lib/drops'
+import { MAX_PREVIEWS, MAX_VIDEO_MB, videoTypes, type VideoType } from '@/lib/previews'
 import { ROLES, can, checkSignInCode, currentAdmin, endSession, newSignInCode, startSession, type Permission, type Role } from '@/lib/server/admin'
 import { notifyTeam } from '@/lib/server/alerts'
 import { sendEmail } from '@/lib/server/email'
 import { allMembers, applyFilters, readFilters } from '@/lib/server/members'
-import { sendDropAlerts } from '@/lib/server/reservationEmails'
+import { sendDropAlerts, sendPreviewReady } from '@/lib/server/reservationEmails'
 import { reservationNumber, siteUrl } from '@/lib/server/reservations'
-import { db, PHOTO_BUCKET } from '@/lib/server/supabase'
+import { db, PHOTO_BUCKET, PREVIEW_BUCKET } from '@/lib/server/supabase'
 
 // Everything the admin pages can change. Each action checks the signed-in admin's role itself: these
 // can be called directly, not just from the pages.
@@ -187,4 +189,57 @@ export async function sendDropAlert(_: AdminState, form: FormData): Promise<Admi
   return failed
     ? { error: `Sent to ${people(done.length)}. ${failed} didn't send (Telegram has the reason); they're still selectable to try again.` }
     : { notice: `Sent to ${people(done.length)}.` }
+}
+
+// Previews: the team uploads a member's preview video straight to private storage (with a link this
+// signs), then sends it, which emails the member. A new preview can go when there's none yet, or when
+// the member asked for changes, up to MAX_PREVIEWS.
+
+async function previewMember(number: number) {
+  const { data: r } = await db().from('reservations').select('id, number, email, name').eq('number', number).maybeSingle()
+  if (!r) return null
+  const { data: previews } = await db().from('previews').select('round, status').eq('reservation_id', r.id).order('round')
+  const latest = previews?.at(-1)
+  return { r, latest, next: (latest?.round ?? 0) + 1, canSend: !latest || (latest.status === 'changes' && latest.round < MAX_PREVIEWS) }
+}
+
+export async function previewUploadLink(number: number, file: { type: string; size: number }): Promise<{ url: string; path: string } | { error: string }> {
+  if (!(await allowed('previews.send'))) return notAllowed
+  if (!(file.type in videoTypes)) return { error: 'Previews need to be MP4, MOV or WebM videos.' }
+  if (file.size > MAX_VIDEO_MB * 1024 * 1024) return { error: `Videos can be up to ${MAX_VIDEO_MB} MB. Try exporting it smaller (1080p is plenty).` }
+  const m = await previewMember(number)
+  if (!m) return { error: 'That member no longer exists.' }
+  if (!m.canSend) return { error: 'A new preview can go once the member asks for changes.' }
+  const path = `${reservationNumber(number)}/round-${m.next}-${randomUUID()}.${videoTypes[file.type as VideoType]}`
+  const { data, error } = await db().storage.from(PREVIEW_BUCKET).createSignedUploadUrl(path)
+  if (error) return { error: 'Something went wrong. Please try again.' }
+  return { url: data.signedUrl, path }
+}
+
+export async function sendPreview(number: number, path: string): Promise<AdminState> {
+  const admin = await allowed('previews.send')
+  if (!admin) return notAllowed
+  const m = await previewMember(number)
+  if (!m) return { error: 'That member no longer exists.' }
+  if (!m.canSend) return { error: 'A new preview can go once the member asks for changes.' }
+  const folder = reservationNumber(number)
+  if (!path.startsWith(`${folder}/round-${m.next}-`)) return { error: 'That upload is for someone else. Please upload again.' }
+  const { data: files } = await db().storage.from(PREVIEW_BUCKET).list(folder, { limit: 100 })
+  if (!files?.some((f) => `${folder}/${f.name}` === path)) return { error: "The video didn't finish uploading. Please try again." }
+  const { error } = await db().from('previews').insert({ reservation_id: m.r.id, round: m.next, video_path: path, sent_by: admin.email })
+  if (error) return { error: 'Something went wrong. Please try again.' }
+  await db().from('reservations').update({ preview_status: 'sent' }).eq('id', m.r.id)
+  const emailed = await sendPreviewReady(m.r, m.next)
+  after(() => notifyTeam(`🎬 ${admin.email} sent ${folder} their ${m.next > 1 ? `updated preview (round ${m.next})` : 'preview'}.`))
+  refresh()
+  return emailed
+    ? { notice: `Sent. ${m.r.name ?? 'The member'} has been emailed a link to watch it.` }
+    : { error: "The preview is saved, but the email didn't send. Use \"Email them again\" in a moment." }
+}
+
+export async function resendPreview(_: AdminState, form: FormData): Promise<AdminState> {
+  if (!(await allowed('previews.send'))) return notAllowed
+  const m = await previewMember(Number(text(form, 'number')))
+  if (!m?.latest || m.latest.status !== 'sent') return { error: 'There is no preview waiting for this member.' }
+  return (await sendPreviewReady(m.r, m.latest.round)) ? { notice: 'Emailed again.' } : { error: "The email didn't send. Please try again shortly." }
 }

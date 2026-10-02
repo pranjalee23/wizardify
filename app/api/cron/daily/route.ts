@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { alertTeam, notifyProblem, notifyTeam } from '@/lib/server/alerts'
-import { LIMITS, WARN, mb, readUsage, removeDeletedMembersPhotos, sendPhotoReminders, summary } from '@/lib/server/daily'
+import { LIMITS, WARN, deleteApprovedPhotos, mb, readUsage, removeDeletedMembersPhotos, sendPhotoReminders, summary } from '@/lib/server/daily'
 
 // Runs every morning (vercel.json). Reading the database keeps the free Supabase project from being
 // paused for inactivity, and the team is alerted, by email and on Telegram, if it can't be reached
@@ -51,7 +51,8 @@ export async function GET(request: Request) {
   }
   const reminders = await attempt('photo reminders', sendPhotoReminders)
   const cleaned = await attempt('photo clean-up', removeDeletedMembersPhotos)
-  await notifyTeam(await summary(usage, reminders, cleaned))
+  const approvedDeleted = await attempt('deletion of approved members’ photos', deleteApprovedPhotos)
+  await notifyTeam(await summary(usage, reminders, cleaned, approvedDeleted))
 
-  return NextResponse.json({ ok: true, database: mb(usage.database), storage: mb(usage.storage), reminders, cleaned })
+  return NextResponse.json({ ok: true, database: mb(usage.database), storage: mb(usage.storage), reminders, cleaned, approvedDeleted })
 }

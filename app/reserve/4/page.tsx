@@ -24,6 +24,11 @@ export default async function ReserveStep4() {
         <p className={s.lede} data-reveal="1">
           A confirmation is on its way to <span className={s.email}>{r.email}</span>.
         </p>
+        {r.preview_status && (
+          <Link href={routes.preview} className={`${ui.pill} ${ui.paper} ${s.preview}`} data-reveal="2">
+            {r.preview_status === 'sent' ? 'YOUR PORTRAIT IS READY: WATCH IT' : r.preview_status === 'changes' ? 'SEE YOUR PORTRAIT' : 'YOUR APPROVED PORTRAIT'}
+          </Link>
+        )}
         <div data-reveal="2">
           <Certificate reservation={r} />
         </div>

@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
 
   await holdReservation(r.id)
   if (request.nextUrl.searchParams.get('to') === 'photos') return to(routes.reserve(3))
+  if (request.nextUrl.searchParams.get('to') === 'preview') return to(routes.preview)
   if (r.priority !== 'first') return to(routes.reserve(2))
   if (!r.photos) return to(routes.reserve(3))
   return to(routes.reserve(4))

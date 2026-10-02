@@ -71,11 +71,13 @@ The admin pages are at **/admin** (www.wizardify.me/admin). Sign in with your em
 
 - **Dashboard:** member counts, how many are first in line or have photos, the cities members are in, and the CSV downloads (all members, or a cities summary). The CSVs open in Excel.
 - **Members:** search by name, email or reservation number. A member's page shows everything they've told us and their photos, and lets you change their name and alerts or delete them. Deleting removes their photos too.
+- **Portrait previews:** on a member's page, upload their preview video (MP4, MOV or WebM, up to 50 MB) and press **Upload and send**. They're emailed a private link to watch it, then approve it or ask for changes. When they ask for changes, their notes show on the same page and you can upload the next round. Members get up to two rounds of changes (three previews in all). Filter the dashboard by **Preview** to see who's waiting.
+- **WhatsApp:** a member's page has buttons that open WhatsApp with a message ready to send from the business number (and their reservation link already in it).
 - **Team:** add people, choose their role, or remove them. The page lists what each role can do.
 
 Roles and their permissions are set in `lib/server/admin.ts` (`ROLES`). To change what a role can do, edit its list there; every admin page and action checks it. Who has which role is stored in the `admins` table.
 
-The Supabase dashboard still works as a back door: the tables are `reservations`, `admins` and `admin_codes`, and photos are in the `reservation-photos` bucket, in folders named after reservation numbers.
+The Supabase dashboard still works as a back door: the tables are `reservations`, `previews`, `admins` and `admin_codes`. Photos are in the `reservation-photos` bucket and preview videos in the `previews` bucket, both in folders named after reservation numbers.
 
 ### The daily check
 
@@ -85,11 +87,12 @@ Every morning at 9:00 IST, Vercel runs `app/api/cron/daily`, which:
 2. Emails and messages the team if the database is down or a free-plan limit passes 70%.
 3. Sends the photo reminders that are due.
 4. Removes the photos of deleted members.
-5. Posts a one-line summary on Telegram.
+5. Deletes members' photos 7 days after they approve their preview, as the privacy notice promises.
+6. Posts a one-line summary on Telegram.
 
 Every hour, a GitHub Action (`.github/workflows/site-check.yml`) checks the site from outside Vercel, so it catches a whole-site outage too, and messages Telegram if anything is wrong. UptimeRobot (free plan) also calls `https://www.wizardify.me/api/health` every 5 minutes and emails livingportrait.me@gmail.com if it fails. That address answers 200 when the site and database are working.
 
-The team also gets a Telegram message for each new reservation, each time a member adds photos, and whenever a member hits an error. These messages never include members' names, emails or phone numbers.
+The team also gets a Telegram message for each new reservation, each time a member adds photos or approves or asks for changes to a preview, and whenever a member hits an error. These messages never include members' names, emails or phone numbers.
 
 ## Deployment
 
