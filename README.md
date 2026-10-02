@@ -87,7 +87,7 @@ Every morning at 9:00 IST, Vercel runs `app/api/cron/daily`, which:
 4. Removes the photos of deleted members.
 5. Posts a one-line summary on Telegram.
 
-At 9:05, a GitHub Action (`.github/workflows/site-check.yml`) checks the site from outside Vercel, so it catches a whole-site outage too, and messages Telegram if anything is wrong. For round-the-clock checks, an uptime monitor such as UptimeRobot can call `https://www.wizardify.me/api/health` every few minutes: it answers 200 when the site and database are working.
+Every hour, a GitHub Action (`.github/workflows/site-check.yml`) checks the site from outside Vercel, so it catches a whole-site outage too, and messages Telegram if anything is wrong. UptimeRobot (free plan) also calls `https://www.wizardify.me/api/health` every 5 minutes and emails livingportrait.me@gmail.com if it fails. That address answers 200 when the site and database are working.
 
 The team also gets a Telegram message for each new reservation, each time a member adds photos, and whenever a member hits an error. These messages never include members' names, emails or phone numbers.
 
