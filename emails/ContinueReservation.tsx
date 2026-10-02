@@ -13,7 +13,8 @@ export default function ContinueReservation({ number, firstName, firstInLine, co
       <Greeting firstName={firstName} />
       <Text style={text}>
         Someone just tried to reserve a place with this email. Since it&apos;s yours, we&apos;re fairly sure it was you. If not, someone&apos;s
-        been practising their disguise spells, and we&apos;d like a word.
+        been practising their disguise spells, and they&apos;ve earned a month of detention, writing “I must not borrow other
+        people&apos;s inboxes” five hundred times, with a quill that stings.
       </Text>
       <Text style={text}>
         Good news: your place is already held as{' '}

@@ -9,7 +9,7 @@ Wizardify turns your photos into a living portrait — a digital picture frame t
 1. **Upload your photos** on the Wizardify website.
 2. **Answer a few questions** to personalize your portrait, for example:
    - Which house do you belong to?
-   - Are you a Quidditch player (and which position)?
+   - Do you play Skyball (and which position)?
    - …and other details that shape your portrait's theme and personality.
 3. **We craft your portrait.** Our team turns your photos and answers into custom animated videos, themed to your house and story.
 4. **We ship it to you.** Your frame arrives pre-loaded with your videos.
@@ -27,7 +27,7 @@ Wizardify turns your photos into a living portrait — a digital picture frame t
 This repo contains the Wizardify website, where customers:
 
 - upload their photos
-- complete the house / Quidditch / personalization questionnaire
+- complete the house / Skyball / personalization questionnaire
 - place their order
 
 The site is deployed on [Vercel](https://vercel.com).
@@ -72,7 +72,7 @@ The Supabase dashboard is the admin (supabase.com/dashboard, then the Wizardify 
 - **See members:** open Table Editor, then `reservations`. Each row is one member. `number` is their reservation number, so `1` is WZ-0001.
 - **Find someone:** use Filter on `email` or `number`.
 - **Photos:** open Storage, then `reservation-photos`. Each member's photos are in a folder named after their number, e.g. `WZ-0001`.
-- **Export the list:** in Table Editor, choose Export, then CSV.
+- **Export the list:** in Table Editor, choose Export, then CSV. It opens in Excel and includes each member's shipping pin code (`pincode`) and approximate location (`approx_city`, `approx_region` and `approx_country`), worked out from their connection when they reserved.
 - **Delete a member on request:** delete their row in Table Editor. Their photos are removed automatically the next morning.
 - **Stop someone's alerts:** set `alerts_email` or `alerts_whatsapp` to false. Members can also do this themselves from the unsubscribe link in any email.
 
