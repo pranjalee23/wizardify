@@ -1,6 +1,6 @@
 'use client'
 
-import { startTransition, useActionState, useEffect } from 'react'
+import { startTransition, useActionState, useEffect, useState } from 'react'
 import { startReservation } from '@/app/reserve/actions'
 import type { HouseId } from '@/lib/houses'
 import ui from '@/components/ui.module.css'
@@ -8,10 +8,19 @@ import FormMessage from './FormMessage'
 import { useTurnstile } from './useTurnstile'
 import s from './DropForm.module.css'
 
+// A WhatsApp number as typed or pasted, as the 10 digits after +91 (which the form already shows):
+// spaces and dashes go, and so does a leading 91, +91 or 0
+function tenDigits(typed: string) {
+  let digits = typed.replace(/\D/g, '')
+  if (digits.length > 10 && digits.startsWith('91')) digits = digits.slice(2)
+  return digits.replace(/^0+/, '').slice(0, 10)
+}
+
 // Reserving takes a name, an email address and a WhatsApp number, where the drop alerts go. The
 // server holds the reservation and moves on to /reserve/1, or says what to fix.
 export default function DropForm({ house }: { house?: HouseId }) {
   const [state, reserve, pending] = useActionState(startReservation, null)
+  const [whatsapp, setWhatsapp] = useState('')
   const human = useTurnstile()
   const { reset } = human
   useEffect(() => {
@@ -50,7 +59,18 @@ export default function DropForm({ house }: { house?: HouseId }) {
             <label htmlFor="drop-email" className={s.label}>
               Email address
             </label>
-            <input id="drop-email" name="email" type="email" autoComplete="email" required placeholder="you@example.com" className={s.input} />
+            <input
+              id="drop-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              maxLength={254}
+              pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}"
+              title="Your email address, e.g. name@gmail.com"
+              placeholder="you@example.com"
+              className={s.input}
+            />
           </div>
           <div className={s.field}>
             <label htmlFor="drop-wa" className={s.label}>
@@ -65,10 +85,11 @@ export default function DropForm({ house }: { house?: HouseId }) {
                 autoComplete="tel-national"
                 inputMode="numeric"
                 required
-                pattern="[0-9 ]{10,12}"
-                maxLength={12}
-                title="Your 10-digit WhatsApp number"
-                placeholder="98765 43210"
+                pattern="[6-9][0-9]{9}"
+                title="Your 10-digit WhatsApp number, without +91 or 0"
+                placeholder="9876543210"
+                value={whatsapp}
+                onChange={(e) => setWhatsapp(tenDigits(e.target.value))}
                 className={s.phoneInput}
               />
             </div>

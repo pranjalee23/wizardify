@@ -10,6 +10,7 @@ import { MAX_PHOTOS, MAX_PHOTO_MB, photoTypes, type PhotoType } from '@/lib/phot
 import { knownForOptions, settingOptions } from '@/lib/preferences'
 import { routes } from '@/lib/routes'
 import { notifyProblem, notifyTeam } from '@/lib/server/alerts'
+import { emailProblem } from '@/lib/server/emailCheck'
 import { sendConfirmation, sendContinueLink } from '@/lib/server/reservationEmails'
 import { currentReservation, heldReservationId, holdReservation, reservationNumber } from '@/lib/server/reservations'
 import { db, PHOTO_BUCKET, type Database } from '@/lib/server/supabase'
@@ -109,6 +110,8 @@ async function reserve(form: FormData): Promise<FormState> {
   if (!name.success) return { error: 'Please tell us your name.' }
   const email = emailAddress.safeParse(field(form, 'email'))
   if (!email.success) return { error: 'Please enter a valid email address.' }
+  const emailIssue = await emailProblem(email.data)
+  if (emailIssue) return { error: emailIssue }
   const whatsapp = indianMobile(field(form, 'whatsapp'))
   if (!whatsapp) return { error: 'Please enter a valid 10-digit WhatsApp number.' }
   const house = houseId.parse(field(form, 'house') || null)
