@@ -58,10 +58,10 @@ export function Greeting({ firstName }: { firstName?: string }) {
   return <Text style={text}>Hi {firstName || 'there'},</Text>
 }
 
-export function SignOff() {
+export function SignOff({ line = 'Until then, keep your wand handy.' }: { line?: string }) {
   return (
     <Text style={{ ...text, margin: '24px 0 0' }}>
-      Until then, keep your wand handy.
+      {line}
       <br />
       <span style={{ fontStyle: 'italic', color: colors.gold }}>The Wizardify team</span>
     </Text>

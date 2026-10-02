@@ -28,6 +28,9 @@ export type ReservationRow = {
   continue_sent_at: string | null
   photo_reminders: number
   photo_reminded_at: string | null
+  // The latest drop alert they were sent (see lib/drops.ts), and when
+  drop_alert: string | null
+  drop_alert_at: string | null
   created_at: string
   updated_at: string
 }

@@ -3,7 +3,7 @@ import { randomInt } from 'node:crypto'
 import { cache } from 'react'
 import { cookies } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
-import { notifyProblem } from './alerts'
+import { notifyProblem } from './telegram'
 import { hmac, isForged, readToken, sameText, signToken } from './signing'
 import { db } from './supabase'
 
@@ -77,9 +77,9 @@ export async function requireAdmin(permission?: Permission) {
   return admin
 }
 
-// Sign-in codes: 6 digits, emailed, good for 10 minutes and 5 tries. Only a keyed hash is stored.
+// Sign-in codes: 6 digits, emailed, good for 10 minutes and 3 tries. Only a keyed hash is stored.
 const CODE_MINUTES = 10
-const MAX_TRIES = 5
+const MAX_TRIES = 3
 const codeHash = (email: string, code: string) => hmac(`admin-code.${email}.${code}`)
 
 // A fresh code for an admin's email, or nothing if it isn't an admin's (or one was sent under a minute

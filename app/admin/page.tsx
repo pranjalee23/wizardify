@@ -1,9 +1,10 @@
 import Link from 'next/link'
-import { houseById, houses } from '@/lib/houses'
+import FilterForm from '@/components/admin/FilterForm'
+import { houseById } from '@/lib/houses'
 import { countryName, regionName } from '@/lib/regions'
 import { can, requireAdmin } from '@/lib/server/admin'
 import { LIMITS, mb, readUsage } from '@/lib/server/daily'
-import { applyFilters, cities, countMembers, filterQuery, indiaTime, preferenceFilters, readFilters } from '@/lib/server/members'
+import { applyFilters, cities, countMembers, filterQuery, indiaTime, readFilters } from '@/lib/server/members'
 import { reservationNumber } from '@/lib/server/reservations'
 import { db } from '@/lib/server/supabase'
 import s from './admin.module.css'
@@ -61,23 +62,6 @@ export default async function AdminHome({ searchParams }: Props) {
     ['With photos', withPhotos],
     ['New this week', thisWeek],
   ] as const
-  const select = (name: string, label: string, options: readonly (string | [string, string])[], value?: string) => (
-    <label className={s.field}>
-      {label}
-      <select name={name} defaultValue={value ?? ''} className={s.select}>
-        <option value="">Any</option>
-        {options.map((o) => {
-          const [v, text] = Array.isArray(o) ? o : [o, o]
-          return (
-            <option key={v} value={v}>
-              {text}
-            </option>
-          )
-        })}
-      </select>
-    </label>
-  )
-
   return (
     <main className={s.main}>
       <h1 className={s.title}>Dashboard</h1>
@@ -97,52 +81,7 @@ export default async function AdminHome({ searchParams }: Props) {
         </p>
       )}
 
-      <form className={s.card} action="/admin">
-        <h2 className={s.subtitle}>Filter reservations</h2>
-        <div className={s.filters}>
-          <label className={s.field}>
-            Reservation number
-            <span className={s.prefixed}>
-              <span className={s.prefix}>WZ-</span>
-              <input name="number" inputMode="numeric" pattern="[0-9]*" placeholder="0001" defaultValue={f.number ? String(f.number).padStart(4, '0') : ''} className={s.input} />
-            </span>
-          </label>
-          <label className={s.field}>
-            Name, email, WhatsApp or IP
-            <input name="q" defaultValue={f.q ?? ''} className={s.input} />
-          </label>
-          {select('city', 'City', allCities.map((c) => c.city).filter((c, i, all) => all.indexOf(c) === i), f.city)}
-          {select('house', 'House', houses.map((h) => [h.id, h.name] as [string, string]), f.house)}
-          {select('first', 'First in line', [['yes', 'Yes'], ['no', 'No']], f.first)}
-          {select('photos', 'Photos', [['yes', 'Added'], ['no', 'None yet']], f.photos)}
-        </div>
-        <details className={s.more} open={Boolean(f.email || f.whatsapp || f.from || f.to || preferenceFilters.some((p) => f[p.key]))}>
-          <summary>More filters</summary>
-          <div className={s.filters}>
-            {select('email', 'Email alerts', [['on', 'On'], ['off', 'Off']], f.email)}
-            {select('whatsapp', 'WhatsApp alerts', [['on', 'On'], ['off', 'Off']], f.whatsapp)}
-            <label className={s.field}>
-              Reserved from
-              <input type="date" name="from" defaultValue={f.from ?? ''} className={s.input} />
-            </label>
-            <label className={s.field}>
-              Reserved to
-              <input type="date" name="to" defaultValue={f.to ?? ''} className={s.input} />
-            </label>
-            {preferenceFilters.map((p) => (
-              <span key={p.key}>{select(p.key, p.label, p.options, f[p.key])}</span>
-            ))}
-          </div>
-        </details>
-        <div className={s.row}>
-          <button className={s.btnGold}>Apply filters</button>
-          {filtered && (
-            <Link href="/admin" className={s.btn}>
-              Clear
-            </Link>
-          )}
-        </div>
-      </form>
+      <FilterForm action="/admin" f={f} cities={allCities.map((c) => c.city)} />
 
       <section>
         <div className={`${s.row} ${s.spread}`}>

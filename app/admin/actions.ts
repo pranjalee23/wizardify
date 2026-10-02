@@ -6,9 +6,12 @@ import { after } from 'next/server'
 import { refresh } from 'next/cache'
 import { z } from 'zod'
 import AdminCode from '@/emails/AdminCode'
+import { CURRENT_DROP } from '@/lib/drops'
 import { ROLES, can, checkSignInCode, currentAdmin, endSession, newSignInCode, startSession, type Permission, type Role } from '@/lib/server/admin'
 import { notifyTeam } from '@/lib/server/alerts'
 import { sendEmail } from '@/lib/server/email'
+import { allMembers, applyFilters, readFilters } from '@/lib/server/members'
+import { sendDropAlerts } from '@/lib/server/reservationEmails'
 import { reservationNumber, siteUrl } from '@/lib/server/reservations'
 import { db, PHOTO_BUCKET } from '@/lib/server/supabase'
 
@@ -75,7 +78,8 @@ export async function updateMember(_: AdminState, form: FormData): Promise<Admin
 
 // Deletes a member and their photos, once the reservation number is typed to confirm
 export async function deleteMember(_: AdminState, form: FormData): Promise<AdminState> {
-  if (!(await allowed('members.delete'))) return notAllowed
+  const admin = await allowed('members.delete')
+  if (!admin) return notAllowed
   const number = Number(text(form, 'number'))
   const folder = reservationNumber(number)
   if (text(form, 'confirm').toUpperCase() !== folder) return { error: `Type ${folder} to confirm.` }
@@ -84,6 +88,7 @@ export async function deleteMember(_: AdminState, form: FormData): Promise<Admin
   if (files?.length) await bucket.remove(files.map((f) => `${folder}/${f.name}`))
   const { error } = await db().from('reservations').delete().eq('number', number)
   if (error) return { error: 'Something went wrong. Please try again.' }
+  after(() => notifyTeam(`🗑️ ${folder} was deleted by ${admin.email}.`))
   redirect('/admin')
 }
 
@@ -141,4 +146,45 @@ export async function removeAdmin(_: AdminState, form: FormData): Promise<AdminS
   after(() => notifyTeam(`👤 ${admin.email} removed ${target.email} from the admin team.`))
   refresh()
   return { notice: `Removed ${target.email}.` }
+}
+
+// Drop alerts: sends the current drop's alert by email to the members picked on /admin/alerts (or to
+// everyone matching the filters). Only members with email alerts on who haven't had this drop's
+// alert are sent it, and each send is recorded, so nobody gets it twice.
+export async function sendDropAlert(_: AdminState, form: FormData): Promise<AdminState> {
+  const admin = await allowed('alerts.send')
+  if (!admin) return notAllowed
+  const eligible = { email: 'on', alert: 'not-sent' } as const
+  type Member = { id: string; number: number; email: string; name: string | null }
+  let members: Member[] = []
+  if (form.get('all') === 'yes') {
+    const filters = readFilters(Object.fromEntries(new URLSearchParams(text(form, 'filters'))))
+    members = await allMembers(['id', 'number', 'email', 'name'], { ...filters, ...eligible })
+  } else {
+    const ids = form.getAll('id').filter((v): v is string => typeof v === 'string' && /^[0-9a-f-]{36}$/.test(v))
+    if (!ids.length) return { error: 'Select at least one member.' }
+    for (let i = 0; i < ids.length; i += 200) {
+      const { data, error } = await applyFilters(db().from('reservations').select('id, number, email, name').in('id', ids.slice(i, i + 200)), eligible)
+      if (error) return { error: 'Something went wrong. Please try again.' }
+      members.push(...data)
+    }
+  }
+  if (!members.length) return { notice: 'Nobody to send to: they have all had this alert already, or have email alerts off.' }
+  if (members.length > 1000) return { error: 'Please send to 1,000 members or fewer at a time.' }
+
+  const sent = await sendDropAlerts(members)
+  const done = members.filter((_, i) => sent[i])
+  for (let i = 0; i < done.length; i += 200) {
+    await db()
+      .from('reservations')
+      .update({ drop_alert: CURRENT_DROP.key, drop_alert_at: new Date().toISOString() })
+      .in('id', done.slice(i, i + 200).map((m) => m.id))
+  }
+  const failed = members.length - done.length
+  const people = (n: number) => `${n} member${n === 1 ? '' : 's'}`
+  after(() => notifyTeam(`📣 ${admin.email} sent the drop alert (${CURRENT_DROP.label}) to ${people(done.length)}${failed ? `; ${failed} didn't send` : ''}.`))
+  refresh()
+  return failed
+    ? { error: `Sent to ${people(done.length)}. ${failed} didn't send (Telegram has the reason); they're still selectable to try again.` }
+    : { notice: `Sent to ${people(done.length)}.` }
 }

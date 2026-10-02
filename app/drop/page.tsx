@@ -22,9 +22,17 @@ const icon = (children: ReactNode) => (
 )
 
 const expect = [
-  { label: 'Limited numbers', icon: icon(<path d="M12 2l2 7 7 3-7 3-2 7-2-7-7-3 7-3z" />) },
   {
-    label: 'New portrait themes',
+    label: 'Early access for reserved members',
+    icon: icon(
+      <>
+        <circle cx="8" cy="12" r="4" />
+        <path d="M12 12h9M18 12v3M21 12v2" />
+      </>,
+    ),
+  },
+  {
+    label: 'A portrait made just for you',
     icon: icon(
       <>
         <rect x="5" y="3" width="14" height="18" />
@@ -33,20 +41,20 @@ const expect = [
     ),
   },
   {
-    label: 'Exclusive designs',
+    label: 'Every frame finished by hand',
     icon: icon(
       <>
-        <path d="M6 3h12l3 6-9 12L3 9z" />
-        <path d="M3 9h18M9 3l3 18M15 3l-3 18" />
+        <path d="M18 3l3 3-9 9-3-3z" />
+        <path d="M9 12c-3 0-4 2-4 4s-1 3-2 3c3 1 7 0 8-3" />
       </>,
     ),
   },
   {
-    label: 'Early access for reserved members',
+    label: '6-month warranty',
     icon: icon(
       <>
-        <circle cx="8" cy="12" r="4" />
-        <path d="M12 12h9M18 12v3M21 12v2" />
+        <path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z" />
+        <path d="M8.5 12l2.5 2.5L16 9.5" />
       </>,
     ),
   },

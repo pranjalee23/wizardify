@@ -1,4 +1,5 @@
 import 'server-only'
+import { CURRENT_DROP } from '@/lib/drops'
 import { houses } from '@/lib/houses'
 import { companionOptions, knownForOptions, roleOptions, settingOptions, skyballOptions } from '@/lib/preferences'
 import { db, type ReservationRow } from './supabase'
@@ -15,6 +16,8 @@ export type Filters = {
   photos?: 'yes' | 'no'
   email?: 'on' | 'off'
   whatsapp?: 'on' | 'off'
+  // Whether they've been sent the current drop's alert
+  alert?: 'sent' | 'not-sent'
   from?: string
   to?: string
   knownFor?: string
@@ -57,6 +60,7 @@ export function readFilters(params: Record<string, string | string[] | undefined
     photos: pick('photos', ['yes', 'no']),
     email: pick('email', ['on', 'off']),
     whatsapp: pick('whatsapp', ['on', 'off']),
+    alert: pick('alert', ['sent', 'not-sent']),
     from: day('from'),
     to: day('to'),
   }
@@ -88,6 +92,8 @@ export function applyFilters<T>(query: T, f: Filters): T {
   if (f.photos) q = f.photos === 'yes' ? q.gt('photos', 0) : q.eq('photos', 0)
   if (f.email) q = q.eq('alerts_email', f.email === 'on')
   if (f.whatsapp) q = q.eq('alerts_whatsapp', f.whatsapp === 'on')
+  if (f.alert === 'sent') q = q.eq('drop_alert', CURRENT_DROP.key)
+  if (f.alert === 'not-sent') q = q.or(`drop_alert.is.null,drop_alert.neq.${CURRENT_DROP.key}`)
   // Days are India days
   if (f.from) q = q.gte('created_at', `${f.from}T00:00:00+05:30`)
   if (f.to) q = q.lt('created_at', new Date(Date.parse(`${f.to}T00:00:00+05:30`) + 86400000).toISOString())

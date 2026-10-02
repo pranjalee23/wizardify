@@ -14,7 +14,7 @@ import { emailProblem } from '@/lib/server/emailCheck'
 import { sendConfirmation, sendContinueLink } from '@/lib/server/reservationEmails'
 import { currentReservation, heldReservationId, holdReservation, reservationNumber } from '@/lib/server/reservations'
 import { db, PHOTO_BUCKET, type Database } from '@/lib/server/supabase'
-import { isHuman } from '@/lib/server/turnstile'
+import { humanCheck } from '@/lib/server/turnstile'
 
 // Every step of reserving, from /drop to /reserve/3. Each one works on the reservation in the
 // visitor's cookie only, and checks everything it's given: these can be called by anyone, not just
@@ -119,7 +119,11 @@ async function reserve(form: FormData): Promise<FormState> {
   const whatsapp = indianMobile(field(form, 'whatsapp'))
   if (!whatsapp) return { error: 'Please enter a valid 10-digit WhatsApp number.' }
   const house = houseId.parse(field(form, 'house') || null)
-  if (!(await isHuman(field(form, 'cf-turnstile-response')))) {
+  const check = await humanCheck(field(form, 'cf-turnstile-response'))
+  if (check === 'unchecked' && process.env.TURNSTILE_SECRET_KEY) {
+    after(() => notifyProblem('turnstile-down', "Cloudflare's bot check couldn't be reached, so reservations are going through unchecked for now."))
+  }
+  if (check === 'bot') {
     after(() => notifyProblem('bots', 'Cloudflare stopped a likely bot from reserving on the drop form.'))
     return { error: "We couldn't confirm you're not a robot. If you see “Verify you are human” below, tick it, then try again." }
   }

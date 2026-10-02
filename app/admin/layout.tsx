@@ -21,6 +21,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           </Link>
           <nav className={s.nav}>
             <Link href="/admin">Dashboard</Link>
+            {can(admin, 'alerts.send') && <Link href="/admin/alerts">Drop alerts</Link>}
             {can(admin, 'team.manage') && <Link href="/admin/team">Team</Link>}
           </nav>
           <div className={s.who}>

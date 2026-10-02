@@ -101,24 +101,22 @@ export async function removeDeletedMembersPhotos() {
   return removed
 }
 
-// The morning summary for the team's Telegram
+// The morning check's message for the team's Telegram: short, e.g. "☀️ Daily check: all good. 45
+// members (3 new), 12 with photos. Photos 120 MB of 1024 MB."
 export async function summary(usage: { database: number; storage: number }, reminders: number | string, cleaned: number | string) {
-  const count = async (filter?: (q: ReturnType<typeof base>) => ReturnType<typeof base>) => {
-    const { count, error } = await (filter ? filter(base()) : base())
+  const base = () => db().from('reservations').select('*', { count: 'exact', head: true })
+  const count = async (q: ReturnType<typeof base>) => {
+    const { count, error } = await q
     return error ? '?' : (count ?? 0)
   }
-  const base = () => db().from('reservations').select('*', { count: 'exact', head: true })
   const [total, fresh, withPhotos] = await Promise.all([
-    count(),
-    count((q) => q.gte('created_at', new Date(Date.now() - DAY).toISOString())),
-    count((q) => q.gt('photos', 0)),
+    count(base()),
+    count(base().gte('created_at', new Date(Date.now() - DAY).toISOString())),
+    count(base().gt('photos', 0)),
   ])
-  return [
-    '☀️ Good morning! Here is today’s check.',
-    `Members: ${total} (${fresh} new since yesterday)`,
-    `With photos: ${withPhotos}`,
-    `Photo reminders sent: ${reminders}`,
-    ...(cleaned === 0 ? [] : [`Photos removed for deleted members: ${cleaned}`]),
-    `Storage: ${mb(usage.storage)} of ${mb(LIMITS.storage)} · Database: ${mb(usage.database)} of ${mb(LIMITS.database)}`,
-  ].join('\n')
+  const extras = [
+    reminders === 'failed' ? 'Photo reminders failed.' : reminders ? `${reminders} photo reminder${reminders === 1 ? '' : 's'} sent.` : '',
+    cleaned === 'failed' ? 'Photo clean-up failed.' : cleaned ? `Removed photos of ${cleaned} deleted member${cleaned === 1 ? '' : 's'}.` : '',
+  ].filter(Boolean)
+  return [`☀️ Daily check: all good. ${total} members (${fresh} new), ${withPhotos} with photos. Photos ${mb(usage.storage)} of ${mb(LIMITS.storage)}.`, ...extras].join(' ')
 }

@@ -2,10 +2,11 @@ import 'server-only'
 import type { ReactElement } from 'react'
 import { after } from 'next/server'
 import ContinueReservation from '@/emails/ContinueReservation'
+import DropAlert from '@/emails/DropAlert'
 import PhotoReminder from '@/emails/PhotoReminder'
 import ReservationConfirmed from '@/emails/ReservationConfirmed'
 import { db } from './supabase'
-import { sendEmail } from './email'
+import { sendBatch, sendEmail, type Email } from './email'
 import { continueToken, reservationNumber, siteUrl, unsubscribeToken } from './reservations'
 
 type Held = { id: string; number: number; email: string; name: string | null }
@@ -29,8 +30,12 @@ type Kind = 'transactional' | 'bulk'
 async function toMember(r: Held, kind: Kind, subject: string, make: (site: string, unsubscribeUrl?: string) => ReactElement) {
   const site = await siteUrl()
   if (kind === 'transactional') return sendEmail({ to: r.email, subject, react: make(site) })
+  return sendEmail(bulk(site, r, subject, make))
+}
+
+function bulk(site: string, r: Held, subject: string, make: (site: string, unsubscribeUrl: string) => ReactElement): Email {
   const token = unsubscribeToken(r.id)
-  return sendEmail({
+  return {
     to: r.email,
     subject,
     react: make(site, `${site}/unsubscribe?t=${token}`),
@@ -38,7 +43,7 @@ async function toMember(r: Held, kind: Kind, subject: string, make: (site: strin
       'List-Unsubscribe': `<${site}/api/unsubscribe?t=${token}>`,
       'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
     },
-  })
+  }
 }
 
 // Both of these go out after the response, so the visitor isn't kept waiting on the mail service
@@ -81,4 +86,17 @@ export function sendPhotoReminder(r: Held, last: boolean) {
       last={last}
     />
   ))
+}
+
+// "The doors are open", to many members at once (from /admin/alerts). Says which went, in order.
+export async function sendDropAlerts(members: Held[]) {
+  const site = await siteUrl()
+  return sendBatch(
+    members.map((r) => {
+      const first = firstName(r.name)
+      return bulk(site, r, first ? `The doors are open, ${first} ✨` : 'The doors are open ✨', (site, unsubscribeUrl) => (
+        <DropAlert number={reservationNumber(r.number)} firstName={first} portraitUrl={continueUrl(site, r.id)} site={site} unsubscribeUrl={unsubscribeUrl} />
+      ))
+    }),
+  )
 }
