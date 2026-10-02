@@ -1,13 +1,14 @@
 import { Text } from '@react-email/components'
-import EmailLayout, { Cta, Title, numberFont, small, text } from './EmailLayout'
+import EmailLayout, { Cta, Greeting, Title, numberFont, small, text } from './EmailLayout'
 
-type Props = { number: string; photosUrl: string; site: string; unsubscribeUrl?: string; last?: boolean }
+type Props = { number: string; firstName?: string; photosUrl: string; site: string; unsubscribeUrl?: string; last?: boolean }
 
 // Sent to members who haven't added photos: 3 days after reserving, and once more after 2 weeks
-export default function PhotoReminder({ number, photosUrl, site, unsubscribeUrl, last }: Props) {
+export default function PhotoReminder({ number, firstName, photosUrl, site, unsubscribeUrl, last }: Props) {
   return (
     <EmailLayout preview="Add your photos to be first in line when the doors reopen." site={site} unsubscribeUrl={unsubscribeUrl}>
       <Title>{last ? 'ONE LAST NUDGE.' : 'YOUR PORTRAIT AWAITS.'}</Title>
+      <Greeting firstName={firstName} />
       <Text style={text}>
         Your place is held as <strong style={{ ...numberFont, fontSize: '17px', letterSpacing: '0.04em' }}>{number}</strong>, but
         we don&apos;t have your photos yet. Members whose photos are on record will be the first to receive their portraits when the
@@ -25,6 +26,7 @@ export default function PhotoReminder({ number, photosUrl, site, unsubscribeUrl,
 
 PhotoReminder.PreviewProps = {
   number: 'WZ-0001',
+  firstName: 'Nisha',
   photosUrl: 'https://www.wizardify.me/reserve/continue?t=example&to=photos',
   site: 'https://www.wizardify.me',
   unsubscribeUrl: 'https://www.wizardify.me/unsubscribe?t=example',

@@ -11,8 +11,8 @@ export const numberFont = { fontFamily: "Cinzel, 'Times New Roman', serif", font
 
 export const colors = { gold: '#D9B26A', cream: '#E5DACA', muted: '#A89F90', page: '#0A0E18', card: '#111726', line: '#3A2F1E' }
 
-export const text = { color: colors.cream, fontFamily: body, fontSize: '19px', lineHeight: '28px', margin: '0 0 16px' }
-export const small = { color: colors.muted, fontFamily: body, fontSize: '15px', lineHeight: '22px', margin: '0 0 8px' }
+export const text = { color: colors.cream, fontFamily: body, fontSize: '19px', lineHeight: '28px', margin: '0 0 16px', fontVariantNumeric: 'lining-nums' } as const
+export const small = { color: colors.muted, fontFamily: body, fontSize: '15px', lineHeight: '22px', margin: '0 0 8px', fontVariantNumeric: 'lining-nums' } as const
 export const label = {
   color: colors.gold,
   fontFamily: heading,
@@ -50,6 +50,21 @@ export function Cta({ href, children }: { href: string; children: ReactNode }) {
         {children}
       </Button>
     </Section>
+  )
+}
+
+// "Hi Nisha," when we know their name, "Hi there," until we do
+export function Greeting({ firstName }: { firstName?: string }) {
+  return <Text style={text}>Hi {firstName || 'there'},</Text>
+}
+
+export function SignOff() {
+  return (
+    <Text style={{ ...text, margin: '24px 0 0' }}>
+      Until then, keep your wand handy.
+      <br />
+      <span style={{ fontStyle: 'italic', color: colors.gold }}>The Wizardify team</span>
+    </Text>
   )
 }
 

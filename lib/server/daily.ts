@@ -33,7 +33,7 @@ const REMINDERS_PER_DAY = 40
 export async function sendPhotoReminders() {
   const { data, error } = await db()
     .from('reservations')
-    .select('id, number, email, created_at, photo_reminders, photo_reminded_at')
+    .select('id, number, email, name, created_at, photo_reminders, photo_reminded_at')
     .eq('photos', 0)
     .eq('alerts_email', true)
     .lt('photo_reminders', 2)

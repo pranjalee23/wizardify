@@ -12,9 +12,11 @@ const sections: LegalSection[] = [
     title: 'What we collect',
     body: (
       <ul>
-        <li>When you reserve: your email address, your WhatsApp number, and the house you chose, if any.</li>
-        <li>If you complete your profile: your name and city.</li>
-        <li>If you share them: your portrait preferences, your wishes, and photos of yourself.</li>
+        <li>
+          When you reserve: your name, email address and WhatsApp number, and the house you chose, if any. We also note roughly where
+          you are (city, state and country), worked out from your internet connection.
+        </li>
+        <li>If you share them: your portrait preferences, your shipping pin code, your wishes, and photos of yourself.</li>
         <li>
           One cookie that keeps your reservation open in your browser. We don&apos;t use advertising or tracking cookies.
         </li>
@@ -28,6 +30,7 @@ const sections: LegalSection[] = [
         <li>To hold your reservation, send you its confirmation, and remind you to add your photos.</li>
         <li>To send you drop alerts by email and WhatsApp when the doors reopen, as you agreed when you reserved.</li>
         <li>To create your portrait from your photos and preferences.</li>
+        <li>To plan delivery to your pin code, and to understand roughly where our members are.</li>
         <li>To keep the reservation form safe from bots.</li>
       </ul>
     ),

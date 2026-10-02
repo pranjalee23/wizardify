@@ -47,7 +47,7 @@ export default function Certificate({ reservation: r }: { reservation: Reservati
               <span>
                 <span className={s.strong}>Photos:</span> add before the doors reopen
               </span>
-              <Link href={routes.reserve(4)} className={s.addNow}>
+              <Link href={routes.reserve(3)} className={s.addNow}>
                 Add now
               </Link>
             </>

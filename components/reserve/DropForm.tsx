@@ -8,8 +8,8 @@ import FormMessage from './FormMessage'
 import { useTurnstile } from './useTurnstile'
 import s from './DropForm.module.css'
 
-// Reserving takes an email address and a WhatsApp number, where the drop alerts go. The server
-// holds the reservation and moves on to /reserve/1, or says what to fix.
+// Reserving takes a name, an email address and a WhatsApp number, where the drop alerts go. The
+// server holds the reservation and moves on to /reserve/1, or says what to fix.
 export default function DropForm({ house }: { house?: HouseId }) {
   const [state, reserve, pending] = useActionState(startReservation, null)
   const human = useTurnstile()
@@ -31,6 +31,21 @@ export default function DropForm({ house }: { house?: HouseId }) {
         }}
       >
         <div className={s.fields}>
+          <div className={s.field}>
+            <label htmlFor="drop-name" className={s.label}>
+              Name
+            </label>
+            <input
+              id="drop-name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              required
+              maxLength={100}
+              placeholder="Your name"
+              className={`${s.input} ${s.name}`}
+            />
+          </div>
           <div className={s.field}>
             <label htmlFor="drop-email" className={s.label}>
               Email address

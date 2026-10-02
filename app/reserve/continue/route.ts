@@ -11,14 +11,13 @@ export async function GET(request: NextRequest) {
   const id = readContinueToken(request.nextUrl.searchParams.get('t') ?? '')
   if (!id) return to(`${routes.drop}?link=expired`)
 
-  const { data: r, error } = await db().from('reservations').select('id, name, house, known_for, setting, photos').eq('id', id).maybeSingle()
+  const { data: r, error } = await db().from('reservations').select('id, house, known_for, setting, photos').eq('id', id).maybeSingle()
   if (error) throw error
   if (!r) return to(routes.drop)
 
   await holdReservation(r.id)
-  if (request.nextUrl.searchParams.get('to') === 'photos') return to(routes.reserve(4))
-  if (!r.name) return to(routes.reserve(2))
-  if (!r.house && !r.known_for && !r.setting) return to(routes.reserve(3))
-  if (!r.photos) return to(routes.reserve(4))
-  return to(routes.reserve(5))
+  if (request.nextUrl.searchParams.get('to') === 'photos') return to(routes.reserve(3))
+  if (!r.house && !r.known_for && !r.setting) return to(routes.reserve(2))
+  if (!r.photos) return to(routes.reserve(3))
+  return to(routes.reserve(4))
 }

@@ -12,7 +12,7 @@ import s from './reserve.module.css'
 
 export const metadata: Metadata = { title: 'Your place is held' }
 
-const perks = ['Your reservation in your name', 'Your details saved for a faster order', 'An official reservation number']
+const perks = ['First in line when the doors reopen', 'Your portrait details saved for a faster order', 'An official reservation number']
 
 export default async function ReserveStep1() {
   const r = await requireReservation()
@@ -31,7 +31,7 @@ export default async function ReserveStep1() {
         </p>
         <div className={`${ui.paperCard} ${s.card}`} data-reveal="3">
           <h2 className={s.cardTitle}>SECURE YOUR PLACE IN LINE</h2>
-          <p className={s.cardText}>Complete your profile so everything is ready the moment the doors reopen.</p>
+          <p className={s.cardText}>Add your portrait preferences and photos so everything is ready the moment the doors reopen.</p>
           <div className={s.perks}>
             {perks.map((p) => (
               <div key={p} className={s.perk}>
@@ -41,10 +41,10 @@ export default async function ReserveStep1() {
             ))}
           </div>
           <Link href={routes.reserve(2)} className={`${ui.pill} ${ui.dark} ${s.cta}`}>
-            COMPLETE MY PROFILE
-            <span className={s.time}>30 sec</span>
+            COMPLETE MY RESERVATION
+            <span className={s.time}>1 min</span>
           </Link>
-          <Link href={routes.reserve(5)} className={s.later}>
+          <Link href={routes.reserve(4)} className={s.later}>
             Maybe later
           </Link>
         </div>

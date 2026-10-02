@@ -58,10 +58,11 @@ export function useTurnstile() {
 
   return {
     box,
-    // The check's answer, waiting up to a few seconds if it hasn't finished yet
+    // The check's answer, waiting up to 3 seconds if it hasn't finished yet. If it's waiting for
+    // the visitor to tick "Verify you are human", the server's reply says so.
     async token() {
       if (!SITE_KEY) return ''
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 15; i++) {
         const t = widget.current && window.turnstile?.getResponse(widget.current)
         if (t) return t
         await new Promise((r) => setTimeout(r, 200))

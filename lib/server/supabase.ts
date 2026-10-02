@@ -8,11 +8,15 @@ export type ReservationRow = {
   email: string
   whatsapp: string
   name: string | null
-  city: string | null
   house: string | null
   known_for: string | null
   setting: string | null
   wish: string | null
+  // Where to ship, and roughly where they reserved from (see app/reserve/actions.ts)
+  pincode: string | null
+  approx_city: string | null
+  approx_region: string | null
+  approx_country: string | null
   photos: number
   priority: 'first' | 'standard'
   alerts_email: boolean

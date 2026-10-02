@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import s from './reserve.module.css'
 
-type Props = { step: 1 | 2 | 3; label: string; note: string; back: string; wide?: boolean }
+type Props = { step: 1 | 2; label: string; note: string; back: string; wide?: boolean }
 
 export default function ReserveHeader({ step, label, note, back, wide = false }: Props) {
   const width = wide ? s.wide : s.narrow
@@ -16,12 +16,12 @@ export default function ReserveHeader({ step, label, note, back, wide = false }:
       <div className={`${s.progress} ${width}`}>
         <div className={s.progressText}>
           <span className={s.progressLabel}>
-            STEP {step} OF 3 · {label}
+            STEP {step} OF 2 · {label}
           </span>
           <span className={s.progressNote}>{note}</span>
         </div>
         <div className={s.bars} aria-hidden="true">
-          {[1, 2, 3].map((k) => (
+          {[1, 2].map((k) => (
             <div key={k} className={k <= step ? `${s.bar} ${s.barOn}` : s.bar} />
           ))}
         </div>
