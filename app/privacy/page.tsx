@@ -18,7 +18,8 @@ const sections: LegalSection[] = [
         </li>
         <li>If you share them: your portrait preferences, your wishes, and photos of yourself.</li>
         <li>
-          One cookie that keeps your reservation open in your browser. We don&apos;t use advertising or tracking cookies.
+          One cookie that keeps your reservation open in your browser. We don&apos;t use advertising or tracking cookies. We count
+          visits to the site anonymously, without cookies, to see how it&apos;s used.
         </li>
       </ul>
     ),

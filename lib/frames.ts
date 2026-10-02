@@ -3,7 +3,7 @@
 export type FrameStyle = 'gold' | 'black'
 
 // Both sizes start at the same price
-export const startingPrice = '₹10,999'
+export const startingPrice = '₹11,999'
 
 export type FrameTier = {
   id: 'keep' | 'heir'

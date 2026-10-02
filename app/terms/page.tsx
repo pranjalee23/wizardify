@@ -56,10 +56,7 @@ const sections: LegalSection[] = [
     body: (
       <ul>
         <li>Your preview is usually ready within 7 days of us receiving your photos.</li>
-        <li>
-          We don&apos;t make changes to a finished preview. If you&apos;d like something customised, write to us at {mail} and we&apos;ll
-          tell you what&apos;s possible.
-        </li>
+        <li>You can ask for up to two rounds of changes to your preview.</li>
         <li>We don&apos;t frame or ship your portrait until you approve your preview.</li>
       </ul>
     ),
@@ -69,7 +66,10 @@ const sections: LegalSection[] = [
     body: (
       <ul>
         <li>You pay only after you&apos;ve approved your preview.</li>
-        <li>Prices are in Indian rupees. The full price, including delivery and any taxes, is shown at checkout before you pay.</li>
+        <li>
+          Prices are in Indian rupees and include all taxes. Delivery is free within India; for international orders, the delivery cost is
+          shown at checkout before you pay.
+        </li>
         <li>We accept UPI, all major credit and debit cards, and net banking.</li>
         <li>Your order is confirmed once your payment goes through and we&apos;ve emailed you a confirmation.</li>
       </ul>
@@ -80,7 +80,8 @@ const sections: LegalSection[] = [
     body: (
       <p>
         Once you&apos;ve approved your preview and paid, we frame your portrait and ship it within 7 days. We ship across India and internationally.
-        Delivery times and costs are shown at checkout. Delivery times are estimates, and we&apos;ll keep you posted if anything changes.
+        Delivery is free within India, and international delivery costs are shown at checkout. Delivery times are estimates, and
+        we&apos;ll keep you posted if anything changes.
       </p>
     ),
   },

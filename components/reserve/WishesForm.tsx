@@ -75,7 +75,8 @@ export default function WishesForm({ wish: savedWish, photos: saved }: Props) {
           <span className={s.badge}>ADD NOW OR LATER</span>
         </div>
         <p className={s.panelText}>
-          Photos are required before we create your portrait. You can add them now, or when the doors reopen. We'll remind you.
+          Photos are required before we create your portrait. You can add them now, or when the doors reopen. We'll remind you. They're
+          kept private and deleted automatically 7 days after you approve your preview.
           {saved > 0 && ` You've added ${saved} so far${room > 0 ? `, and can add ${room} more` : ''}.`}
         </p>
         {room > 0 && (

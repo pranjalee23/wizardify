@@ -14,7 +14,7 @@ export default function DropAlert({ number, firstName, portraitUrl, site, unsubs
         For the next 48 hours, only members can order. After that, the doors open to all, and the non-magical folk come crowding in.
       </Text>
       <Text style={text}>
-        Your house, your story, your portrait: framed, moving, and yours to keep, from ₹10,999. Each drop is limited, so once the frames
+        Your house, your story, your portrait: framed, moving, and yours to keep, from ₹11,999. Each drop is limited, so once the frames
         are gone, they&apos;re gone until the next chapter.
       </Text>
       <Cta href={portraitUrl}>CREATE MY PORTRAIT</Cta>

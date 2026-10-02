@@ -6,12 +6,16 @@ export const faqTopics = [
       ['What kind of photos should I upload?', 'Clear, well-lit photos with your face easy to see, from a few different angles. Skip heavy filters.'],
       ['How many photos do I need?', '3 to 8 photos work best.'],
       [
+        'What happens to my photos?',
+        "They're kept private and used only to create your portrait. We delete them automatically 7 days after you approve your preview.",
+      ],
+      [
         'How is my portrait created?',
         'You choose your house, tell us your story and send us your photos. Our team turns them into a custom animated portrait, themed to your house and the life you imagine there.',
       ],
       [
         'Can I request changes?',
-        "We don't make changes to a finished preview, but we can customise your portrait. Write to us at hello@wizardify.me with what you have in mind and we'll tell you what's possible. You see your preview first, and pay only once you approve it.",
+        "Yes. You see your preview before anything is made, and you can ask for up to two rounds of changes to it. You pay only once you're happy and approve it.",
       ],
       [
         'How long does it take?',
@@ -86,7 +90,7 @@ export const faqTopics = [
       ],
       [
         'What does the starting price include?',
-        'Both sizes start at ₹10,999. That includes up to 6 clips and 2 minutes of playback, in Classic mode, which plays your portrait on a gentle loop.',
+        'Both sizes start at ₹11,999. That includes up to 6 clips and 2 minutes of playback, in Classic mode, which plays your portrait on a gentle loop.',
       ],
       [
         'What is More Magic?',
@@ -102,7 +106,7 @@ export const faqTopics = [
     id: 'general',
     label: 'General',
     questions: [
-      ['Where do you ship?', "We ship across India and internationally. You'll see delivery times and costs at checkout, before you pay."],
+      ['Where do you ship?', "Delivery is free across India. We ship internationally too; the delivery cost for your country is shown at checkout, before you pay."],
       [
         'What if my frame arrives damaged?',
         "Every frame is packed with care, but if yours arrives damaged, email us a photo within 48 hours of delivery and we'll send a replacement at no cost.",
