@@ -13,7 +13,6 @@ export type House = {
   cardAlt: string
   core: string
   border: string
-  banner: string
 }
 
 export const houses: House[] = [
@@ -31,7 +30,6 @@ export const houses: House[] = [
     cardAlt: 'An ember-lit hall with candles',
     core: '#6B2A0E',
     border: '#B4561F',
-    banner: '#8E3F15',
   },
   {
     id: 'tidesong',
@@ -47,7 +45,6 @@ export const houses: House[] = [
     cardAlt: 'A moonlit sea-view hall in teal light',
     core: '#0B3C42',
     border: '#2A8A92',
-    banner: '#0F4950',
   },
   {
     id: 'nightbloom',
@@ -63,7 +60,6 @@ export const houses: House[] = [
     cardAlt: 'A violet observatory under the stars',
     core: '#2E1846',
     border: '#7A4FA8',
-    banner: '#3B2156',
   },
   {
     id: 'stonecrest',
@@ -79,7 +75,6 @@ export const houses: House[] = [
     cardAlt: 'A copper-lit stone hall',
     core: '#2C3036',
     border: '#C07A4A',
-    banner: '#474B52',
   },
 ]
 

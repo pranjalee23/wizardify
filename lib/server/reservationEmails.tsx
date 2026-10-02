@@ -54,16 +54,14 @@ export async function sendConfirmation(r: Held) {
 }
 
 // At most one every 10 minutes per reservation, so the form can't be used to flood someone's inbox
-type Progress = { house: string | null; known_for: string | null; setting: string | null; photos: number }
-
-export async function sendContinueLink(r: Held & Progress & { continue_sent_at: string | null }) {
+export async function sendContinueLink(r: Held & { priority: 'first' | 'standard'; continue_sent_at: string | null }) {
   if (r.continue_sent_at && Date.now() - Date.parse(r.continue_sent_at) < 10 * 60 * 1000) return
   const { error } = await db().from('reservations').update({ continue_sent_at: new Date().toISOString() }).eq('id', r.id)
   if (error) throw error
   const number = reservationNumber(r.number)
   const first = firstName(r.name)
-  // First in line: portrait preferences on record (as on the certificate)
-  const firstInLine = Boolean(r.house || r.known_for || r.setting)
+  // First in line: all six portrait preferences on record, as on the certificate
+  const firstInLine = r.priority === 'first'
   after(() =>
     toMember(r, 'transactional', first ? `Back so soon, ${first}? Your place is still held` : 'Back so soon? Your place is still held', (site) => (
       <ContinueReservation number={number} firstName={first} firstInLine={firstInLine} continueUrl={continueUrl(site, r.id)} site={site} />

@@ -6,7 +6,7 @@ import Arrow from '@/components/Arrow'
 import Crest from '@/components/Crest'
 import { savePreferences } from '@/app/reserve/actions'
 import { houses, type HouseId } from '@/lib/houses'
-import { knownForOptions, settingOptions } from '@/lib/preferences'
+import { companionOptions, knownForOptions, roleOptions, settingOptions, skyballOptions } from '@/lib/preferences'
 import { routes } from '@/lib/routes'
 import ui from '@/components/ui.module.css'
 import FormMessage from './FormMessage'
@@ -15,15 +15,28 @@ import s from './PreferencesForm.module.css'
 
 const groups = [
   { key: 'knownFor', title: 'KNOWN FOR', options: knownForOptions },
+  { key: 'role', title: 'YOUR ROLE', options: roleOptions },
+  { key: 'skyball', title: 'SKYBALL', options: skyballOptions },
+  { key: 'companion', title: 'COMPANION', options: companionOptions },
   { key: 'setting', title: 'YOUR SETTING', options: settingOptions },
 ] as const
 
-type Props = { house: HouseId | null; knownFor: string | null; setting: string | null }
+type Pick = string | null
+type Props = { house: HouseId | null; knownFor: Pick; role: Pick; skyball: Pick; companion: Pick; setting: Pick }
 
 export default function PreferencesForm(saved: Props) {
   const [state, save, pending] = useActionState(savePreferences, null)
   const [house, setHouse] = useState(saved.house ?? undefined)
-  const [picks, setPicks] = useState({ knownFor: saved.knownFor ?? undefined, setting: saved.setting ?? undefined })
+  const [picks, setPicks] = useState({
+    knownFor: saved.knownFor ?? undefined,
+    role: saved.role ?? undefined,
+    skyball: saved.skyball ?? undefined,
+    companion: saved.companion ?? undefined,
+    setting: saved.setting ?? undefined,
+  })
+
+  // First in line takes all six: the house and the five groups below it
+  const chosen = [house, ...Object.values(picks)].filter(Boolean).length
 
   return (
     <form
@@ -76,6 +89,9 @@ export default function PreferencesForm(saved: Props) {
           </div>
         </fieldset>
       ))}
+      <p className={s.progress} aria-live="polite">
+        {chosen === 6 ? 'All six chosen. You’re first in line.' : `${chosen} of 6 chosen. Choose all six to be first in line.`}
+      </p>
       <div className={`${r.actions} ${s.actions}`}>
         <Link href={routes.reserve(3)} className={r.skip}>
           Skip this step

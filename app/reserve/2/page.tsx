@@ -27,10 +27,17 @@ export default async function ReserveStep2() {
             <path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#8A6526" />
           </svg>
           <p className={s.noteText}>
-            Members whose portrait preferences are on record will be the first to receive their portraits when the doors reopen.
+            Members who complete all six portrait preferences will be the first to receive their portraits when the doors reopen.
           </p>
         </div>
-        <PreferencesForm house={houseById(reservation.house ?? undefined)?.id ?? null} knownFor={reservation.known_for} setting={reservation.setting} />
+        <PreferencesForm
+          house={houseById(reservation.house ?? undefined)?.id ?? null}
+          knownFor={reservation.known_for}
+          role={reservation.role}
+          skyball={reservation.skyball}
+          companion={reservation.companion}
+          setting={reservation.setting}
+        />
       </main>
     </PageShell>
   )

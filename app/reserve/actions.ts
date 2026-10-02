@@ -7,7 +7,7 @@ import { after } from 'next/server'
 import { z } from 'zod'
 import { houses, type HouseId } from '@/lib/houses'
 import { MAX_PHOTOS, MAX_PHOTO_MB, photoTypes, type PhotoType } from '@/lib/photos'
-import { knownForOptions, settingOptions } from '@/lib/preferences'
+import { companionOptions, knownForOptions, roleOptions, settingOptions, skyballOptions } from '@/lib/preferences'
 import { routes } from '@/lib/routes'
 import { notifyProblem, notifyTeam } from '@/lib/server/alerts'
 import { emailProblem } from '@/lib/server/emailCheck'
@@ -85,9 +85,9 @@ export async function startReservation(_: FormState, form: FormData) {
   return safely('reserve', () => reserve(form), trouble)
 }
 
-// Where the visitor is, roughly, from their internet connection (Vercel adds it to each request).
-// Good for knowing where members are; too rough to ship to, as mobile networks often place people in
-// a city far from where they are.
+// Where the visitor is, roughly, from their internet connection (Vercel adds it to each request),
+// and their IP address. Good for knowing where members are and spotting spam; too rough to ship to,
+// as mobile networks often place people in a city far from where they are.
 async function roughLocation() {
   const h = await headers()
   const read = (name: string) => {
@@ -99,7 +99,9 @@ async function roughLocation() {
     }
   }
   const country = read('x-vercel-ip-country')
+  const ip = (h.get('x-real-ip') ?? h.get('x-forwarded-for')?.split(',')[0] ?? '').trim().slice(0, 64)
   return {
+    ip: ip || null,
     approx_city: read('x-vercel-ip-city'),
     approx_region: read('x-vercel-ip-country-region'),
     approx_country: country && /^[A-Z]{2}$/.test(country) ? country : null,
@@ -118,11 +120,12 @@ async function reserve(form: FormData): Promise<FormState> {
   if (!whatsapp) return { error: 'Please enter a valid 10-digit WhatsApp number.' }
   const house = houseId.parse(field(form, 'house') || null)
   if (!(await isHuman(field(form, 'cf-turnstile-response')))) {
+    after(() => notifyProblem('bots', 'Cloudflare stopped a likely bot from reserving on the drop form.'))
     return { error: "We couldn't confirm you're not a robot. If you see “Verify you are human” below, tick it, then try again." }
   }
 
   const find = async () => {
-    const { data, error } = await db().from('reservations').select('id, number, email, name, house, known_for, setting, photos, continue_sent_at').eq('email', email.data).maybeSingle()
+    const { data, error } = await db().from('reservations').select('id, number, email, name, priority, continue_sent_at').eq('email', email.data).maybeSingle()
     if (error) throw error
     return data
   }
@@ -141,8 +144,18 @@ async function reserve(form: FormData): Promise<FormState> {
       after(async () => {
         const { count } = await db().from('reservations').select('*', { count: 'exact', head: true })
         const houseName = houses.find((h) => h.id === house)?.name
-        const where = location.approx_city ? `, from ${location.approx_city}` : ''
+        const { approx_city: city, ip } = location
+        const where = city ? `, from ${city}` : ''
         await notifyTeam(`🪄 New reservation: ${reservationNumber(created.number)}${houseName ? `, ${houseName}` : ''}${where}. ${count ?? '?'} members in all.`)
+        // Lots of reservations from one address in a short time looks like spam
+        if (ip) {
+          const { count: fromIp } = await db()
+            .from('reservations')
+            .select('*', { count: 'exact', head: true })
+            .eq('ip', ip)
+            .gte('created_at', new Date(Date.now() - 60 * 60 * 1000).toISOString())
+          if ((fromIp ?? 0) >= 5) await notifyProblem(`ip-${ip}`, `${fromIp} reservations from one IP address (${ip}) in the last hour. That might be spam; check them in the admin.`)
+        }
       })
       redirect(routes.reserve(1))
     }
@@ -168,6 +181,9 @@ export async function savePreferences(_: FormState, form: FormData) {
     await update({
       house: houseId.parse(field(form, 'house') || null),
       known_for: oneOf(knownForOptions).parse(field(form, 'knownFor') || null),
+      role: oneOf(roleOptions).parse(field(form, 'role') || null),
+      skyball: oneOf(skyballOptions).parse(field(form, 'skyball') || null),
+      companion: oneOf(companionOptions).parse(field(form, 'companion') || null),
       setting: oneOf(settingOptions).parse(field(form, 'setting') || null),
     })
     redirect(routes.reserve(3))

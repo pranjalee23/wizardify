@@ -13,8 +13,8 @@ const sections: LegalSection[] = [
     body: (
       <ul>
         <li>
-          When you reserve: your name, email address and WhatsApp number, and the house you chose, if any. We also note roughly where
-          you are (city, state and country), worked out from your internet connection.
+          When you reserve: your name, email address and WhatsApp number, and the house you chose, if any. We also note your IP address
+          and roughly where you are (city, state and country), worked out from your internet connection.
         </li>
         <li>If you share them: your portrait preferences, your wishes, and photos of yourself.</li>
         <li>
@@ -31,7 +31,7 @@ const sections: LegalSection[] = [
         <li>To send you drop alerts by email and WhatsApp when the doors reopen, as you agreed when you reserved.</li>
         <li>To create your portrait from your photos and preferences.</li>
         <li>To understand roughly where our members are.</li>
-        <li>To keep the reservation form safe from bots.</li>
+        <li>To keep the reservation form safe from bots and spam.</li>
       </ul>
     ),
   },

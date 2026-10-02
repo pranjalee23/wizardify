@@ -10,9 +10,13 @@ export type ReservationRow = {
   name: string | null
   house: string | null
   known_for: string | null
+  role: string | null
+  skyball: string | null
+  companion: string | null
   setting: string | null
   wish: string | null
-  // Roughly where they reserved from (see app/reserve/actions.ts)
+  // The IP address they reserved from, and roughly where that is (see app/reserve/actions.ts)
+  ip: string | null
   approx_city: string | null
   approx_region: string | null
   approx_country: string | null
@@ -30,6 +34,16 @@ export type ReservationRow = {
 
 type Generated = 'id' | 'number' | 'priority' | 'created_at' | 'updated_at'
 
+export type AdminRow = {
+  id: string
+  email: string
+  role: 'super_admin' | 'manager' | 'marketing' | 'viewer'
+  created_at: string
+  last_login_at: string | null
+}
+
+type AdminCodeRow = { email: string; code_hash: string; expires_at: string; attempts: number; sent_at: string }
+
 export type Database = {
   public: {
     Tables: {
@@ -37,6 +51,18 @@ export type Database = {
         Row: ReservationRow
         Insert: Partial<Omit<ReservationRow, Generated>> & Pick<ReservationRow, 'email' | 'whatsapp'>
         Update: Partial<Omit<ReservationRow, Generated>>
+        Relationships: []
+      }
+      admins: {
+        Row: AdminRow
+        Insert: Pick<AdminRow, 'email' | 'role'> & Partial<Pick<AdminRow, 'last_login_at'>>
+        Update: Partial<Pick<AdminRow, 'email' | 'role' | 'last_login_at'>>
+        Relationships: []
+      }
+      admin_codes: {
+        Row: AdminCodeRow
+        Insert: Pick<AdminCodeRow, 'email' | 'code_hash' | 'expires_at'> & Partial<Pick<AdminCodeRow, 'attempts' | 'sent_at'>>
+        Update: Partial<AdminCodeRow>
         Relationships: []
       }
     }

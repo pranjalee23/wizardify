@@ -68,9 +68,10 @@ export function SignOff() {
   )
 }
 
-type Props = { preview: string; site: string; unsubscribeUrl?: string; children: ReactNode }
+// `reason` replaces the footer's "you reserved a place" line, for emails sent for other reasons
+type Props = { preview: string; site: string; unsubscribeUrl?: string; reason?: ReactNode; children: ReactNode }
 
-export default function EmailLayout({ preview, site, unsubscribeUrl, children }: Props) {
+export default function EmailLayout({ preview, site, unsubscribeUrl, reason, children }: Props) {
   return (
     <Html lang="en">
       <Head>
@@ -90,11 +91,16 @@ export default function EmailLayout({ preview, site, unsubscribeUrl, children }:
             <Text style={{ ...small, fontStyle: 'italic' }}>Pictures were never meant to stay still.</Text>
             <Hr style={{ borderColor: colors.line, margin: '16px 0' }} />
             <Text style={small}>
-              You&apos;re receiving this because you reserved a place at{' '}
-              <Link href={site} style={{ color: colors.gold }}>
-                wizardify.me
-              </Link>
-              . Questions? Write to{' '}
+              {reason ?? (
+                <>
+                  You&apos;re receiving this because you reserved a place at{' '}
+                  <Link href={site} style={{ color: colors.gold }}>
+                    wizardify.me
+                  </Link>
+                  .
+                </>
+              )}{' '}
+              Questions? Write to{' '}
               <Link href="mailto:hello@wizardify.me" style={{ color: colors.gold }}>
                 hello@wizardify.me
               </Link>

@@ -5,7 +5,7 @@ type Props = { number: string; firstName?: string; firstInLine?: boolean; contin
 
 // Sent when someone reserves with an email that's already on the list. Only the owner of the inbox
 // can pick the reservation back up, so typing someone's email never reveals their details. Members
-// who haven't shared their portrait preferences yet get a nudge to; the rest hear they're set.
+// who haven't completed all their portrait preferences get a nudge to; the rest hear they're set.
 export default function ContinueReservation({ number, firstName, firstInLine, continueUrl, site, unsubscribeUrl }: Props) {
   return (
     <EmailLayout preview={`You're already on the list as ${number}.`} site={site} unsubscribeUrl={unsubscribeUrl}>
@@ -23,13 +23,13 @@ export default function ContinueReservation({ number, firstName, firstInLine, co
       </Text>
       {firstInLine ? (
         <Text style={text}>
-          Even better, your portrait preferences are on record, so you&apos;re first in line for your moving portrait when the doors
+          Even better, all your portrait preferences are on record, so you&apos;re first in line for your moving portrait when the doors
           reopen. Nothing left to do but wait, wand at the ready, looking a little smug.
         </Text>
       ) : (
         <Text style={text}>
-          Now, a little secret between us: members who share their portrait preferences are first in line for their moving portrait
-          frame when the doors reopen. Everyone else waits their turn with the non-magical folk, clutching photographs
+          Now, a little secret between us: members who complete all their portrait preferences are first in line for their moving
+          portrait frame when the doors reopen. Everyone else waits their turn with the non-magical folk, clutching photographs
           that refuse to move.
         </Text>
       )}

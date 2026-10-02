@@ -10,6 +10,5 @@ export const routes = {
   privacy: '/privacy',
   terms: '/terms',
   drop: '/drop',
-  create: (step: number) => `/create/${step}`,
   reserve: (step: number) => `/reserve/${step}`,
 } as const

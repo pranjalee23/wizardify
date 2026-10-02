@@ -13,7 +13,7 @@ const links = [
   { id: 'faq', label: 'FAQ', href: routes.faq },
 ] as const
 
-export type NavId = 'home' | 'create' | (typeof links)[number]['id']
+export type NavId = 'home' | (typeof links)[number]['id']
 
 export default function Nav({ active = 'home' }: { active?: NavId }) {
   return (

@@ -27,7 +27,7 @@ const sections: LegalSection[] = [
         <li>Reserving is free. It doesn&apos;t involve any payment or commit you to buy anything.</li>
         <li>
           Each drop is limited, so a reservation doesn&apos;t guarantee a frame. It gives you early access before the doors open to
-          everyone, and members whose portrait preferences are on record are first in line.
+          everyone, and members who complete all their portrait preferences are first in line.
         </li>
         <li>One reservation per email address. We may remove reservations that look automated or made with false details.</li>
         <li>You can ask us to remove your reservation at any time.</li>

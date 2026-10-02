@@ -67,14 +67,15 @@ All server-only code lives in `lib/server/`.
 
 ### Managing members
 
-The Supabase dashboard is the admin (supabase.com/dashboard, then the Wizardify project).
+The admin pages are at **/admin** (www.wizardify.me/admin). Sign in with your email address, and a 6-digit code is emailed to you each time.
 
-- **See members:** open Table Editor, then `reservations`. Each row is one member. `number` is their reservation number, so `1` is WZ-0001.
-- **Find someone:** use Filter on `email` or `number`.
-- **Photos:** open Storage, then `reservation-photos`. Each member's photos are in a folder named after their number, e.g. `WZ-0001`.
-- **Export the list:** in Table Editor, choose Export, then CSV. It opens in Excel and includes each member's approximate location (`approx_city`, `approx_region` and `approx_country`), worked out from their connection when they reserved.
-- **Delete a member on request:** delete their row in Table Editor. Their photos are removed automatically the next morning.
-- **Stop someone's alerts:** set `alerts_email` or `alerts_whatsapp` to false. Members can also do this themselves from the unsubscribe link in any email.
+- **Dashboard:** member counts, how many are first in line or have photos, the cities members are in, and the CSV downloads (all members, or a cities summary). The CSVs open in Excel.
+- **Members:** search by name, email or reservation number. A member's page shows everything they've told us and their photos, and lets you change their name and alerts or delete them. Deleting removes their photos too.
+- **Team:** add people, choose their role, or remove them. The page lists what each role can do.
+
+Roles and their permissions are set in `lib/server/admin.ts` (`ROLES`). To change what a role can do, edit its list there; every admin page and action checks it. Who has which role is stored in the `admins` table.
+
+The Supabase dashboard still works as a back door: the tables are `reservations`, `admins` and `admin_codes`, and photos are in the `reservation-photos` bucket, in folders named after reservation numbers.
 
 ### The daily check
 

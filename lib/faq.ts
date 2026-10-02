@@ -68,7 +68,7 @@ export const faqTopics = [
       ],
       [
         'Does the waitlist guarantee a frame?',
-        "No, because each drop is limited. Reserving gives you early access before the public, and members whose portrait preferences are on record are first in line.",
+        "No, because each drop is limited. Reserving gives you early access before the public, and members who complete all their portrait preferences are first in line.",
       ],
     ],
   },

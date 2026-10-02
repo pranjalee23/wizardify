@@ -1,9 +1,9 @@
 import 'server-only'
-import { createHmac, timingSafeEqual } from 'node:crypto'
 import { cache } from 'react'
 import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { routes } from '@/lib/routes'
+import { readToken, signToken } from './signing'
 import { db, type ReservationRow } from './supabase'
 
 // A visitor's reservation is theirs by a cookie holding its id, set when they reserve (or when they
@@ -47,38 +47,14 @@ export async function requireReservation() {
   return r
 }
 
-// Links in emails: the reservation id and an expiry, signed so they can't be forged or altered. Each
-// kind of link is signed for its purpose, so an unsubscribe link can't be used to open a reservation.
-type Purpose = 'continue' | 'unsubscribe'
-
-function sign(purpose: Purpose, payload: string) {
-  const secret = process.env.RESERVATION_SECRET
-  if (!secret) throw new Error('RESERVATION_SECRET is not set (see .env.example)')
-  return createHmac('sha256', secret).update(`${purpose}.${payload}`).digest('base64url')
-}
-
-function linkToken(purpose: Purpose, id: string, days: number) {
-  const payload = `${id}.${Math.floor(Date.now() / 1000) + days * 86400}`
-  return `${payload}.${sign(purpose, payload)}`
-}
-
-function readLinkToken(purpose: Purpose, token: string) {
-  const [id, expires, sig] = token.split('.')
-  if (!id || !expires || !sig) return undefined
-  const expected = Buffer.from(sign(purpose, `${id}.${expires}`))
-  const given = Buffer.from(sig)
-  if (given.length !== expected.length || !timingSafeEqual(given, expected)) return undefined
-  if (Number(expires) * 1000 < Date.now()) return undefined
-  return id
-}
-
+// Links in emails, signed so they can't be forged (see ./signing)
 // Brings a member back to their reservation on any device, for 30 days
-export const continueToken = (id: string) => linkToken('continue', id, 30)
-export const readContinueToken = (token: string) => readLinkToken('continue', token)
+export const continueToken = (id: string) => signToken('continue', id, 30 * 86400)
+export const readContinueToken = (token: string) => readToken('continue', token)
 
 // Changes which drop alerts a member gets; works for as long as the emails are kept
-export const unsubscribeToken = (id: string) => linkToken('unsubscribe', id, 3650)
-export const readUnsubscribeToken = (token: string) => readLinkToken('unsubscribe', token)
+export const unsubscribeToken = (id: string) => signToken('unsubscribe', id, 3650 * 86400)
+export const readUnsubscribeToken = (token: string) => readToken('unsubscribe', token)
 
 // Where links in emails point: the live site in production, this deployment on previews, and the
 // dev server locally
