@@ -19,8 +19,8 @@ export default function ReservationConfirmed({ number, firstName, continueUrl, s
       </Section>
       <Text style={text}>The moment the doors reopen, we&apos;ll send word here and on WhatsApp. No owl required.</Text>
       <Text style={text}>
-        Want to be first in line? Members whose portrait preferences and photos are on record receive their portraits first. It takes
-        about a minute, quicker than brewing a decent potion.
+        Want to be first in line? Members whose portrait preferences are on record receive their portraits first. It takes about a
+        minute, quicker than brewing a decent potion.
       </Text>
       <Cta href={continueUrl}>COMPLETE MY RESERVATION</Cta>
       <Text style={{ ...small, textAlign: 'center' }}>

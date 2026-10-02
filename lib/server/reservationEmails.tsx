@@ -19,10 +19,16 @@ function firstName(name: string | null) {
 
 const continueUrl = (site: string, id: string, to?: 'photos') => `${site}/reserve/continue?t=${continueToken(id)}${to ? `&to=${to}` : ''}`
 
-// Every email to a member carries a way to stop drop alerts: a link in the footer to the page where
-// they choose, and the headers Gmail, Yahoo and Apple Mail use for their own one-click Unsubscribe
-async function toMember(r: Held, subject: string, make: (site: string, unsubscribeUrl: string) => ReactElement) {
+// Emails answering something the member just did (the confirmation, the continue link) are
+// transactional. Reminders and drop alerts are bulk mail, so they carry a way to stop them: a footer
+// link to the page where members choose, and the headers Gmail, Yahoo and Apple Mail use for their own
+// one-click Unsubscribe. Keeping those off transactional emails helps Gmail file them under Updates
+// or Primary rather than Promotions.
+type Kind = 'transactional' | 'bulk'
+
+async function toMember(r: Held, kind: Kind, subject: string, make: (site: string, unsubscribeUrl?: string) => ReactElement) {
   const site = await siteUrl()
+  if (kind === 'transactional') return sendEmail({ to: r.email, subject, react: make(site) })
   const token = unsubscribeToken(r.id)
   return sendEmail({
     to: r.email,
@@ -41,8 +47,8 @@ export async function sendConfirmation(r: Held) {
   const number = reservationNumber(r.number)
   const first = firstName(r.name)
   after(() =>
-    toMember(r, first ? `Your place is held, ${first} ✨` : 'Your place is held ✨', (site, unsubscribeUrl) => (
-      <ReservationConfirmed number={number} firstName={first} continueUrl={continueUrl(site, r.id)} site={site} unsubscribeUrl={unsubscribeUrl} />
+    toMember(r, 'transactional', first ? `Your place is held, ${first} ✨` : 'Your place is held ✨', (site) => (
+      <ReservationConfirmed number={number} firstName={first} continueUrl={continueUrl(site, r.id)} site={site} />
     )),
   )
 }
@@ -56,25 +62,18 @@ export async function sendContinueLink(r: Held & Progress & { continue_sent_at: 
   if (error) throw error
   const number = reservationNumber(r.number)
   const first = firstName(r.name)
-  // First in line: preferences and photos both on record
-  const firstInLine = Boolean(r.house || r.known_for || r.setting) && r.photos > 0
+  // First in line: portrait preferences on record (as on the certificate)
+  const firstInLine = Boolean(r.house || r.known_for || r.setting)
   after(() =>
-    toMember(r, first ? `Back so soon, ${first}? Your place is still held` : 'Back so soon? Your place is still held', (site, unsubscribeUrl) => (
-      <ContinueReservation
-        number={number}
-        firstName={first}
-        firstInLine={firstInLine}
-        continueUrl={continueUrl(site, r.id)}
-        site={site}
-        unsubscribeUrl={unsubscribeUrl}
-      />
+    toMember(r, 'transactional', first ? `Back so soon, ${first}? Your place is still held` : 'Back so soon? Your place is still held', (site) => (
+      <ContinueReservation number={number} firstName={first} firstInLine={firstInLine} continueUrl={continueUrl(site, r.id)} site={site} />
     )),
   )
 }
 
 // Sent by the daily job (lib/server/daily.ts), which waits for it and records it
 export function sendPhotoReminder(r: Held, last: boolean) {
-  return toMember(r, last ? 'Last reminder: add your photos' : 'Add your photos to be first in line', (site, unsubscribeUrl) => (
+  return toMember(r, 'bulk', last ? 'Last reminder: add your photos' : 'Add your photos for your portrait', (site, unsubscribeUrl) => (
     <PhotoReminder
       number={reservationNumber(r.number)}
       firstName={firstName(r.name)}

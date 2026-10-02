@@ -47,7 +47,7 @@ const sections: LegalSection[] = [
           You allow us to use your photos only to create your portrait and its preview. We never show them, or your portrait, in our
           gallery or anywhere else without asking you first.
         </li>
-        <li>We delete your photos 3 days after you approve your preview.</li>
+        <li>We delete your photos 7 days after you approve your preview.</li>
       </ul>
     ),
   },

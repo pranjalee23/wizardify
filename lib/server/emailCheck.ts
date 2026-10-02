@@ -2,8 +2,8 @@ import 'server-only'
 import { promises as dns } from 'node:dns'
 
 // Checks an email address (already in a valid format) is one we can really reach: not a reserved or
-// test domain, not a throwaway inbox, not an obvious typo of a big provider, and on a domain that
-// receives email. Says what's wrong, or nothing if it's fine.
+// test domain, not a throwaway inbox, on a domain that receives email, and not a likely typo of a big
+// provider (which the member can confirm).
 
 // Reserved for examples and testing (example.com, anything.test, …), plus test.com
 const FAKE = /(^|\.)(example\.(com|net|org)|test\.com|test|example|invalid|localhost)$/
@@ -39,12 +39,41 @@ const TYPOS: Record<string, string> = {
   'rediffmial.com': 'rediffmail.com',
 }
 
-export async function emailProblem(email: string) {
+// The providers most members use, for "did you mean…?"
+const PROVIDERS = ['gmail.com', 'yahoo.com', 'yahoo.co.in', 'hotmail.com', 'outlook.com', 'icloud.com', 'rediffmail.com', 'live.com']
+
+// Real providers that happen to look like one of those, so they're never questioned
+const LOOKALIKES = new Set(['ymail.com', 'email.com', 'gmx.com', 'mail.com', 'me.com', 'mac.com', 'aol.com', 'yahoo.in', 'outlook.in', 'live.in'])
+
+// How many letters differ between two words (added, removed or changed)
+function distance(a: string, b: string) {
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j)
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i]
+    for (let j = 1; j <= b.length; j++) row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1))
+    prev = row
+  }
+  return prev[b.length]
+}
+
+// The provider they probably meant, if the domain is a likely slip of the finger
+function meant(domain: string) {
+  if (TYPOS[domain]) return TYPOS[domain]
+  if (/\.(con|cmo|ocm)$/.test(domain)) return domain.replace(/\.\w+$/, '.com')
+  if (PROVIDERS.includes(domain) || LOOKALIKES.has(domain)) return undefined
+  return PROVIDERS.find((p) => distance(domain, p) <= 2)
+}
+
+// What's wrong with the address, if anything. `error` stops the reservation; a `check` is a likely
+// typo, which the member can wave through by pressing Reserve again with the same address (`confirmed`)
+export async function emailProblem(email: string, confirmed: boolean): Promise<{ error: string } | { check: string } | undefined> {
   const [name, domain] = email.split('@')
-  const fix = TYPOS[domain] ?? (/\.(con|cmo|ocm)$/.test(domain) ? domain.replace(/\.\w+$/, '.com') : undefined)
-  if (fix) return `Did you mean ${name}@${fix}?`
-  if (FAKE.test(domain) || THROWAWAY.has(domain)) return 'Please use your own email address, so your drop alerts reach you.'
-  if (!(await receivesEmail(domain))) return `We can't find ${domain}. Please check your email address.`
+  if (FAKE.test(domain) || THROWAWAY.has(domain)) return { error: 'Please use your own email address, so your drop alerts reach you.' }
+  const suggestion = meant(domain)
+  if (!(await receivesEmail(domain))) {
+    return { error: suggestion ? `Did you mean ${name}@${suggestion}?` : `We can't find ${domain}. Please check your email address.` }
+  }
+  if (suggestion && !confirmed) return { check: `Did you mean ${name}@${suggestion}? If ${email} is right, press Reserve again.` }
 }
 
 // Asks Cloudflare's and Google's public DNS, which say clearly when a domain doesn't exist (some home

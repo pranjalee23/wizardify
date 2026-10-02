@@ -39,6 +39,8 @@ export default function DropForm({ house }: { house?: HouseId }) {
           startTransition(() => reserve(form))
         }}
       >
+        {/* Set when the server asked "did you mean…?", so pressing Reserve again keeps that address */}
+        <input type="hidden" name="emailConfirmed" value={state?.confirmEmail ?? ''} />
         <div className={s.fields}>
           <div className={s.field}>
             <label htmlFor="drop-name" className={s.label}>

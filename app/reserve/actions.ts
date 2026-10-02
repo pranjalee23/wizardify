@@ -20,7 +20,8 @@ import { isHuman } from '@/lib/server/turnstile'
 // visitor's cookie only, and checks everything it's given: these can be called by anyone, not just
 // through the site's forms.
 
-export type FormState = { error?: string; notice?: string } | null
+// confirmEmail: the address a "did you mean…?" asked about, so pressing Reserve again keeps it
+export type FormState = { error?: string; notice?: string; confirmEmail?: string } | null
 
 const trouble = { error: 'Something went wrong on our side. Please try again in a moment.' }
 
@@ -110,8 +111,9 @@ async function reserve(form: FormData): Promise<FormState> {
   if (!name.success) return { error: 'Please tell us your name.' }
   const email = emailAddress.safeParse(field(form, 'email'))
   if (!email.success) return { error: 'Please enter a valid email address.' }
-  const emailIssue = await emailProblem(email.data)
-  if (emailIssue) return { error: emailIssue }
+  const emailIssue = await emailProblem(email.data, field(form, 'emailConfirmed') === email.data)
+  if (emailIssue && 'error' in emailIssue) return { error: emailIssue.error }
+  if (emailIssue) return { error: emailIssue.check, confirmEmail: email.data }
   const whatsapp = indianMobile(field(form, 'whatsapp'))
   if (!whatsapp) return { error: 'Please enter a valid 10-digit WhatsApp number.' }
   const house = houseId.parse(field(form, 'house') || null)
@@ -160,16 +162,13 @@ async function reserve(form: FormData): Promise<FormState> {
   return { notice: "You're already on the list. We've emailed you a link to continue your reservation." }
 }
 
-// /reserve/2: portrait preferences, and the pin code to ship to (both optional)
+// /reserve/2: portrait preferences (optional)
 export async function savePreferences(_: FormState, form: FormData) {
   return safely('save their preferences', async (): Promise<FormState> => {
-    const pincode = field(form, 'pincode').replace(/\s/g, '')
-    if (pincode && !/^[1-9]\d{5}$/.test(pincode)) return { error: 'Please enter a 6-digit pin code, or leave it empty.' }
     await update({
       house: houseId.parse(field(form, 'house') || null),
       known_for: oneOf(knownForOptions).parse(field(form, 'knownFor') || null),
       setting: oneOf(settingOptions).parse(field(form, 'setting') || null),
-      pincode: pincode || null,
     })
     redirect(routes.reserve(3))
   }, trouble)

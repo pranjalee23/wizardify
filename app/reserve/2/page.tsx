@@ -30,7 +30,7 @@ export default async function ReserveStep2() {
             Members whose portrait preferences are on record will be the first to receive their portraits when the doors reopen.
           </p>
         </div>
-        <PreferencesForm house={houseById(reservation.house ?? undefined)?.id ?? null} knownFor={reservation.known_for} setting={reservation.setting} pincode={reservation.pincode} />
+        <PreferencesForm house={houseById(reservation.house ?? undefined)?.id ?? null} knownFor={reservation.known_for} setting={reservation.setting} />
       </main>
     </PageShell>
   )

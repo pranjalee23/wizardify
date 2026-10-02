@@ -22,36 +22,6 @@
   color: #F2DDB0;
 }
 
-.pinNote {
-  margin-bottom: 12px;
-  font-size: 15px;
-  color: #C9BFAE;
-}
-
-.pin {
-  width: 220px;
-  height: 54px;
-  box-sizing: border-box;
-  padding: 0 22px;
-  border: 1px solid #8A7550;
-  border-radius: 999px;
-  background: rgba(10, 14, 24, 0.75);
-  color: #F2DDB0;
-  font-family: inherit;
-  font-size: 16px;
-  letter-spacing: 0.12em;
-}
-
-.pin::placeholder {
-  letter-spacing: normal;
-  color: #8E8578;
-}
-
-.pin:focus-visible {
-  outline: 2px solid #D9B26A;
-  outline-offset: 2px;
-}
-
 .houses {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

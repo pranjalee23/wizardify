@@ -16,7 +16,7 @@ const sections: LegalSection[] = [
           When you reserve: your name, email address and WhatsApp number, and the house you chose, if any. We also note roughly where
           you are (city, state and country), worked out from your internet connection.
         </li>
-        <li>If you share them: your portrait preferences, your shipping pin code, your wishes, and photos of yourself.</li>
+        <li>If you share them: your portrait preferences, your wishes, and photos of yourself.</li>
         <li>
           One cookie that keeps your reservation open in your browser. We don&apos;t use advertising or tracking cookies.
         </li>
@@ -30,7 +30,7 @@ const sections: LegalSection[] = [
         <li>To hold your reservation, send you its confirmation, and remind you to add your photos.</li>
         <li>To send you drop alerts by email and WhatsApp when the doors reopen, as you agreed when you reserved.</li>
         <li>To create your portrait from your photos and preferences.</li>
-        <li>To plan delivery to your pin code, and to understand roughly where our members are.</li>
+        <li>To understand roughly where our members are.</li>
         <li>To keep the reservation form safe from bots.</li>
       </ul>
     ),
@@ -52,7 +52,7 @@ const sections: LegalSection[] = [
     body: (
       <p>
         We use your photos only to create your portrait. They&apos;re kept private and never shown in our gallery or anywhere else without
-        your permission. We delete them 3 days after you approve your preview.
+        your permission. We delete them 7 days after you approve your preview.
       </p>
     ),
   },
@@ -76,7 +76,7 @@ const sections: LegalSection[] = [
     title: 'How long we keep it',
     body: (
       <p>
-        We delete your photos 3 days after you approve your preview. We keep your other details while your reservation or order is open,
+        We delete your photos 7 days after you approve your preview. We keep your other details while your reservation or order is open,
         and delete them when you ask us to.
       </p>
     ),

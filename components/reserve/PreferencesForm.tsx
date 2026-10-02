@@ -18,13 +18,12 @@ const groups = [
   { key: 'setting', title: 'YOUR SETTING', options: settingOptions },
 ] as const
 
-type Props = { house: HouseId | null; knownFor: string | null; setting: string | null; pincode: string | null }
+type Props = { house: HouseId | null; knownFor: string | null; setting: string | null }
 
 export default function PreferencesForm(saved: Props) {
   const [state, save, pending] = useActionState(savePreferences, null)
   const [house, setHouse] = useState(saved.house ?? undefined)
   const [picks, setPicks] = useState({ knownFor: saved.knownFor ?? undefined, setting: saved.setting ?? undefined })
-  const [pincode, setPincode] = useState(saved.pincode ?? '')
 
   return (
     <form
@@ -32,7 +31,7 @@ export default function PreferencesForm(saved: Props) {
       onSubmit={(e) => {
         e.preventDefault()
         const form = new FormData()
-        for (const [k, v] of Object.entries({ house, ...picks, pincode })) if (v) form.set(k, v)
+        for (const [k, v] of Object.entries({ house, ...picks })) if (v) form.set(k, v)
         startTransition(() => save(form))
       }}
     >
@@ -77,25 +76,6 @@ export default function PreferencesForm(saved: Props) {
           </div>
         </fieldset>
       ))}
-      <fieldset className={s.fieldset}>
-        <legend className={s.legend}>SHIPPING PIN CODE</legend>
-        <label htmlFor="rp-pincode" className={s.pinNote}>
-          Optional. Where we&apos;ll ship your frame when the doors reopen.
-        </label>
-        <input
-          id="rp-pincode"
-          name="pincode"
-          type="text"
-          inputMode="numeric"
-          autoComplete="postal-code"
-          pattern="[1-9][0-9]{5}"
-          title="A 6-digit pin code"
-          placeholder="e.g. 411001"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-          className={s.pin}
-        />
-      </fieldset>
       <div className={`${r.actions} ${s.actions}`}>
         <Link href={routes.reserve(3)} className={r.skip}>
           Skip this step
