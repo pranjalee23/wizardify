@@ -1,0 +1,32 @@
+# The 9am check from outside Vercel. The site checks itself every morning (app/api/cron/daily), but
+# that check runs on Vercel, so it can't notice when Vercel itself, and so the whole site, is down.
+# This one runs on GitHub, calls the site's health check, and messages the team's Telegram if the
+# site or its database doesn't answer.
+name: Daily site check
+
+on:
+  schedule:
+    # 9:05 am India time, just after the site's own check
+    - cron: '35 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check the site and its database
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          status=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 20 https://www.wizardify.me/api/health || true)
+          echo "Health check answered: ${status:-nothing}"
+          if [ "$status" = "200" ]; then exit 0; fi
+          if [ "$status" = "503" ]; then
+            msg="⚠️ Wizardify's site is up, but its database can't be reached. Check the Supabase dashboard (supabase.com/dashboard)."
+          else
+            msg="⚠️ Wizardify looks down: the website didn't answer the 9am check from outside Vercel (got ${status:-no answer}). Check vercel.com/status and the Vercel dashboard."
+          fi
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" -d chat_id="${TELEGRAM_CHAT_ID}" --data-urlencode text="$msg" > /dev/null
+          exit 1
