@@ -80,13 +80,13 @@ export default function FrameDetails({ tier, style, price, onClose }: Props) {
             <div className={s.figure}>
               {style === 'gold' ? (
                 <div className={s.gold}>
-                  <img className={s.goldArt} src={tier.img} alt={`${tier.name} in the antique gold frame`} />
-                  <img className={s.goldFrame} src="/images/frame.png" alt="" />
+                  <img className={s.goldArt} loading="lazy" decoding="async" src={tier.img} alt={`${tier.name} in the antique gold frame`} />
+                  <img className={s.goldFrame} src="/images/frame.webp" alt="" loading="lazy" decoding="async" />
                 </div>
               ) : (
                 <div className={s.black}>
                   <div className={s.mat}>
-                    <img className={s.blackArt} src={tier.img} alt={`${tier.name} in the modern black frame`} />
+                    <img className={s.blackArt} loading="lazy" decoding="async" src={tier.img} alt={`${tier.name} in the modern black frame`} />
                   </div>
                 </div>
               )}

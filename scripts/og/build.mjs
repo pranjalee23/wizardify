@@ -28,7 +28,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
   .kicker { font-family: Cinzel, Georgia, serif; font-weight: 700; font-size: 18px; letter-spacing: 0.18em; color: #D9B26A; white-space: nowrap; }
 </style></head><body>
   <div class="room"></div><div class="shade"></div>
-  <img class="frame" src="${img('frame-front.png')}">
+  <img class="frame" src="${img('frame-front.webp')}">
   <div class="text">
     <img class="logo" src="${img('logo.webp')}">
     <div class="line"></div>

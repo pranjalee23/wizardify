@@ -26,7 +26,7 @@ export default function GalleryPage() {
         </p>
         <GalleryGrid />
         <LivingOwl owl={galleryOwl} className={s.decoRight} />
-        <LitImage className={s.decoLeft} src="/images/deco-gallery-left.png" bleed />
+        <LitImage className={s.decoLeft} src="/images/deco-gallery-left.webp" bleed />
         <nav aria-label="Gallery pages" className={s.pager} data-reveal="0">
           <button type="button" aria-label="Previous page" className={`${s.pageBtn} ${s.pageOff}`}>
             &lt;

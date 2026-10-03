@@ -79,7 +79,7 @@ export default async function HousePage({ params }: Params) {
           {examplePortraits.map((p, i) => (
             <figure key={p.src} className={s.exFig} data-reveal={String(1 + i)}>
               <Framed width={236} delay={i * 1.4}>
-                <img className={ui.top} src={p.src} alt={p.alt} />
+                <img className={ui.top} src={p.src} alt={p.alt} loading="lazy" decoding="async" />
               </Framed>
             </figure>
           ))}

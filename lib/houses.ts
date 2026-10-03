@@ -1,6 +1,6 @@
 export type HouseId = 'emberwyn' | 'tidesong' | 'nightbloom' | 'stonecrest'
 
-export type House = {
+type House = {
   id: HouseId
   name: string
   title: string

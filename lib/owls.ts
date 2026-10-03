@@ -3,7 +3,7 @@
 import type { OwlRig } from '@/components/LivingOwl'
 
 export const galleryOwl: OwlRig = {
-  src: '/images/deco-gallery-right.png',
+  src: '/images/deco-gallery-right.webp',
   rig: '/images/deco-gallery-right-rig.png',
   size: [641, 742],
   headPivot: [303, 200],
@@ -20,7 +20,7 @@ export const galleryOwl: OwlRig = {
 }
 
 export const houseOwl: OwlRig = {
-  src: '/images/deco-house.png',
+  src: '/images/deco-house.webp',
   rig: '/images/deco-house-rig.png',
   size: [694, 727],
   headPivot: [490, 190],

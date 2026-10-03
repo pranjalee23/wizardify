@@ -20,7 +20,7 @@ export default function Footer() {
         <div className={s.top}>
           <div className={s.brand}>
             <Link href={routes.home} className={s.home}>
-              <img className={s.logo} src="/images/logo.webp" width={720} height={266} alt="Wizardify" />
+              <img className={s.logo} src="/images/logo.webp" width={720} height={266} alt="Wizardify" loading="lazy" decoding="async" />
             </Link>
             <div className={s.tagline}>Pictures were never meant to stay still.</div>
           </div>

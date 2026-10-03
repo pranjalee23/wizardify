@@ -25,6 +25,10 @@
   height: 100%;
 }
 
+.picture {
+  display: contents;
+}
+
 .layer {
   position: absolute;
   inset: 0;
@@ -33,6 +37,9 @@
 
 .flame {
   position: absolute;
+  background-image: var(--fi);
+  background-size: var(--fs);
+  background-position: var(--fp);
   background-repeat: no-repeat;
   -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 62%, transparent 100%);
   mask-image: radial-gradient(ellipse 50% 50% at 50% 56%, #000 62%, transparent 100%);
@@ -100,6 +107,27 @@
   86% {
     opacity: 0.62;
     scale: 0.96;
+  }
+}
+
+/* PHONE_MEDIA (lib/phone-crops.ts): the background is just the strip phones see, set where it sits in
+   the full picture, and the flames come from it too */
+@media (max-width: 700px) {
+  .strip {
+    position: absolute;
+    top: 0;
+    left: calc(var(--px) * 100%);
+    width: calc(var(--pw) * 100%);
+  }
+
+  .flame {
+    background-image: var(--fi-phone, var(--fi));
+    background-size: var(--fs-phone, var(--fs));
+    background-position: var(--fp-phone, var(--fp));
+  }
+
+  .offPhone {
+    display: none;
   }
 }
 

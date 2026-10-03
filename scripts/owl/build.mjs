@@ -14,7 +14,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '../..')
 const owls = {
   // Gallery and FAQ: the owl standing on books
   galleryOwl: {
-    src: 'deco-gallery-right.png',
+    src: 'deco-gallery-right.webp',
     size: [641, 742],
     neck: [150, 235],
     headPivot: [303, 200],
@@ -34,7 +34,7 @@ const owls = {
   },
   // The house pages: the owl on a branch with one wing raised
   houseOwl: {
-    src: 'deco-house.png',
+    src: 'deco-house.webp',
     size: [694, 727],
     neck: [140, 215],
     headPivot: [490, 190],
@@ -65,7 +65,7 @@ for (const [name, o] of Object.entries(owls)) {
     (o) => window.buildOwlRig({ origin: [0, 0], size: o.size, neck: o.neck, wing: o.wing.outline, face: o.face }),
     o,
   )
-  const rigName = o.src.replace(/\.png$/, '-rig.png')
+  const rigName = o.src.replace(/\.\w+$/, '-rig.png')
   writeFileSync(join(root, 'public/images', rigName), Buffer.from(url.split(',')[1], 'base64'))
   entries.push(`export const ${name}: OwlRig = {
   src: '/images/${o.src}',

@@ -26,9 +26,23 @@ Wizardify turns your photos into a living portrait — a digital picture frame t
 
 This repo contains the Wizardify website, where customers:
 
-- upload their photos
-- complete the house / Skyball / personalization questionnaire
-- place their order
+- reserve their place for the drop
+- choose their portrait preferences (house, Skyball and more) and add their photos
+- watch their portrait preview, then approve it or ask for changes
+
+It also has the team's admin pages (/admin). Checkout and orders come later.
+
+- `app/`, `components/`, `lib/` and `emails/`: the site, the admin and the emails.
+- `supabase/migrations/`: the database schema.
+- `designs/` and `scripts/`: the original artwork and the scripts that turn it into the site's images (the hero room, owl, candles, wand, parchment) and the link-preview image (`scripts/og/build.mjs`). They aren't deployed. Run a script again after changing its artwork, for example `node scripts/og/build.mjs`.
+
+### Adding videos and images
+
+- **Videos** (`public/videos/`) are short silent loops. Encode them small, or the pages get slow on phones: 900 px wide for the house videos (1600 for wide ones), for example with `ffmpeg -i in.mp4 -an -vf scale=900:-2 -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -movflags +faststart out.mp4`. That keeps a 6-second loop around 0.6 to 1.2 MB.
+- Each video needs a still image of its **first frame**. `components/LivingPicture` shows it until the video is playing, and keeps showing it for people with reduced motion or Data Saver on.
+- **Transparent artwork** goes in as WebP, not PNG: it's around 85% smaller and looks the same.
+- **Page backgrounds** (the hero room, the candlelit room, the study, the castle) have phone versions: just the strip of the picture a phone shows, cut by `node scripts/backgrounds/phone.mjs`. Run it again after changing one of those pictures.
+- Images further down a page get `loading="lazy"`; the first thing on screen gets `fetchPriority="high"` instead.
 
 The site is deployed on [Vercel](https://vercel.com).
 

@@ -1,7 +1,7 @@
 // Candle flames in the site's photographs, so they can be made to flicker (components/Flicker).
 // Each flame is [centre x, centre y, height] in the image's own pixels. Found with scripts/flames/detect.mjs,
 // then checked by eye: glints on brass and glass removed, and blurred or dim flames it missed added.
-export type ImageFlames = { w: number; h: number; flames: [number, number, number][] }
+type ImageFlames = { w: number; h: number; flames: [number, number, number][] }
 
 export const imageFlames: Record<string, ImageFlames> = {
   // The lit room behind the inner pages (from designs/hero/room-lit.png); its three candles on the left
@@ -91,7 +91,7 @@ export const imageFlames: Record<string, ImageFlames> = {
       [147, 549, 73],
     ],
   },
-  '/images/deco-gallery-left.png': {
+  '/images/deco-gallery-left.webp': {
     w: 497,
     h: 469,
     flames: [

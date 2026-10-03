@@ -8,7 +8,7 @@ export const filters = [
   ['mentor', 'Mentors'],
 ] as const
 
-export type Portrait = { name: string; house: string; tags: string[]; src: string; alt: string }
+type Portrait = { name: string; house: string; tags: string[]; src: string; alt: string }
 
 export const portraits: Portrait[] = [
   { name: 'The Charms Student', house: 'Nightbloom', tags: ['nightbloom'], src: '/images/portrait.jpg', alt: 'A young witch with a wand before a castle at dusk' },

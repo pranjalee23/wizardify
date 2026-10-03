@@ -23,9 +23,9 @@ export default function PortraitFrame({
   return (
     <div className={className ? `${s.group} ${className}` : s.group} style={style}>
       <div className={s.window}>
-        <img className={s.painting} src={src} alt={alt} />
+        <img className={s.painting} src={src} alt={alt} fetchPriority="high" />
       </div>
-      <img className={s.gilt} src="/images/frame.png" alt="" />
+      <img className={s.gilt} src="/images/frame.webp" alt="" fetchPriority="high" />
       {children}
     </div>
   )

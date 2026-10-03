@@ -120,7 +120,7 @@ export async function allMembers<K extends keyof ReservationRow>(columns: K[], f
   }
 }
 
-export type CityCount = { city: string; region: string | null; country: string | null; members: number }
+type CityCount = { city: string; region: string | null; country: string | null; members: number }
 
 // Members by approximate city, most first. Members whose city couldn't be worked out are grouped as "Unknown".
 export async function cities(filters: Filters = {}) {

@@ -36,7 +36,7 @@ export const ROLES = {
 } as const
 
 export type Role = keyof typeof ROLES
-export type Admin = { id: string; email: string; role: Role }
+type Admin = { id: string; email: string; role: Role }
 
 export const can = (admin: Admin, permission: Permission) => ROLES[admin.role].can.includes(permission)
 

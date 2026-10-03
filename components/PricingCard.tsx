@@ -47,13 +47,13 @@ export default function PricingCard({ tier, price }: Props) {
       >
         {pick === 'gold' ? (
           <div className={s.gold}>
-            <img className={s.goldArt} src={img} alt={`${alt}, in the antique gold frame`} />
-            <img className={s.goldFrame} src="/images/frame.png" alt="" />
+            <img className={s.goldArt} loading="lazy" decoding="async" src={img} alt={`${alt}, in the antique gold frame`} />
+            <img className={s.goldFrame} src="/images/frame.webp" alt="" loading="lazy" decoding="async" />
           </div>
         ) : (
           <div className={s.black}>
             <div className={s.mat}>
-              <img className={s.blackArt} src={img} alt={`${alt}, in the modern black frame`} />
+              <img className={s.blackArt} loading="lazy" decoding="async" src={img} alt={`${alt}, in the modern black frame`} />
             </div>
           </div>
         )}

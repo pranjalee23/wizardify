@@ -34,7 +34,7 @@ export default function HousesPage() {
               data-wand=""
               style={{ borderColor: h.border, background: `radial-gradient(circle at 50% 55%, ${h.core} 0%, #07090F 85%)` }}
             >
-              <LivingPicture className={s.cardImg} src={h.video} poster={h.img} alt={h.cardAlt} />
+              <LivingPicture className={s.cardImg} src={h.video} poster={h.img} alt={h.cardAlt} priority={i < 2} />
               <div className={s.cardShade} />
               <div className={s.cardText}>
                 <h2 className={s.cardName}>{h.name}</h2>

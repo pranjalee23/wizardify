@@ -1,6 +1,5 @@
 designs
 scripts
-.playwright-mcp
 .next
 node_modules
 tsconfig.tsbuildinfo

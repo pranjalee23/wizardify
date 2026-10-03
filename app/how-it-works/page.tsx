@@ -13,12 +13,12 @@ import s from './how.module.css'
 export const metadata: Metadata = { title: 'How it works, Wizardify' }
 
 const steps = [
-  { title: 'Choose\nYour House', src: '/images/step-hat.png' },
-  { title: 'Tell Us\nYour Story', src: '/images/step-quill.png' },
-  { title: 'Send Us\nYour Photos', src: '/images/step-photos.png' },
-  { title: 'We Create\nYour Portrait', src: '/images/step-portrait.png' },
-  { title: 'We Frame\nthe Magic', src: '/images/frame-front.png' },
-  { title: 'It Arrives\nat Your Door', src: '/images/step-parcel.png' },
+  { title: 'Choose\nYour House', src: '/images/step-hat.webp' },
+  { title: 'Tell Us\nYour Story', src: '/images/step-quill.webp' },
+  { title: 'Send Us\nYour Photos', src: '/images/step-photos.webp' },
+  { title: 'We Create\nYour Portrait', src: '/images/step-portrait.webp' },
+  { title: 'We Frame\nthe Magic', src: '/images/frame-front.webp' },
+  { title: 'It Arrives\nat Your Door', src: '/images/step-parcel.webp' },
 ]
 
 export default function HowItWorksPage() {
@@ -45,7 +45,7 @@ export default function HowItWorksPage() {
                   </svg>
                 </div>
               )}
-              <img className={s.art} src={st.src} alt="" style={{ animationDelay: `-${i * 0.6}s` }} />
+              <img className={s.art} src={st.src} alt="" loading={i < 3 ? 'eager' : 'lazy'} decoding="async" style={{ animationDelay: `-${i * 0.6}s` }} />
               <div className={s.num}>{i + 1}</div>
               <div className={s.stepTitle}>{st.title}</div>
             </li>

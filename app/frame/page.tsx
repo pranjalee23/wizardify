@@ -97,21 +97,21 @@ export default function FramePage() {
           <div className={s.views}>
             <figure className={s.view} data-reveal="1">
               <div className={s.viewBox}>
-                <img className={s.front} src="/images/frame-front.png" alt="Front view of the frame with a portrait of a witch and her owl" />
+                <img className={s.front} loading="lazy" decoding="async" src="/images/frame-front.webp" alt="Front view of the frame with a portrait of a witch and her owl" />
               </div>
               <figcaption className={s.viewCaption}>FRONT VIEW</figcaption>
             </figure>
             <figure className={s.view} data-reveal="2">
               <div className={`${s.viewBox} ${s.viewBox3d}`}>
                 <div className={s.turn}>
-                  <img className={s.side} src="/images/frame-front.png" alt="Side view of the frame" />
+                  <img className={s.side} loading="lazy" decoding="async" src="/images/frame-front.webp" alt="Side view of the frame" />
                 </div>
               </div>
               <figcaption className={s.viewCaption}>SIDE VIEW</figcaption>
             </figure>
             <figure className={s.view} data-reveal="3">
               <div className={`${s.viewBox} ${s.viewBoxDetail}`}>
-                <img className={s.detail} src="/images/frame-detail.jpg" alt="Close-up of the carved corner ornament" />
+                <img className={s.detail} loading="lazy" decoding="async" src="/images/frame-detail.jpg" alt="Close-up of the carved corner ornament" />
                 <div className={s.detailShade} />
               </div>
               <figcaption className={s.viewCaption}>DETAIL</figcaption>

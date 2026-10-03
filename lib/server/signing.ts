@@ -4,7 +4,7 @@ import { createHmac, timingSafeEqual } from 'node:crypto'
 // Tokens the server hands out and later trusts: an id and an expiry, signed with RESERVATION_SECRET so
 // they can't be forged or altered. Each is signed for its purpose, so a token made for one thing (an
 // unsubscribe link, say) is useless for another (opening a reservation, or the admin pages).
-export type Purpose = 'continue' | 'unsubscribe' | 'admin'
+type Purpose = 'continue' | 'unsubscribe' | 'admin'
 
 export function hmac(text: string) {
   const secret = process.env.RESERVATION_SECRET

@@ -29,7 +29,7 @@ export default function GalleryGrid() {
         {items.map((p, i) => (
           <figure key={p.name} className={s.item} data-reveal={String(i % 4)}>
             <Framed width={290} delay={(i % 4) * 1.3 + Math.floor(i / 4) * 0.7}>
-              <img className={ui.top} src={p.src} alt={p.alt} />
+              <img className={ui.top} src={p.src} alt={p.alt} loading="lazy" decoding="async" />
             </Framed>
             <figcaption className={s.caption}>
               <span className={s.plaque}>{p.name}</span>
